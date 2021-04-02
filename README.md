@@ -5,7 +5,7 @@ Programlamaya yeni başlayanlar için:
 Bir yazılım projesinin, nasıl yapılacağını, en sade ve basit şekilde 
 öğretmek amacı ile tasarlanmış örnek algoritmalar ve anlatım videolarıdır.
 
-![alt tag](http://bug7a.github.io/iconselect.js/a.png)
+![alt tag](https://bug7a.github.io/basicjs-turkce/resimler/projeler.png)
 
 Started: 25 October 2020<br />
 Developer: Buğra ÖZDEN<br />
