@@ -7,6 +7,8 @@ Bir yazılım projesinin, nasıl yapılacağını, en sade ve basit şekilde ö�
 
 <br /><br />
 
+İletişim Bilgileri:<br />
+
 Başlangıç: 25 Ekim 2020<br>
 Geliştirici: Buğra ÖZDEN<br>
 Eposta: bugra.ozden@gmail.com<br>
