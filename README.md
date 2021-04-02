@@ -15,7 +15,6 @@ Eposta: bugra.ozden@gmail.com<br>
 Hayrını görmenizi dilerim,<br />
 İyi çalışmalar.<br /><br />
 
-
 You are free:<br />
 
 to Share — to copy, distribute and transmit the work<br />
