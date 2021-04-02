@@ -3,9 +3,11 @@ Programlamaya yeni başlayanlar için:
 
 Bir yazılım projesinin, nasıl yapılacağını, en sade ve basit şekilde öğretmek amacı ile tasarlanmış örnek algoritmalar ve anlatım videolarından oluşmaktadır.
 
-Tüm projelerde, JavaScript'i sadeleştiren basic.js kütüphanesi kullanılmıştır. Gereken HTML ve CSS kodlarını kütüphane, otomatik eklenmektedir. Böylece öğrenci, başlangıçta sadece algoritma geliştirmeye odaklanabilir.
+Tüm projelerde, JavaScript'i sadeleştiren basic.js kütüphanesi kullanılmıştır. Gereken HTML ve CSS kodlarını kütüphane, otomatik eklenmektedir. Böylece öğrenci, başlangıçta sadece algoritma geliştirmeye odaklanabilir.<br /><br />
 
 ![alt tag](https://bug7a.github.io/basicjs-turkce/resimler/projeler.png)
+
+<br /><br />
 
 Started: 25 October 2020<br />
 Developer: Buğra ÖZDEN<br />
