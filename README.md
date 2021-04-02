@@ -9,10 +9,13 @@ Tüm projelerde, JavaScript'i sadeleştiren basic.js kütüphanesi kullanılmı�
 
 <br /><br />
 
-Started: 25 October 2020<br />
-Developer: Buğra ÖZDEN<br />
-EMail: bugra.ozden@gmail.com<br />
-Web Site: http://bugraozden.com<br /><br />
+Başlangıç: 25 Ekim 2020<br>
+Geliştirici: Buğra ÖZDEN<br>
+Eposta: bugra.ozden@gmail.com<br>
+İnternet Sitesi: http://bugraozden.com<br><br>
+
+Hayrını görmenizi dilerim,<br />
+İyi çalışmalar.<br /><br />
 
 
 You are free:<br />
@@ -22,7 +25,3 @@ to Remix — to adapt the work<br />
 to make commercial use of the work<br />
 
 <http://creativecommons.org/licenses/by/3.0/><br /><br />
-
-
-Hayrını görmenizi dilerim,<br />
-İyi çalışmalar.
