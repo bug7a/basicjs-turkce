@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <title>Hesap Makinesi</title>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.3.css">
+        <script src="kutuphane/basic-1.3.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+
+        /*
+
+        ALGORİTMA:
+
+        4 işlem yapabilen bir hesap makinesi.
+
+        */
+
+
+        // DEĞİŞKENLER
+        
+        // İşlem sonuçlarının görüneceği metin kutusu. (Label)
+        var lblEkran
+        // İşlem yapılacak 1. sayı.
+        var sayi1 = ""
+        // İşlem yapılacak 2. sayı.
+        var sayi2 = ""
+        // İşlem yapılacak matematik operatörü +, -, * veya / olabilir.
+        var isaret = ""
+        // İşlem sonucunu taşıyan değişken.
+        var sonuc = ""
+        
+        // FONKSİYONLAR
+
+        // İlk çalışan fonksiyon.
+        var start = function() {
+
+            // Sayfanın arka plan rengini belirle.
+            page.color = "whitesmoke"
+            
+            // EKRAN Parametreler: left, top, width, height
+            lblEkran = new Label(50, 50, 435, "auto")
+            lblEkran.text = "0"
+            //metin boyutunu belile (pixel cinsinden)
+            lblEkran.fontSize = 40
+
+            // DÜĞMELER
+            for (var i = 0; i <= 3; i++) {
+                for (var k = 0; k <= 2; k++) {
+
+                    // Yeni düğme (Button) nesnesi oluştur.
+                    var btnDugme = new Button()
+                    // Düğmnin metnini belirle 1 den 12 ye kadar.
+                    btnDugme.text = (i * 3) + (k + 1)
+                    // genişlik: 100px, yükseklik: 100px olarak belirle.
+                    btnDugme.width = 100
+                    btnDugme.height = 100
+                    // Üst boşluk: 150px, button yüksekliği: 100px, button arası boşluk: 10px
+                    btnDugme.top = 150 + (110 * i)
+                    // Sol boşluk: 50px, button genişliği: 100px, button arası boşluk: 10px
+                    btnDugme.left = 50 + (110 * k)
+                    // Düğmenin arka plan rengini gri olarak belirle.
+                    btnDugme.color = "lightgray"
+                    
+                    // Eğer düğme metni, 10 dan küçük ise,
+                    if (btnDugme.text < 10) {
+                        //1 den 9 a kadar olan sayılar için,
+                        btnDugme.addEventListener("click", sayiEkle)
+                        
+                    // Eğer düğme metni 10 ise,
+                    } else if (btnDugme.text == 10) {
+                        // Düğmenin metnini 0 olarak belirle.
+                        btnDugme.text = 0
+                        // Düğmeye basıldığında, sayiEkle fonksiyonunu çalıştır.
+                        btnDugme.addEventListener("click", sayiEkle)
+                        
+                    // Eğer düğme metni 11 ise,
+                    } else if (btnDugme.text == 11) {
+                        // Düğmenin yazısını "C" olarak belirle.
+                        btnDugme.text = "C"
+                        // Düğmeye basıldığında temizle fonksiyonunu çalıştır.
+                        btnDugme.addEventListener("click", temizle)
+                        
+                    // Eğer düğme metni 12 ise,
+                    } else if (btnDugme.text == 12) {
+                        // Düğmenin yazısını "=" olarak belirle.
+                        btnDugme.text = "="
+                        // Düğmenin rengini turuncu olarak belirle.
+                        btnDugme.color = "orange"
+                        // Düğmeye basıldığında sonucuHesapla fonksiyonunu çalıştır.
+                        btnDugme.addEventListener("click", sonucuHesapla)
+                        
+                    }
+                    
+                }
+            }
+
+            // OPERATÖR DÜĞMELERİ
+            for (var i = 0; i <= 3; i++) {
+
+                // Yeni düğme (Button) nesnesi oluştur
+                var btnDugme = new Button()
+                 // Genişlik: 150px, yükseklik: 100px olarak belirle
+                btnDugme.width = 150
+                btnDugme.height = 100
+                // Üst boşluk: 150px, button yüksekliği: 100px, button arası boşluk: 10px
+                btnDugme.top = 150 + (110 * i)
+                // Sol boşluk: 390px
+                btnDugme.left = 390
+                // Düğmenin arka plan rengini belirle.
+                btnDugme.backgroundColor = "default"
+                // Düğmeye basıldığında isaretSec fonksiyonunu çalıştır.
+                btnDugme.addEventListener("click", isaretSec)
+
+                // Duğme nesnelerinin metinlerini ayarla.
+                if (i == 0) {
+                    btnDugme.text = "+"
+                    
+                } else if (i == 1) {
+                    btnDugme.text = "-"
+                    
+                } else if (i == 2) {
+                    btnDugme.text = "*"
+                    
+                } else {
+                    btnDugme.text = "/"
+                    
+                }
+
+            }
+
+        }
+        
+        // DİĞER FONKSİYONLAR
+        
+        // Yeni bir sayının girişini yapan fonksiyon.
+        var sayiEkle = function(basilanDugme) {
+            
+            // Eğer isaret değişkeninin içeriği boş ise,
+            if (isaret == "") {
+                // İlk sayı giriliyor.
+                sayi1 = sayi1 + basilanDugme.text
+                // Ekranı güncelle.
+                lblEkran.text = sayi1
+                
+            } else {
+                // İkinci sayı giriliyor.
+                sayi2 = sayi2 + basilanDugme.text
+                // Ekranı güncelle.
+                lblEkran.text = sayi2
+                
+            }
+            
+        }
+        
+        // İşareti seçen fonksiyon.
+        var isaretSec = function(basilanDugme) {
+            
+            // Hangi işlemin seçildiğini değişkene aktar.
+            isaret = basilanDugme.text
+            // Ekranda bu işlemin işaretini göster.
+            lblEkran.text = basilanDugme.text
+            
+        }
+        
+        // Tüm işlemleri temizleyen fonksiyon.
+        var temizle = function(basilanDugme) {
+            
+            // Değişkenlerin içeriklerini temizle.
+            sayi1 = ""
+            sayi2 = ""
+            isaret = ""
+
+            // Ekranı 0 yap.
+            lblEkran.text = "0"
+            
+        }
+        
+        // Sonucu hesaplayıp, ekranda gösteren fonksiyon.
+        var sonucuHesapla = function(basilanDugme) {
+            
+            // İsaret değişkeninin içeriğine göre işlem yap.
+            if(isaret == "+") {
+                // TOPLAMA
+                
+                sonuc = num(sayi1) + num(sayi2)
+
+                // Not: num(metin) fonksiyonu,
+                // metin olarak gönderilen parametrenin, 
+                // sayıya çevrilmiş halini cevap verir.
+                
+            } else if (isaret == "-") {
+                // ÇIKARMA
+                sonuc = num(sayi1) - num(sayi2)
+                
+            } else if (isaret == "*") {
+                // ÇARMA
+                sonuc = num(sayi1) * num(sayi2)
+                
+            } else if (isaret == "/") {
+                // BÖLME
+                sonuc = num(sayi1) / num(sayi2)
+                
+            }
+
+            // Değişkenlerin içeriklerini temizele.
+            temizle()
+
+            // İşlem sonucunu ekranda göster.
+            lblEkran.text = "= " + sonuc
+            
+        }
+        
+        /*
+        
+        GELİŞTİRME ÖNERİSİ:
+
+        - Uygulamanın görünümünü özelleştirin.
+        
+        */
+
+        </script>
+
+    </head>
+    <body></body>
+</html>

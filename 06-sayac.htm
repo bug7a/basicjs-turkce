@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Sayaç</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.3.css">
+        <script src="kutuphane/basic-1.3.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script>
+            
+        /*
+
+        ALGORİTMA:
+            
+        - Her saniye, etiket (Label) üzerindeki sayının 1 arttırılması 
+          ve bir düğmeye (Button) basıldığında sıfırlanması.
+
+        ÇALIŞMA MANTIĞI:
+            
+        - Düğmeye basıldığında, sıfırlama işlemini yapacak fonksiyon çalıştırılır.
+        - Fonksiyon (sayiSifirla), algoritmada yazılmıştır. Sayiyi 1 arttıran başka bir fonksiyon 
+          ise, her saniye çalıştırılan loop fonksiyonunun içine eklenmiştir.
+
+        */
+
+            
+        // Görünen sayı.
+        var lblSayi
+        // Sıfırlama butonu.
+        var btnArttir
+
+        // İlk çalışan fonksiyon.
+        var start = function() {
+            
+            // Sayfa rengini açık mavi olarak düzenle.
+            page.color = "lightblue"
+
+            // Bir etiket nesnesi oluştur. Parametreler: left, top, width
+            lblSayi = createLabel(50, 50, DEFAULT.BUTTON_WIDTH)
+            that.text = "0"
+            // Yazıyı, kendi genişliğinin içerisinde ortalanmış olarak yaz.
+            that.textAlign = "center"
+            // Yazının boyutunu, 40px yap.
+            that.fontSize = 40
+            // Yazının rengini, standart düğme rengi olarak ayarla.
+            that.textColor = DEFAULT.BUTTON_COLOR
+
+            // Bir düğme nesnesi oluştur. Parametreler: left, top
+            btnArttir = createButton(50, 120)
+            that.text = "Sıfırla"
+            that.onClick(sayiSifirla)
+            
+            // Not: bu örnekte, hızlı kod yazabilmek için 
+            // bazı kısa yazımlar kullanılmıştır.
+            
+            // Not: that değişkeni, son oluşturulan nesneyi taşımaktadır.
+            
+            // DEFAULT nesnesi, bazı standart değerleri taşımaktadır.
+            // DEFAULT.BUTTON_WIDTH = 130
+            // DEFAULT.BUTTON_COLOR = "steelblue"
+            
+            // Not: Hepsinin büyük harf ile yazılması, 
+            // içeriğin sabit olduğunu belirten bir yazım tekniğidir.
+            
+        }
+
+        // Her saniye çalışan fonksiyon. (Otomatik çalıştırılır.)
+        var loop = function(){
+            
+            // Sayıyı 1 arttır.
+            sayiArttir()
+            
+        }
+
+        // Düğmeye basıldığında sayinın 1 arttırılmasını sağlayan fonksiyon.
+        var sayiArttir = function() {
+            
+            // Etiket (Label) nesnesindeki değeri 1 ile topla ve geri yaz.
+            lblSayi.text = num(lblSayi.text) + 1
+            
+        }
+        
+        // Düğmeye basıldığında, sayinın 0 olmasını sağlayan fonksiyon.
+        var sayiSifirla = function() {
+            
+            // Etiket (Label) nesnesindeki değeri "0" yap.
+            lblSayi.text = "0"
+            
+        }
+        
+        /*
+        
+        GELİŞTİRME ÖNERİLERİ: 
+        
+        - Sayan sayı, saat formatında, dakika ve saniye olarak (00:00) gösterilebilir.
+        - Başka ne geliştirme yapılabilir diye düşünüp, tasarlayın ve geliştirmeye çalışın.
+
+        
+        İNGİLİZCE - TÜRKÇE SÖZLÜK:
+        
+        Anlamını bilmediğiniz ingilizce kelimeler için,
+        https://translate.google.com/ internet sitesini kullanabilirsiniz.
+        
+        */
+
+        </script>
+
+    </head>
+    <body></body>
+</html>

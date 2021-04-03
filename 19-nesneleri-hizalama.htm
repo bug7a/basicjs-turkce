@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <title>Nesneleri Hizalamak</title>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.3.css">
+        <script src="kutuphane/basic-1.3.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+            
+        var btnA, btnA1, btnA2, btnA3, btnA4
+        var btnB, btnB1, btnB2
+        var btnC, btnC1, btnC2
+        var btnD, btnD1, btnD2
+        var btnE, btnE1, btnE2, btnE3, btnE4
+
+        // İlk çalışan fonksiyon; herşey yüklendiğinde, otomatik çalıştırılır.
+        var start = function() {
+
+            // SOL ÜST KONUMLANDIRMA
+            
+            // Sol üste konumlandır.
+            btnA = createButton()
+            that.text = "A"
+            that.color = "tomato"
+            that.top = 0
+            that.left = 0
+            
+            // btnA nın sağına, 10px boşluk bırakarak konumlandır.
+            btnA1 = createButton()
+            that.text = "A1"
+            that.aline(btnA, "right", 10)
+            
+            // btnA1 in sağına, 10px boşluk bırakarak konumlandır.
+            btnA2 = createButton()
+            that.text = "A2"
+            that.aline(btnA1, "right", 10)
+            
+            // btnA nın altına, 10px boşluk bırakarak konumlandır.
+            btnA3 = createButton()
+            that.text = "A3"
+            that.aline(btnA, "bottom", 10)
+            
+            // btnA3 ün altına, 10px boşluk bırakarak konumlandır.
+            btnA4 = createButton()
+            that.text = "A4"
+            that.aline(btnA3, "bottom", 10)
+            
+            // SAĞ ÜST KONUMLANDIRMA
+            
+            // Sol üste konumlandır.
+            btnB = createButton()
+            that.text = "B"
+            that.color = "tomato"
+            that.top = 0
+            that.right = 0
+            
+            // btnB nın soluna, 10px boşluk bırakarak konumlandır.
+            btnB1 = createButton()
+            that.text = "B1"
+            that.aline(btnB, "left", 10)
+            
+            // btnB in altına, 10px boşluk bırakarak konumlandır.
+            btnB2 = createButton()
+            that.text = "B2"
+            that.aline(btnB, "bottom", 10)
+            
+            // SOL ALTA KONUMLANDIRMA
+            
+            // Sol üste konumlandır.
+            btnC = createButton()
+            that.text = "C"
+            that.color = "tomato"
+            that.left = 0
+            that.bottom = 0
+            
+            // btnB nın soluna, 10px boşluk bırakarak konumlandır.
+            btnC1 = createButton()
+            that.text = "C1"
+            that.aline(btnC, "right", 10)
+            
+            // btnB in altına, 10px boşluk bırakarak konumlandır.
+            btnC2 = createButton()
+            that.text = "C2"
+            that.aline(btnC, "top", 10)
+            
+            // SAĞ ALTA KONUMLANDIRMA
+            
+            // Sol üste konumlandır.
+            btnD = createButton()
+            that.text = "D"
+            that.color = "tomato"
+            that.right = 0
+            that.bottom = 0
+            
+            // btnB nın soluna, 10px boşluk bırakarak konumlandır.
+            btnD1 = createButton()
+            that.text = "D1"
+            that.aline(btnD, "left", 10)
+            
+            // btnB in altına, 10px boşluk bırakarak konumlandır.
+            btnD2 = createButton()
+            that.text = "D2"
+            that.aline(btnD, "top", 10)
+            
+            // BİR NESNEYE GÖRE ORTADA KONUMLANDIRMA
+            
+            // page nesnesine göre, ortala
+            btnE = createButton()
+            that.text = "E"
+            that.color = "tomato"
+            that.center(page)
+            
+            // btnE nın sağına,
+            btnE1 = createButton()
+            that.text = "E1"
+            that.aline(btnE, "right", 10)
+            
+            // btnE nın soluna,
+            btnE2 = createButton()
+            that.text = "E2"
+            that.aline(btnE, "left", 10)
+            
+            // btnE nın üstüne,
+            btnE3 = createButton()
+            that.text = "E3"
+            that.aline(btnE, "top", 10)
+            
+            // btnE nın altına,
+            btnE4 = createButton()
+            that.text = "E4"
+            that.aline(btnE, "bottom", 10)
+            
+            page.onResize(yenidenHizala)
+
+        }
+        
+        var yenidenHizala = function() {
+            
+            // page nesnesine göre, yeniden ortala.
+            btnE.center(page)
+            btnE1.aline(btnE, "right", 10)
+            btnE2.aline(btnE, "left", 10)
+            btnE3.aline(btnE, "top", 10)
+            btnE4.aline(btnE, "bottom", 10)
+            
+            // Not: ortadaki kareler hariç, yeniden hizalamaya gerek yoktur.
+            
+        }
+
+        </script>
+
+    </head>
+    <body></body>
+</html>
