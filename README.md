@@ -23,4 +23,4 @@ to Share — to copy, distribute and transmit the work<br />
 to Remix — to adapt the work<br />
 to make commercial use of the work<br />
 
-<http://creativecommons.org/licenses/by/3.0/><br /><br />
+<https://creativecommons.org/licenses/by/4.0/><br /><br />
