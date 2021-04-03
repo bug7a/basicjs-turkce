@@ -2,7 +2,7 @@
 <html>
     <head>
         
-        <title>Programlamaya yeni başlayanlar için (basic.js)</title>
+        <title>Programlamaya yeni başlayanlar için Örnek Projeler</title>
         <meta charset="UTF-8">
           <meta name="description" content="En sade ve basit şekilde, nesne tabanlı yazılım projeleri geliştirin. Örnekleri bilgisayarınıza indirin ve anlatım videolarını izleyin.">
           <meta name="keywords" content="JavaScript, programlama, eğitim">
@@ -217,8 +217,8 @@
             
             // sub desc 2
             page1.sub_desc2 = createLabel()
-            //that.text = "- Temel konuları, <a href='https://play.google.com/store/apps/details?id=com.bugraozden.cik' style='color:#33A5D3;text-decoration: underline;pointer-events:auto;' target='_blank'>android uygulaması</a> üzerinden öğrenin."
-            that.text = "- Temel konuları, <a href='https://play.google.com/store/apps/details?id=com.bugraozden.cik' style='color:#33A5D3;text-decoration: underline;pointer-events:auto;' target='_blank'>Android</a> veya <a href='https://play.google.com/store/apps/details?id=com.bugraozden.cik' style='color:#33A5D3;text-decoration: underline;pointer-events:auto;' target='_blank'>iOS</a> uygulaması üzerinden öğrenin."
+            that.text = "- Temel konuları, <a href='https://play.google.com/store/apps/details?id=com.bugraozden.cik' style='color:#33A5D3;text-decoration: underline;pointer-events:auto;' target='_blank'>android uygulaması</a> üzerinden öğrenin."
+            //that.text = "- Temel konuları, <a href='https://play.google.com/store/apps/details?id=com.bugraozden.cik' style='color:#33A5D3;text-decoration: underline;pointer-events:auto;' target='_blank'>Android</a> veya <a href='https://play.google.com/store/apps/details?id=com.bugraozden.cik' style='color:#33A5D3;text-decoration: underline;pointer-events:auto;' target='_blank'>iOS</a> uygulaması üzerinden öğrenin."
             that.text += "<br>- Örnekleri bilgisayarınıza indirin ve anlatım videolarını izleyin."
             that.color = "transparent"
             that.textColor = "#33A5D3"
@@ -245,6 +245,9 @@
             that.aline(page1.sub_desc1, "bottom", 80)
             that.center(page1, "left")
             that.left -= 115
+            that.onClick(function() {
+                window.open("https://www.youtube.com/watch?v=CemAvscdzQg", "_blank");
+            });
             
             // DOWNLOAD BUTTON
             page1.download_button = createButton()
@@ -262,6 +265,9 @@
             that.aline(page1.sub_desc1, "bottom", 80)
             that.center(page1, "left")
             that.left += 115
+            that.onClick(function() {
+                window.open("https://github.com/bug7a/basicjs-turkce", "_blank");
+            });
             
             // DOWNLOAD BUTTON DESC
             page1.download_button_desc = createLabel()
