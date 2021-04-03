@@ -23,7 +23,6 @@ https://www.youtube.com/
 - Yeni bir proje oluştururken; "0C-bos-proje-sablonu.htm" dosyasını ve "kutuphane" klasörünü, 
   farklı bir klasöre kopyalayın. Kopyaladığınız HTM dosyasını, yeniden isimlendirin (proje-ismi.htm vb.) 
   ve bu klasörü, geliştirme ortamında açın.
-- Bir proje dosyası, geliştirme ortamı dışında, not defteri kullanılarak da düzenlenebilir.
 
 
 3. İLK ÖRNEK PROJE:
@@ -54,3 +53,4 @@ https://www.figma.com/
 
 Hayrını görmenizi dilerim,
 İyi çalışmalar.
+

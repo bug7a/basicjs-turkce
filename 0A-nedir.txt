@@ -1,9 +1,9 @@
 
-BasicJS PROJESİ NEDİR?
+NEDİR?
 
-Programlamaya yeni başlayanlara:
+Programlamaya yeni başlayanlar için:
 Bir yazılım projesinin, nasıl yapılacağını, en sade ve basit şekilde 
-öğretmek için tasarlanmış örnek algoritmalar ve anlatım videolarıdır.
+öğretmek amacı ile tasarlanmış örnek algoritmalar ve anlatım videolarıdır.
 
 
 KİMLER FAYDALANABİLİR?
@@ -34,7 +34,7 @@ to Share — to copy, distribute and transmit the work
 to Remix — to adapt the work
 to make commercial use of the work
 
-http://creativecommons.org/licenses/by/3.0/
+https://creativecommons.org/licenses/by/4.0/
 
 
 Hayrını görmenizi dilerim,
