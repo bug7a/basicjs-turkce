@@ -18,7 +18,7 @@
         
             body {
                 overflow-x:hidden;
-                overflow-y:hidden;
+                overflow-y:auto;
             }
             
             a {
@@ -59,10 +59,12 @@
             page.fit(DEFAULT_WIDTH, 700)
             
             // İLK SAYFA
+            /*
             mp = createBox(0, 0, page.width, page.height);
-            mp.color = "transparent"
-            mp.border = 0
-            mp.scrollY = 1
+            mp.color = "transparent";
+            mp.border = 0;
+            mp.scrollY = 1;
+            */
             
             // PAGE1
             page1 = createBox()
@@ -74,7 +76,7 @@
             that.border = 0
             that.center("left")
 
-            mp.add(page1)
+            //mp.add(page1)
             createPage1()
             
             // PAGE2
@@ -86,15 +88,10 @@
             that.color = "transparent"
             that.border = 0
             that.center("left")
-            mp.add(page2)
+            //mp.add(page2)
             createPage2()
             
             page2.visible = 1
-            
-        }
-        
-        // Her saniye çalışan fonksiyon.
-        var loop = function() {
             
         }
         
@@ -260,8 +257,9 @@
                 that.load("images/pro" + i + ".png")
                 that.opacity = 0.7
                 that.round = 0
+                var savedURL = itemURLs[i - 1];
                 that.onClick(function(){
-                    window.open(itemURLs[i], "_blank");
+                    window.open(savedURL, "_blank");
                 });
                 
                 createLabel()
@@ -294,8 +292,9 @@
                 that.load("images/pro" + (6 + i) + ".png")
                 that.opacity = 0.7
                 that.round = 0
+                var savedURL = itemURLs[i - 1];
                 that.onClick(function(){
-                    window.open(itemURLs[i], "_blank");
+                    window.open(savedURL, "_blank");
                 });
                 
                 createLabel()
@@ -320,48 +319,6 @@
 
         }
         
-        createBackgroundAnimation = function() {
-            
-            boxAnimation = createBox()
-            boxAnimation.border = 0
-            boxAnimation.width = page.width
-            boxAnimation.height = page.height
-            boxAnimation.color = "transparent"
-            
-            for (var i = 1; i <= 16; i++) {
-
-                var rNum = 0.2 + num(random(100) / 100);
-                var objName = "bck" + i;
-                boxAnimation[objName] = createBox();
-
-                boxAnimation[objName].width = 120 * rNum; //93
-                boxAnimation[objName].height = 120 * rNum; //93
-                boxAnimation[objName].color = "transparent";
-                //boxAnimation[objName].border = 1;
-                var _random = random(1, 1)
-                if (_random == 1) {
-                    boxAnimation[objName].border = 1;
-                    boxAnimation[objName].borderColor = "#33A5D3";
-                } else if (_random == 2) {
-                    boxAnimation[objName].border = 1;
-                    boxAnimation[objName].borderColor = "white";
-                } else if (_random == 3) {
-                    boxAnimation[objName].border = 0;
-                    boxAnimation[objName].color = "white";
-                } else {
-                    boxAnimation[objName].border = 0;
-                    boxAnimation[objName].color = "#33A5D3";
-                }
-                
-                
-                boxAnimation[objName].value = random(4);
-                boxAnimation[objName].opacity = num(random(20) / 100);
-                boxAnimation[objName].left = random(page.width);
-                boxAnimation[objName].top = random(page.height);
-
-            }
-            
-        }
 
         </script>
 
