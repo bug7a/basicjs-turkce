@@ -80,9 +80,9 @@
             //that.element.style.backgroundImage = "radial-gradient(yellow, white)";
             that.border = 0
             //that.scrollY = 1
-            //if (page.width > DEFAULT_WIDTH) {
-            that.center("left")
-            //}
+            if (page.width > DEFAULT_WIDTH) {
+                that.center("left")
+            }
             createPage1()
             
             boxAnimation.height = PAGE1_HEIGHT;
@@ -120,9 +120,9 @@
             that.height = 600
             that.color = "transparent"
             that.border = 0
-            //if (page.width > antiZoom(DEFAULT_WIDTH)) {
+            if (page.width > antiZoom(DEFAULT_WIDTH)) {
                 that.center("left")
-            //}
+            }
             createPage2()
             
             //boxbackgroundColor.height = page2.height
@@ -347,6 +347,9 @@
                 that.load("images/pro" + i + ".png")
                 that.opacity = 0.7
                 that.round = 0
+                that.onClick(function(){
+                    window.open(itemURLs[i], "_blank");
+                });
                 
                 createLabel()
                 that.text = itemTitles[i - 1]
