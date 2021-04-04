@@ -3,6 +3,7 @@
     <head>
         
         <title>Programlamaya yeni başlayanlar için Örnek Projeler</title>
+
         <meta charset="UTF-8">
           <meta name="description" content="En sade ve basit şekilde, nesne tabanlı yazılım projeleri geliştirin. Örnekleri bilgisayarınıza indirin ve anlatım videolarını izleyin.">
           <meta name="keywords" content="JavaScript, programlama, eğitim">
@@ -57,9 +58,6 @@
             
             page.fit(DEFAULT_WIDTH, 700)
             
-            
-            //createBackgroundAnimation()
-            
             // İLK SAYFA
             mp = createBox(0, 0, page.width, page.height);
             mp.color = "transparent"
@@ -74,15 +72,10 @@
             that.color = "transparent"
             //that.element.style.backgroundImage = "radial-gradient(yellow, white)";
             that.border = 0
-            //that.scrollY = 1
-            //if (page.width > DEFAULT_WIDTH) {
             that.center("left")
-            //}
 
             mp.add(page1)
             createPage1()
-            
-            //boxAnimation.height = PAGE1_HEIGHT;
             
             // PAGE2
             page2 = createBox(0, PAGE1_HEIGHT, 0, 0)
@@ -92,33 +85,16 @@
             that.height = 600
             that.color = "transparent"
             that.border = 0
-            //if (page.width > antiZoom(DEFAULT_WIDTH)) {
             that.center("left")
-            //}
             mp.add(page2)
             createPage2()
             
-            //boxbackgroundColor.visible = 1
             page2.visible = 1
             
         }
         
         // Her saniye çalışan fonksiyon.
         var loop = function() {
-                        /*
-            for (var i = 1; i <= 16; i++) {
-
-                var objName = "bck" + i;
-
-                boxAnimation[objName].rotate += boxAnimation[objName].value;
-                boxAnimation[objName].top -= boxAnimation[objName].value;
-
-                if (boxAnimation[objName].top < -150) {
-                    boxAnimation[objName].top = boxAnimation.height + 100;
-                }
-
-            }
-            */
             
         }
         
@@ -132,8 +108,6 @@
             that.width = 260
             that.height = 70
             that.top = 120
-            //that.left = (page1.width - that.width) / 2
-            //alert(JSON.stringify(that.upperObject))
             that.center("left")
             
             // desc1
@@ -238,12 +212,7 @@
             that.opacity = 0.6
             that.center("left")
             
-            //PAGE1_HEIGHT = that.top + that.width + 40
             page1.height = PAGE1_HEIGHT
-            //boxMainBackground.height = PAGE1_HEIGHT
-            
-            //boxMainBackground.height = PAGE1_HEIGHT
-            //PAGE1_HEIGHT.width = page.width
             
         }
         
@@ -309,6 +278,12 @@
             
             topSpace = 270
             itemTitles = ["Duvar Saati", "Kronometre", "Matematik Oyunu", "Renk Sözlüğü"]
+            itemURLs = [
+                "https://jsfiddle.net/bug7a/71950mj8/7/", 
+                "https://jsfiddle.net/bug7a/71950mj8/7/", 
+                "https://jsfiddle.net/bug7a/71950mj8/7/", 
+                "https://jsfiddle.net/bug7a/71950mj8/7/"
+            ]
             
             for (var i = 1; i <= 4; i++) {
                 
@@ -319,6 +294,9 @@
                 that.load("images/pro" + (6 + i) + ".png")
                 that.opacity = 0.7
                 that.round = 0
+                that.onClick(function(){
+                    window.open(itemURLs[i], "_blank");
+                });
                 
                 createLabel()
                 that.text = itemTitles[i - 1]
@@ -336,15 +314,10 @@
             
         var createProject = function(projectNum, topSpace) {
             
-            
         }
         
-       
-        
         var createPage3 = function() {
-            
-            
-            
+
         }
         
         createBackgroundAnimation = function() {
