@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Programlamaya yeni başlayanlar için Örnek Projeler</title>
+        <meta charset="UTF-8">
+          <meta name="description" content="En sade ve basit şekilde, nesne tabanlı yazılım projeleri geliştirin. Örnekleri bilgisayarınıza indirin ve anlatım videolarını izleyin.">
+          <meta name="keywords" content="JavaScript, programlama, eğitim">
+          <meta name="author" content="Buğra ÖZDEN">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="basic-1.3.css">
+        <script src="basic-1.3.js" type="text/javascript" charset="utf-8"></script>
+        
+        <style>
+        
+            body {
+                overflow-x:hidden;
+                overflow-y:hidden;
+            }
+            
+            a {
+                
+                text-decoration: none;
+                
+            }
+            
+        </style>
+
+        <script>
+            
+        // DEĞİŞKENLER
+            
+        const DEFAULT_WIDTH = 600
+        var PAGE1_HEIGHT = 700
+
+        var mp
+            
+        var boxAnimation
+        var page1
+        var page2 
+        var page3
+        var boxbackgroundColor
+        var boxbackgroundColor3
+        var boxMainBackground
+        
+        // BAŞLANGIÇ FONKSİYONLARI
+            
+        // İlk çalışan fonksiyon.
+        var start = function() {
+            
+            setLoopTimer(10)
+            
+            page.color = "#141414" //#141414 , 2F4F4F, rgba(0, 0, 0, 0.9)
+            //page.element.style.backgroundImage = "radial-gradient(yellow, white)";
+            
+            page.fit(DEFAULT_WIDTH, 700)
+            
+            boxMainBackground = createImage(0, 0, page.width, page.height)
+            //that.load("images/arkaplan.jpg")
+            //that.color = "transparent"
+            //that.element.style.backgroundImage = "linear-gradient(orangered, steelblue)";
+            that.border = 0
+            that.opacity = 0.0
+            that.left = 0
+            that.top = 0
+            //that.rotate = 0
+            
+            
+            createBackgroundAnimation()
+            
+            // İLK SAYFA
+            mp = createBox(0, 0, page.width, page.height);
+            mp.color = "transparent"
+            mp.border = 0
+            mp.scrollY = 1
+            
+            // PAGE1
+            page1 = createBox()
+            that.width = DEFAULT_WIDTH
+            //that.height = page.height
+            that.height = PAGE1_HEIGHT
+            that.color = "transparent"
+            //that.element.style.backgroundImage = "radial-gradient(yellow, white)";
+            that.border = 0
+            //that.scrollY = 1
+            if (page.width > DEFAULT_WIDTH) {
+                that.center("left")
+            }
+
+            mp.add(page1)
+            createPage1()
+            
+            boxAnimation.height = PAGE1_HEIGHT;
+            
+            // PAGE2
+            page2 = createBox(0, PAGE1_HEIGHT, 0, 0)
+            that.visible = 0
+            that.top = PAGE1_HEIGHT
+            that.width = DEFAULT_WIDTH
+            that.height = 600
+            that.color = "transparent"
+            that.border = 0
+            if (page.width > antiZoom(DEFAULT_WIDTH)) {
+                that.center("left")
+            }
+            mp.add(page2)
+            createPage2()
+            
+            //boxbackgroundColor.visible = 1
+            page2.visible = 1
+            
+        }
+        
+        // Her saniye çalışan fonksiyon.
+        var loop = function() {
+                        
+            for (var i = 1; i <= 16; i++) {
+
+                var objName = "bck" + i;
+
+                boxAnimation[objName].rotate += boxAnimation[objName].value;
+                boxAnimation[objName].top -= boxAnimation[objName].value;
+
+                if (boxAnimation[objName].top < -150) {
+                    boxAnimation[objName].top = boxAnimation.height + 100;
+                }
+
+            }
+            
+        }
+        
+        // DİĞER FONKSİYONLAR
+        
+        var createPage1 = function() {
+            
+            // logo
+            page1.logo = createImage()
+            that.load("images/basic.js-logo.svg")
+            that.width = 260
+            that.height = 70
+            that.top = 120
+            //that.left = (page1.width - that.width) / 2
+            //alert(JSON.stringify(that.upperObject))
+            that.center("left")
+            
+            // desc1
+            page1.desc1 = createLabel(0, 0)
+            //that.text = "Sadeleştirilmiş ve nesne-tabanlı JavaScript Kütüphanesi"
+            //that.color = "yellow"
+            that.text = "Programlamaya yeni başlayanlar için"
+            //that.textColor = "#141414" // white
+            that.textColor = "white" // white
+            that.width = 350
+            that.height = 60
+            that.textAlign = "center"
+            that.aline(page1.logo, "bottom", 20)
+            that.center("left")
+            
+            // sub desc1
+            page1.sub_desc1 = createLabel()
+            //that.text = "Bir yazılım projesinin, nasıl yapılacağını, en sade ve basit şekilde öğretmek için tasarlanmış algoritma örnekleri ve anlatım videoları içerir."
+            that.text = "En sade ve basit şekilde, nesne tabanlı yazılım projeleri geliştirin."
+            that.color = "transparent"
+            // #33A5D3
+            //that.textColor = "tomato"
+            that.textColor = "#33A5D3"
+            that.width = DEFAULT_WIDTH
+            that.height = 30
+            that.opacity = 0.8 // 0.5
+            that.fontSize = 16
+            that.textAlign = "center"
+            that.aline(page1.desc1, "bottom", 100)
+            that.left = 0
+            
+            // sub desc 2
+            page1.sub_desc2 = createLabel()
+            that.text = "- Temel konuları, <a href='https://play.google.com/store/apps/details?id=com.bugraozden.cik' style='color:#33A5D3;text-decoration: underline;pointer-events:auto;' target='_blank'>android uygulaması</a> üzerinden öğrenin."
+            //that.text = "- Temel konuları, <a href='https://play.google.com/store/apps/details?id=com.bugraozden.cik' style='color:#33A5D3;text-decoration: underline;pointer-events:auto;' target='_blank'>Android</a> veya <a href='https://play.google.com/store/apps/details?id=com.bugraozden.cik' style='color:#33A5D3;text-decoration: underline;pointer-events:auto;' target='_blank'>iOS</a> uygulaması üzerinden öğrenin."
+            that.text += "<br>- Örnekleri bilgisayarınıza indirin ve anlatım videolarını izleyin."
+            that.color = "transparent"
+            that.textColor = "#33A5D3"
+            that.width = 550
+            that.height = 60
+            that.opacity = 0.4 // 0.4
+            that.fontSize = 14
+            that.aline(page1.sub_desc1, "bottom", 0)
+            that.left = 90
+            
+            // TRAILER BUTTON
+            page1.trailer_button = createButton()
+            //that.text = "GitHub’dan İndir"
+            that.text = "Tanıtım Videosu"
+            //that.color = "tomato"
+            that.color = "rgba(255, 255, 255, 0.02)" //transparent
+            that.minimal = 1
+            that.border = 1
+            that.borderColor = "white" // white
+            that.textColor = "white" // whtie
+            that.round = 12
+            that.width = 220
+            that.height = 80
+            that.aline(page1.sub_desc1, "bottom", 80)
+            that.center("left")
+            that.left -= 115
+            that.onClick(function() {
+                window.open("https://www.youtube.com/watch?v=CemAvscdzQg", "_blank");
+            });
+            
+            // DOWNLOAD BUTTON
+            page1.download_button = createButton()
+            //that.text = "GitHub’dan İndir"
+            that.text = "Örnekleri İndir"
+            //that.color = "tomato"
+            that.color = "rgba(255, 255, 255, 0.02)" // transparent
+            that.minimal = 1
+            that.border = 1
+            that.borderColor = "white" // white
+            that.textColor = "white" // white
+            that.round = 12
+            that.width = 220
+            that.height = 80
+            that.aline(page1.sub_desc1, "bottom", 80)
+            that.center("left")
+            that.left += 115
+            that.onClick(function() {
+                window.open("https://github.com/bug7a/basicjs-turkce", "_blank");
+            });
+            
+            // DOWNLOAD BUTTON DESC
+            page1.download_button_desc = createLabel()
+            that.text = "Yeşil Düğme, Download ZIP"
+            that.textColor = "#33A5D3"
+            that.fontSize = 14
+            that.opacity = 0.3 // 0.3
+            that.width = page1.download_button.width
+            that.textAlign = "center"
+            that.aline(page1.download_button, "bottom", 10)
+            
+            // BOTTOM ARROW
+            page1.bottom_arrow = createImage()
+            that.load("images/bottom-arrow.svg")
+            that.width= 33
+            that.height= 16
+            that.top = page1.download_button.top + 200
+            that.opacity = 0.6
+            that.center("left")
+            
+            //PAGE1_HEIGHT = that.top + that.width + 40
+            page1.height = PAGE1_HEIGHT
+            //boxMainBackground.height = PAGE1_HEIGHT
+            
+            boxMainBackground.height = PAGE1_HEIGHT
+            //PAGE1_HEIGHT.width = page.width
+            
+        }
+        
+        var createPage2 = function() {
+            
+            page2.color = "transparent"
+            
+            page2.desc1 = createLabel()
+            //that.text = "Sadeleştirilmiş ve nesne-tabanlı JavaScript Kütüphanesi"
+            //that.color = "yellow"
+            that.text = ""
+            that.textColor = "#33A5D3"
+            that.width = DEFAULT_WIDTH
+            that.height = 30
+            that.textAlign = "left"
+            that.top = 40
+            that.left = 0
+            
+            page2.sub_desc1 = createLabel()
+            that.text = "Kaynak kodunu görüntülemek için bir örnek seçin."
+            that.width = DEFAULT_WIDTH
+            that.textAlign = "center"
+            that.fontSize = 16
+            that.textColor = "#33A5D3"
+            that.opacity = 0.7
+            that.aline(page2.desc1, "bottom", 0)
+            
+            var topSpace = 120
+            var itemTitles = ["Merhaba", "Çarpım Tablosu", "Hesap Makinesi", "Zarlar", "Tic-tac-toe", "Sayaç"]
+            var itemURLs = [
+                "https://jsfiddle.net/bug7a/71950mj8/7/", 
+                "https://jsfiddle.net/bug7a/71950mj8/7/", 
+                "https://jsfiddle.net/bug7a/71950mj8/7/", 
+                "https://jsfiddle.net/bug7a/71950mj8/7/", 
+                "https://jsfiddle.net/bug7a/71950mj8/7/", 
+                "https://jsfiddle.net/bug7a/71950mj8/7/"
+            ]
+            
+            for (var i = 1; i <= 6; i++) {
+                
+                var projectName = "project" + i
+                var projectLeft = 20 + ((i - 1) * 94)
+                
+                page2[projectName] = createImage(projectLeft, topSpace, 90, 90)
+                that.load("images/pro" + i + ".png")
+                that.opacity = 0.7
+                that.round = 0
+                that.onClick(function(){
+                    window.open(itemURLs[i], "_blank");
+                });
+                
+                createLabel()
+                that.text = itemTitles[i - 1]
+                that.textAlign = "center"
+                that.width = 90
+                that.aline(page2[projectName], "bottom", 4)
+                that.fontSize = 14
+                that.textColor = "#FFFFFF"
+                that.opacity = 0.4
+                page2.add(that)
+                
+            }
+            
+            topSpace = 270
+            itemTitles = ["Duvar Saati", "Kronometre", "Matematik Oyunu", "Renk Sözlüğü"]
+            
+            for (var i = 1; i <= 4; i++) {
+                
+                var projectName = "projectb" + i
+                var projectLeft = 20 + ((i - 1) * 94)
+                
+                page2[projectName] = createImage(projectLeft, topSpace, 90, 90)
+                that.load("images/pro" + (6 + i) + ".png")
+                that.opacity = 0.7
+                that.round = 0
+                
+                createLabel()
+                that.text = itemTitles[i - 1]
+                that.textAlign = "center"
+                that.width = 90
+                that.aline(page2[projectName], "bottom", 4)
+                that.fontSize = 14
+                that.textColor = "#FFFFFF"
+                that.opacity = 0.4
+                page2.add(that)
+                
+            }
+        
+        }
+            
+        var createProject = function(projectNum, topSpace) {
+            
+            
+        }
+        
+       
+        
+        var createPage3 = function() {
+            
+            
+            
+        }
+        
+        createBackgroundAnimation = function() {
+            
+            boxAnimation = createBox()
+            boxAnimation.border = 0
+            boxAnimation.width = page.width
+            boxAnimation.height = page.height
+            boxAnimation.color = "transparent"
+            
+            for (var i = 1; i <= 16; i++) {
+
+                var rNum = 0.2 + num(random(100) / 100);
+                var objName = "bck" + i;
+                boxAnimation[objName] = createBox();
+
+                boxAnimation[objName].width = 120 * rNum; //93
+                boxAnimation[objName].height = 120 * rNum; //93
+                boxAnimation[objName].color = "transparent";
+                //boxAnimation[objName].border = 1;
+                var _random = random(1, 1)
+                if (_random == 1) {
+                    boxAnimation[objName].border = 1;
+                    boxAnimation[objName].borderColor = "#33A5D3";
+                } else if (_random == 2) {
+                    boxAnimation[objName].border = 1;
+                    boxAnimation[objName].borderColor = "white";
+                } else if (_random == 3) {
+                    boxAnimation[objName].border = 0;
+                    boxAnimation[objName].color = "white";
+                } else {
+                    boxAnimation[objName].border = 0;
+                    boxAnimation[objName].color = "#33A5D3";
+                }
+                
+                
+                boxAnimation[objName].value = random(4);
+                boxAnimation[objName].opacity = num(random(20) / 100);
+                boxAnimation[objName].left = random(page.width);
+                boxAnimation[objName].top = random(page.height);
+
+            }
+            
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML içeriği -->
+        
+    </body>
+</html>
