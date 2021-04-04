@@ -80,7 +80,9 @@
             //that.element.style.backgroundImage = "radial-gradient(yellow, white)";
             that.border = 0
             //that.scrollY = 1
-            that.center(page, "left")
+            //if (page.width > DEFAULT_WIDTH) {
+            that.center("left")
+            //}
             createPage1()
             
             boxAnimation.height = PAGE1_HEIGHT;
@@ -118,7 +120,9 @@
             that.height = 600
             that.color = "transparent"
             that.border = 0
-            that.center(page, "left")
+            //if (page.width > antiZoom(DEFAULT_WIDTH)) {
+                that.center("left")
+            //}
             createPage2()
             
             //boxbackgroundColor.height = page2.height
@@ -132,7 +136,7 @@
             that.color = "transparent"
             that.border = 0
             that.aline(page2, "bottom")
-            that.center(page, "left")
+            that.center("left")
             createPage3()
             */
             
@@ -146,7 +150,7 @@
             page.onResize(function(){ 
             
                 page.fit(DEFAULT_WIDTH, 700)
-                page1.center(page)
+                page1.center()
                 boxbackgroundColor.left = page1.left
                 page2.left = page1.left
                 page3.left = page1.left
@@ -184,10 +188,12 @@
             that.width = 260
             that.height = 70
             that.top = 120
-            that.center(page1, "left")
+            //that.left = (page1.width - that.width) / 2
+            //alert(JSON.stringify(that.upperObject))
+            that.center("left")
             
             // desc1
-            page1.desc1 = createLabel()
+            page1.desc1 = createLabel(0, 0)
             //that.text = "Sadeleştirilmiş ve nesne-tabanlı JavaScript Kütüphanesi"
             //that.color = "yellow"
             that.text = "Programlamaya yeni başlayanlar için"
@@ -197,7 +203,7 @@
             that.height = 60
             that.textAlign = "center"
             that.aline(page1.logo, "bottom", 20)
-            that.center(page1, "left")
+            that.center("left")
             
             // sub desc1
             page1.sub_desc1 = createLabel()
@@ -243,7 +249,7 @@
             that.width = 220
             that.height = 80
             that.aline(page1.sub_desc1, "bottom", 80)
-            that.center(page1, "left")
+            that.center("left")
             that.left -= 115
             that.onClick(function() {
                 window.open("https://www.youtube.com/watch?v=CemAvscdzQg", "_blank");
@@ -263,7 +269,7 @@
             that.width = 220
             that.height = 80
             that.aline(page1.sub_desc1, "bottom", 80)
-            that.center(page1, "left")
+            that.center("left")
             that.left += 115
             that.onClick(function() {
                 window.open("https://github.com/bug7a/basicjs-turkce", "_blank");
@@ -286,14 +292,14 @@
             that.height= 16
             that.top = page1.download_button.top + 200
             that.opacity = 0.6
-            that.center(page1, "left")
+            that.center("left")
             
-            PAGE1_HEIGHT = that.top + that.width + 40
+            //PAGE1_HEIGHT = that.top + that.width + 40
             page1.height = PAGE1_HEIGHT
             //boxMainBackground.height = PAGE1_HEIGHT
             
             boxMainBackground.height = PAGE1_HEIGHT
-            PAGE1_HEIGHT.width = page.width
+            //PAGE1_HEIGHT.width = page.width
             
         }
         
@@ -323,6 +329,14 @@
             
             var topSpace = 120
             var itemTitles = ["Merhaba", "Çarpım Tablosu", "Hesap Makinesi", "Zarlar", "Tic-tac-toe", "Sayaç"]
+            var itemURLs = [
+                "https://jsfiddle.net/bug7a/71950mj8/7/", 
+                "https://jsfiddle.net/bug7a/71950mj8/7/", 
+                "https://jsfiddle.net/bug7a/71950mj8/7/", 
+                "https://jsfiddle.net/bug7a/71950mj8/7/", 
+                "https://jsfiddle.net/bug7a/71950mj8/7/", 
+                "https://jsfiddle.net/bug7a/71950mj8/7/"
+            ]
             
             for (var i = 1; i <= 6; i++) {
                 
@@ -510,7 +524,7 @@
             that.height = 60
             that.textAlign = "center"
             that.top = 40
-            that.center(page, "left")
+            that.center("left")
             
             page3.sub_desc1 = createLabel()
             //that.text = "Bir yazılım projesinin, nasıl yapılacağını, en sade ve basit şekilde öğretmek için tasarlanmış algoritma örnekleri ve anlatım videoları içerir."

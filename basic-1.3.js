@@ -29,10 +29,10 @@ https://translate.google.com/ internet sitesini kullanabilirsiniz.
 --
 
 
-Year       : 25 October 2020
-Developer  : Bugra OZDEN
-Email      : bugra.ozden@gmail.com
-WebSite    : http://bugraozden.com
+Year: 25 October 2020
+Developer: Bugra OZDEN
+Email: bugra.ozden@gmail.com
+WebSite: http://bugraozden.com
 
 You are free:
 
@@ -40,46 +40,9 @@ to Share — to copy, distribute and transmit the work
 to Remix — to adapt the work
 to make commercial use of the work
 
-http://creativecommons.org/licenses/by/3.0/
+https://creativecommons.org/licenses/by/4.0/
 
 Have Fun.
-
-*/
-
-
-/*
-
-TODO LIST:
-
-- designMode("on"); nesnelerin yanında küçük kutularda konum bilgileri, sınır çizgileri görünsün.
-- designMode = on : ekrandaki nesneler drag yapılabilir. üzerine gelinen nesnenin koordinatları görünsün. Bir renk paleti çıkabilir.
-
-- İçinde gün ve ay isimlerinin olduğu diziler faydalı olur mu? gunler[0] = "pazartesi"
-
-- nesne.animate(now, now + 2000, {top: 200}, "HızlıBaşlaYavaşla":animateType)
-nesne.animate(1000, 3000, {left: 300})
-nesne.animate(3000, 3500, {top: 200})
-
-- Video sınıfı oluşturulabilir.
-
-- Label nesnesinde, .space veya .padding kenarlardan boşluk bıraksın.
-
-- Bir renk paleti yap. Bir resim dosyası ile projenin içine koy. Ve COLOR nesnesi ile destekle.
-
-// Text  Text       Label
-// Input TextInput  TextBox
-// Button
-// Image
-// Box
-
-- "transparent" kelimesini renk paletine ekle.
-
-- aline ve center fonksiyonlarına gönderilen parametreleri bir listede sakla, ekran boyutu değiştiğinde yeniden çalıştır. 
-Veya manuel çalıştırılmasına izin ver.
-
-- canplaythrough eventi iOS üzerinde çalışmıyor.
-
-- oluşturulan diğer tüm nesneleri de, box hariç, bir dizide tutabilirim. kullanıcının yaptıklarını kontrol etmek için işe yarayabilir.
 
 */
 
@@ -141,6 +104,7 @@ Basic.init = function () {
 class UIComponent {
 
     _type;
+    _upperObject;
 
     _element;
     _rotate;
@@ -164,6 +128,14 @@ class UIComponent {
 
     }
 
+    get upperObject() {
+        return this._upperObject;
+    }
+
+    set upperObject($value) {
+        this._upperObject = $value;
+    }
+
     // Hizalama ve boyutlandırma.
 
     get left() {
@@ -172,7 +144,7 @@ class UIComponent {
 
     set left($value) {
         this.contElement.style.right = "";
-        this.contElement.style.left = $value + "px";
+        this.contElement.style.left = parseInt($value) + "px";
     }
 
     get top() {
@@ -181,7 +153,7 @@ class UIComponent {
 
     set top($value) {
         this.contElement.style.bottom = "";
-        this.contElement.style.top = $value + "px";
+        this.contElement.style.top = parseInt($value) + "px";
     }
 
     get right() {
@@ -190,7 +162,7 @@ class UIComponent {
 
     set right($value) {
         this.contElement.style.left = "";
-        this.contElement.style.right = $value + "px";
+        this.contElement.style.right = parseInt($value) + "px";
     }
 
     get bottom() {
@@ -199,7 +171,7 @@ class UIComponent {
 
     set bottom($value) {
         this.contElement.style.top = "";
-        this.contElement.style.bottom = $value + "px";
+        this.contElement.style.bottom = parseInt($value) + "px";
     }
     
     // TODO: width, height parseFloat yapılabilir.
@@ -216,7 +188,7 @@ class UIComponent {
 
     set width($value) {
         if ($value != "auto") {
-            this.contElement.style.width = $value + "px";
+            this.contElement.style.width = parseInt($value) + "px";
 
         } else {
             this.contElement.style.width = "auto";
@@ -235,7 +207,7 @@ class UIComponent {
 
     set height($value) {
         if ($value != "auto") {
-            this.contElement.style.height = $value + "px";
+            this.contElement.style.height = parseInt($value) + "px";
 
         } else {
             this.contElement.style.height = "auto";
@@ -355,8 +327,8 @@ class UIComponent {
 
     // Otomatik hizalama metodları
 
-    center($obj, $position) {
-        moveToCenter(this, $obj, $position);
+    center($position) {
+        moveToCenter(this, $position);
     }
 
     aline($obj, $position, $space = 0) {
@@ -560,6 +532,8 @@ class MainBox {
     }
 
     add($obj) {
+        // Eklenen nesnenin, üst nesnesi değişiyor.
+        $obj.upperObject = this;
         this.element.appendChild($obj.contElement);
     }
 
@@ -594,6 +568,7 @@ class Box extends UIComponent {
         labelElement.style.height = $height + "px";
 
         this._element = labelElement;
+        this._upperObject = basic_selectedBox;
         basic_selectedBox.element.appendChild(this._element);
 
         basic_boxes.push(this);
@@ -680,6 +655,7 @@ class Box extends UIComponent {
     }
 
     add($obj) {
+        $obj.upperObject = this;
         this.element.appendChild($obj.contElement);
     }
 
@@ -724,6 +700,7 @@ class Button extends UIComponent {
         buttonElement.style.height = $height + "px";
 
         this._element = buttonElement;
+        this._upperObject = basic_selectedBox;
         basic_selectedBox.element.appendChild(this._element);
 
         if (getAutoAdd() == 1) {
@@ -870,6 +847,7 @@ class TextBox extends UIComponent {
         mainElement.appendChild(this._titleElement);
         mainElement.appendChild(this._element);
 
+        this._upperObject = basic_selectedBox;
         basic_selectedBox.element.appendChild(this._mainElement);
 
         if (getAutoAdd() == 1) {
@@ -1042,6 +1020,7 @@ class Label extends UIComponent {
         labelElement.style.top = $top + "px";
 
         this._element = labelElement;
+        this._upperObject = basic_selectedBox;
         basic_selectedBox.element.appendChild(this._element);
 
         // TODO: değer auto olabileceği için, özellik kullanıldı. Diğer nesneler için de yapılabilir. 
@@ -1178,6 +1157,7 @@ class Image extends UIComponent {
 
         this._element = imageElement;
         this._mainElement = shapeElement;
+        this._upperObject = basic_selectedBox;
         basic_selectedBox.element.appendChild(this._mainElement);
 
         if (getAutoAdd() == 1) {
@@ -1422,16 +1402,23 @@ class Sound {
 /* ### FUNCTIONS ### */
 
 // Bir nesnenin, başka bir nesneye göre ortalanması.
-let moveToCenter = function ($this, $obj, $position) {
+let moveToCenter = function ($this, $position) {
+
+    // Otomatik Box içine ekleme 1ms sürüyor. 
+    // Ortalama uygulamadan önce içine aktarma işlemini yap.
+    // Çünkü .center içinde bulunduğu Box nesnesi ile doğrudan ilgili.
+    if (getAutoAdd() == 1) {
+        basic_autoAdder($this);
+    }
 
     if ($position == "left" || !$position) {
-        let _w = $obj.width;
+        let _w = $this.upperObject.width;
         $this.left = (_w - $this.width) / 2;
 
     }
 
     if ($position == "top" || !$position) {
-        let _h = $obj.height;
+        let _h = $this.upperObject.height;
         $this.top = (_h - $this.height) / 2;
 
     }
@@ -1667,7 +1654,14 @@ let getSelectedBox = function () {
 // Box nesnesine eklenen nesneyi, otomatik o nesnenin içine taşır.
 let basic_autoAdd = function ($object) {
 
+    // Bir nesne create edildikten sonra, bir box nesnesinin içine aktarılıyor. (gecikme)
+    // page1.btn1 = createButton() gibi,
     setTimeout(function () {
+        basic_autoAdder($object);
+    }, 1);
+}
+
+let basic_autoAdder = function ($object) {
         for (var boxIndex in basic_boxes) {
             for (var boxItemNames in basic_boxes[boxIndex]) {
                 if (basic_boxes[boxIndex][boxItemNames] == $object) {
@@ -1675,7 +1669,6 @@ let basic_autoAdd = function ($object) {
                 }
             }
         }
-    }, 1);
 }
 
 let setAutoAdd = function ($value) {
