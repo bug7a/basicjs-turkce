@@ -1,9 +1,9 @@
 
-Bu projede kullanılan küçük resimler, flaticon sitesinden alınmıştır.
+- Bu projede kullanılan küçük resimler, flaticon sitesinden alınmıştır.
 https://www.flaticon.com/
 
 
-Küçük resimleri yapan tasarımcıların listesi:
+- Küçük resimleri üreten tasarımcıların listesi:
 
 Freepik
 https://www.flaticon.com/authors/freepik

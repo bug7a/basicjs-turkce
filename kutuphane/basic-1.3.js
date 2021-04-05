@@ -75,20 +75,20 @@ DEFAULT.IMAGE_HEIGHT = 50;
 
 // body, ekran nesnesi.
 let page;
-// Son oluşturulan nesne.
+// Son oluşturulan nesne ve bir önceki (ex).
 let that = "";
 let exThat = "";
-// Yeni nesnelerin ekleneceği kutu.
+// Yeni oluşturulan nesnelerin ekleneceği kutu.
 let basic_selectedBox;
 // loop fonksiyonunu sürekli çağıran timer.
 let basic_loopTimer;
-// Sayfaya eklenen tüm box nesneleri
+// Sayfaya eklenen tüm box nesneleri.ß
 let basic_boxes = [];
 
 //let gunler = ["Pazartesi", "Salı", "Çarşamba", ];
 //let aylar = ["Ocak", "Şubat", "Mart", "Nisan"];
 
-// settings
+// Ayarlar.
 let basic_settings = {};
 // auto add into box setting.
 basic_settings.auto_add_objects_into_boxes = 1;
@@ -104,6 +104,7 @@ Basic.init = function () {
 class UIComponent {
 
     _type;
+    _upperObject;
 
     _element;
     _rotate;
@@ -127,6 +128,14 @@ class UIComponent {
 
     }
 
+    get upperObject() {
+        return this._upperObject;
+    }
+
+    set upperObject($value) {
+        this._upperObject = $value;
+    }
+
     // Hizalama ve boyutlandırma.
 
     get left() {
@@ -135,7 +144,7 @@ class UIComponent {
 
     set left($value) {
         this.contElement.style.right = "";
-        this.contElement.style.left = $value + "px";
+        this.contElement.style.left = parseInt($value) + "px";
     }
 
     get top() {
@@ -144,7 +153,7 @@ class UIComponent {
 
     set top($value) {
         this.contElement.style.bottom = "";
-        this.contElement.style.top = $value + "px";
+        this.contElement.style.top = parseInt($value) + "px";
     }
 
     get right() {
@@ -153,7 +162,7 @@ class UIComponent {
 
     set right($value) {
         this.contElement.style.left = "";
-        this.contElement.style.right = $value + "px";
+        this.contElement.style.right = parseInt($value) + "px";
     }
 
     get bottom() {
@@ -162,7 +171,7 @@ class UIComponent {
 
     set bottom($value) {
         this.contElement.style.top = "";
-        this.contElement.style.bottom = $value + "px";
+        this.contElement.style.bottom = parseInt($value) + "px";
     }
     
     // TODO: width, height parseFloat yapılabilir.
@@ -179,7 +188,7 @@ class UIComponent {
 
     set width($value) {
         if ($value != "auto") {
-            this.contElement.style.width = $value + "px";
+            this.contElement.style.width = parseInt($value) + "px";
 
         } else {
             this.contElement.style.width = "auto";
@@ -198,7 +207,7 @@ class UIComponent {
 
     set height($value) {
         if ($value != "auto") {
-            this.contElement.style.height = $value + "px";
+            this.contElement.style.height = parseInt($value) + "px";
 
         } else {
             this.contElement.style.height = "auto";
@@ -211,7 +220,7 @@ class UIComponent {
     }
 
     set rotate($value) {
-        this._rotate = $value;
+        this._rotate = parseInt($value);
         this.contElement.style.transform = "rotate(" + $value + "deg)";
     }
 
@@ -287,7 +296,6 @@ class UIComponent {
     
     get fontSize() {
         return this._fontSize;
-        //return parseInt(this._element.style.fontSize) || DEFAULT.LABEL_TEXT_SIZE;
     }
 
     set fontSize($value) {
@@ -306,7 +314,6 @@ class UIComponent {
 
     get textAlign() {
         return this._textAlign;
-        //return this._element.style.textAlign || DEFAULT.LABEL_TEXT_ALIGN;
     }
 
     set textAlign($value) {
@@ -318,8 +325,8 @@ class UIComponent {
 
     // Otomatik hizalama metodları
 
-    center($obj, $position) {
-        moveToCenter(this, $obj, $position);
+    center($position) {
+        moveToCenter(this, $position);
     }
 
     aline($obj, $position, $space = 0) {
@@ -339,19 +346,16 @@ class UIComponent {
 let data = {
 
     save(key, value) {
-        
         window.localStorage.setItem(key, JSON.stringify(value));
 
     },
 
     load(key) {
-        
         return JSON.parse(window.localStorage.getItem(key));
 
     },
 
-    delete(key) {
-        
+    delete(key) {  
         window.localStorage.removeItem(key)
 
     }
@@ -458,9 +462,6 @@ class MainBox {
 
     get height() {
 
-        // TODO: mobilde yükseklik yanlış hesaplanıyor, android button yüksekliği çıkarılmalı veya 
-        // body.offsetHeight kullanmayı dene
-
         let _h;
 
         _h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
@@ -523,6 +524,8 @@ class MainBox {
     }
 
     add($obj) {
+        // Eklenen nesnenin, üst nesnesi değişiyor.
+        $obj.upperObject = this;
         this.element.appendChild($obj.contElement);
     }
 
@@ -557,6 +560,7 @@ class Box extends UIComponent {
         labelElement.style.height = $height + "px";
 
         this._element = labelElement;
+        this._upperObject = basic_selectedBox;
         basic_selectedBox.element.appendChild(this._element);
 
         basic_boxes.push(this);
@@ -643,6 +647,8 @@ class Box extends UIComponent {
     }
 
     add($obj) {
+        // Eklenen nesnenin, üst nesnesini değiştir.
+        $obj.upperObject = this;
         this.element.appendChild($obj.contElement);
     }
 
@@ -687,6 +693,7 @@ class Button extends UIComponent {
         buttonElement.style.height = $height + "px";
 
         this._element = buttonElement;
+        this._upperObject = basic_selectedBox;
         basic_selectedBox.element.appendChild(this._element);
 
         if (getAutoAdd() == 1) {
@@ -833,6 +840,7 @@ class TextBox extends UIComponent {
         mainElement.appendChild(this._titleElement);
         mainElement.appendChild(this._element);
 
+        this._upperObject = basic_selectedBox;
         basic_selectedBox.element.appendChild(this._mainElement);
 
         if (getAutoAdd() == 1) {
@@ -1005,6 +1013,7 @@ class Label extends UIComponent {
         labelElement.style.top = $top + "px";
 
         this._element = labelElement;
+        this._upperObject = basic_selectedBox;
         basic_selectedBox.element.appendChild(this._element);
 
         // TODO: değer auto olabileceği için, özellik kullanıldı. Diğer nesneler için de yapılabilir. 
@@ -1141,6 +1150,7 @@ class Image extends UIComponent {
 
         this._element = imageElement;
         this._mainElement = shapeElement;
+        this._upperObject = basic_selectedBox;
         basic_selectedBox.element.appendChild(this._mainElement);
 
         if (getAutoAdd() == 1) {
@@ -1385,16 +1395,25 @@ class Sound {
 /* ### FUNCTIONS ### */
 
 // Bir nesnenin, başka bir nesneye göre ortalanması.
-let moveToCenter = function ($this, $obj, $position) {
+let moveToCenter = function ($this, $position) {
+
+    // Otomatik Box içine ekleme 1ms sürüyor. 
+    // Ortalama uygulamadan önce içine aktarma işlemini yap.
+    // Çünkü .center içinde bulunduğu Box nesnesi ile doğrudan ilgili.
+    if (getAutoAdd() == 1) {
+        // TODO: Buradaki kod, nesneyi 2 kere daha kutu içine almaya çalışıyor.
+        // Ve ters şekilde; dış kutuyu iç kutuya almaya çalışıyor. (3.)
+        basic_autoAdder($this);
+    }
 
     if ($position == "left" || !$position) {
-        let _w = $obj.width;
+        let _w = $this.upperObject.width;
         $this.left = (_w - $this.width) / 2;
 
     }
 
     if ($position == "top" || !$position) {
-        let _h = $obj.height;
+        let _h = $this.upperObject.height;
         $this.top = (_h - $this.height) / 2;
 
     }
@@ -1630,15 +1649,29 @@ let getSelectedBox = function () {
 // Box nesnesine eklenen nesneyi, otomatik o nesnenin içine taşır.
 let basic_autoAdd = function ($object) {
 
+    // Bir nesne create edildikten sonra, bir box nesnesinin içine aktarılıyor. (gecikme)
+    // page1.btn1 = createButton() gibi,
     setTimeout(function () {
+        basic_autoAdder($object);
+    }, 1);
+}
+
+let basic_autoAdder = function ($object) {
+    // Taşıyıcı nesne, alt nesnelere eklenmeye çalışılır ise hata vermesin.
+    try {
         for (var boxIndex in basic_boxes) {
             for (var boxItemNames in basic_boxes[boxIndex]) {
                 if (basic_boxes[boxIndex][boxItemNames] == $object) {
+                    // console.log("insert:")
+                    // console.log($object.text + " -> " + basic_boxes[boxIndex].text);
+                    // console.log($object.color + " -> " + basic_boxes[boxIndex].color);
                     basic_boxes[boxIndex].add($object);
                 }
             }
         }
-    }, 1);
+    } catch (e) {
+        // console.log("insert error.")
+    }
 }
 
 let setAutoAdd = function ($value) {
