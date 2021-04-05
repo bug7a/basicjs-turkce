@@ -75,20 +75,20 @@ DEFAULT.IMAGE_HEIGHT = 50;
 
 // body, ekran nesnesi.
 let page;
-// Son oluşturulan nesne.
+// Son oluşturulan nesne ve bir önceki (ex).
 let that = "";
 let exThat = "";
-// Yeni nesnelerin ekleneceği kutu.
+// Yeni oluşturulan nesnelerin ekleneceği kutu.
 let basic_selectedBox;
 // loop fonksiyonunu sürekli çağıran timer.
 let basic_loopTimer;
-// Sayfaya eklenen tüm box nesneleri
+// Sayfaya eklenen tüm box nesneleri.ß
 let basic_boxes = [];
 
 //let gunler = ["Pazartesi", "Salı", "Çarşamba", ];
 //let aylar = ["Ocak", "Şubat", "Mart", "Nisan"];
 
-// settings
+// Ayarlar.
 let basic_settings = {};
 // auto add into box setting.
 basic_settings.auto_add_objects_into_boxes = 1;
@@ -220,7 +220,7 @@ class UIComponent {
     }
 
     set rotate($value) {
-        this._rotate = $value;
+        this._rotate = parseInt($value);
         this.contElement.style.transform = "rotate(" + $value + "deg)";
     }
 
@@ -296,7 +296,6 @@ class UIComponent {
     
     get fontSize() {
         return this._fontSize;
-        //return parseInt(this._element.style.fontSize) || DEFAULT.LABEL_TEXT_SIZE;
     }
 
     set fontSize($value) {
@@ -315,7 +314,6 @@ class UIComponent {
 
     get textAlign() {
         return this._textAlign;
-        //return this._element.style.textAlign || DEFAULT.LABEL_TEXT_ALIGN;
     }
 
     set textAlign($value) {
@@ -348,19 +346,16 @@ class UIComponent {
 let data = {
 
     save(key, value) {
-        
         window.localStorage.setItem(key, JSON.stringify(value));
 
     },
 
     load(key) {
-        
         return JSON.parse(window.localStorage.getItem(key));
 
     },
 
-    delete(key) {
-        
+    delete(key) {  
         window.localStorage.removeItem(key)
 
     }
@@ -466,9 +461,6 @@ class MainBox {
     }
 
     get height() {
-
-        // TODO: mobilde yükseklik yanlış hesaplanıyor, android button yüksekliği çıkarılmalı veya 
-        // body.offsetHeight kullanmayı dene
 
         let _h;
 
@@ -655,6 +647,7 @@ class Box extends UIComponent {
     }
 
     add($obj) {
+        // Eklenen nesnenin, üst nesnesini değiştir.
         $obj.upperObject = this;
         this.element.appendChild($obj.contElement);
     }
@@ -1408,6 +1401,8 @@ let moveToCenter = function ($this, $position) {
     // Ortalama uygulamadan önce içine aktarma işlemini yap.
     // Çünkü .center içinde bulunduğu Box nesnesi ile doğrudan ilgili.
     if (getAutoAdd() == 1) {
+        // TODO: Buradaki kod, nesneyi 2 kere daha kutu içine almaya çalışıyor.
+        // Ve ters şekilde; dış kutuyu iç kutuya almaya çalışıyor. (3.)
         basic_autoAdder($this);
     }
 
@@ -1662,13 +1657,21 @@ let basic_autoAdd = function ($object) {
 }
 
 let basic_autoAdder = function ($object) {
+    // Taşıyıcı nesne, alt nesnelere eklenmeye çalışılır ise hata vermesin.
+    try {
         for (var boxIndex in basic_boxes) {
             for (var boxItemNames in basic_boxes[boxIndex]) {
                 if (basic_boxes[boxIndex][boxItemNames] == $object) {
+                    // console.log("insert:")
+                    // console.log($object.text + " -> " + basic_boxes[boxIndex].text);
+                    // console.log($object.color + " -> " + basic_boxes[boxIndex].color);
                     basic_boxes[boxIndex].add($object);
                 }
             }
         }
+    } catch (e) {
+        // console.log("insert error.")
+    }
 }
 
 let setAutoAdd = function ($value) {
