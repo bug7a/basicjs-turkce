@@ -70,7 +70,7 @@
             page1 = createBox()
             that.width = DEFAULT_WIDTH
             //that.height = page.height
-            that.height = PAGE1_HEIGHT
+            that.height = page.height
             that.color = "transparent"
             //that.element.style.backgroundImage = "radial-gradient(yellow, white)";
             that.border = 0
@@ -212,7 +212,7 @@
             that.opacity = 0.6
             that.center("left")
             
-            page1.height = PAGE1_HEIGHT
+            //page1.height = PAGE1_HEIGHT
             
         }
         
@@ -312,9 +312,10 @@
 
             }
 
-            createLabel()
-            that.text = "a"
-            that.top = 1200
+            createBox()
+            that.top = 1100
+            that.color = "transparent"
+            that.border = 0
             page1.add(that)
         
         }
