@@ -16,20 +16,20 @@
 
         ALGORİTMA:
             
-        - 3x3 bir alan üzerinde, boş karelere basarak; "x" veya "o" sembolu gösteriyor.
+        - Üç'e üç (3x3) bir alan üzerinde, boş karelere basarak; "x" veya "o" sembolu olarak işaretliyor.
 
         ÇALIŞMA MANTIĞI:
             
         - Her bir alan, bir resim nesnesidir.
-        - Üzerine basılan nesne, kendine sıradaki sembolun resim dosyasını yüklüyor.
+        - Üzerine basılan nesne, kendine sıradaki sembolün resim dosyasını yüklüyor.
           
         OYUNUN OYNANIŞI:
         
-        - Bir oyuncu "X", diğeri ise "O" sembolünü kullanır.
-        - Sıra ile, boş karelerden birine kendi sembollerini koyarak devam ediyorsun.
-        - Kendi sembolünden 3 tane Yatay, dikey veya çapraz olarak 
-          yan yana ilk getiren 1 puan kazanır.
-        - Boş kareler dolana kadar, kimse başarılı olamaz ise berabere olur.
+        - Bir oyuncu "x", diğeri ise "o" sembolünü kullanır.
+        - Sıra ile, boş karelerden birine kendi sembollerini koyarak devam ederler.
+        - Kendi sembolünden üç tane yatay, dikey veya çapraz olarak 
+          yan yana ilk getiren oyuncu, bir puan kazanır.
+        - Boş kareler dolana kadar, kimse başarılı olamaz ise berabere olur. Ve oyun yeniden başlatılır.
         
         */
 
@@ -39,7 +39,7 @@
         // Not: resimDegistir() fonksiyonu, ilk çalıştığında "x" eklemesi için,
         // siraKimde değişkeni tanımlanırken, "x" değeri aktarılmıştır.
 
-        //ilk çalıştırılan fonksiyon.
+        // İlk çalıştırılan fonksiyon.
         var start = function() {
             
             // Sayfanın arka plan rengini beyaz duman olarak belirle.
@@ -57,7 +57,9 @@
                     // Döngü sayılarına göre nesneleri hizala.
                     that.left = 40 + (180 * x)
                     that.top = 40 + (180 * y)
+                    // Nesneye taşıması için bir bilgi ekleyelim.
                     that.value = "bos"
+                    // Üzerine basıldığında fonksiyonu çalıştır.
                     that.onClick(resimDegistir)
                     
                     // Not: that, en son oluşturulan nesnenin taşındığı bir değişkendir.

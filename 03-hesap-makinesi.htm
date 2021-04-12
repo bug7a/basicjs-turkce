@@ -22,21 +22,12 @@
         - Matematiksel işlemleri yapmak için, dört düğme eklenmiş.
         - Yapılan işlemin sonucu, başka bir metin kutusunda gösteriliyor.
 
-        ÇALIŞMA MANTIĞI:
-            
-        - Metin kutusu ve düğmeler, hesaplanıp istenilen yerlere hizalanıyor.
-        - Her bir matematiksel işlem için bir fonksiyon ve bir düğme tasarlanmış.
-        - Düğmelerden birine basıldığında, ilgili fonksiyon çağırılıyor.
         
         EĞİTİM:
         
         Konu anlatımları ve daha fazlası için mobil uygulamayı kullanabilirsiniz.
         (Android) https://play.google.com/store/apps/details?id=com.bugraozden.cik
-        
-        PROJE ANLATIMI:
-        
-        Projenin, adım adım anlatım videosu.
-        https://www.youtube.com/watch?v=x
+
         
         */
         
@@ -108,7 +99,7 @@
             btnBol.color = "lightgray"
             btnBol.onClick(bolmeYap)
 
-            // Sonuç için Metin Kutusu oluştur.
+            // Sonuç için metin kutusu oluştur.
             txtSonuc = createTextBox()
             txtSonuc.title = "Sonuç:"
             txtSonuc.left = 20
@@ -125,10 +116,6 @@
             // Not: num(metin) fonksiyonu,
             // metin olarak gönderilen parametrenin, 
             // sayıya çevrilmiş halini cevap verir.
-
-            // Not: Tam sayıya çevirmek için 
-            // ikinci parametre olarak "integer" ekleyin. 
-            // num(metin, "integer")
             
         }
 
@@ -153,6 +140,10 @@
             
             // Bölüme işlemini sonucunu metin kutusuna yaz.
             txtSonuc.text = num(txtSayi1.text) / num(txtSayi2.text)
+
+            // Not: Ondalıklı sayıyı, tam sayıya çevirmek:
+            // 3 / 2 işleminin cevabı ondalıklı sayıdır. 1.5
+            // num("1.5", "integer") fonksiyonu, sonucu tam sayıya çevirir. 1
 
         }
         

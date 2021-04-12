@@ -16,9 +16,16 @@
             
             ALGORİTMA:
             
-            - Yılan (snake) oyunu.
+            - Eski telefonlardan bildiğimiz yılan oyununun benzeri.
             
             */
+
+            // Sabit sayılar
+            var YATAY_KARE_SAYISI = 28
+            var DIKEY_KARE_SAYISI = 23
+
+            // Not: Hepsinin büyük harf ile yazılması, 
+            // içeriğin sabit olduğunu belirten bir yazım tekniğidir.
             
             // Puan gösterme alanı.
             var lblPuanBaslik
@@ -121,12 +128,14 @@
                 kareler = {}
                 
                 // Dikey ve yatay kare sayısı kadar tekrar et.
-                for (var y = 1; y <= 23; y++) {
+                for (var y = 1; y <= DIKEY_KARE_SAYISI; y++) {
+                    for (var x = 1; x <= YATAY_KARE_SAYISI; x++) {
 
-                    for (var x = 1; x <= 28; x++) {
+                        // karenin konumu ile, bir anahtar oluştur.
+                        var anahtar = x + "-" + y
                         
-                        // Her bir karenin nesnesini oluştur.
-                        var kare = createBox()
+                        // Her bir kareyi, anahtar ile sakla.
+                        kareler[anahtar] = createBox()
                         that.height = 19
                         that.width = 19
                         that.left = x * 20
@@ -134,18 +143,12 @@
                         that.border = 0
                         that.color = "white"
                         
-                        // kare nesnesini, bir anahtar (konum) ile,
-                        // kareler nesnesine ekle.
-                        var kareKonum = x + "-" + y
-                        kareler[kareKonum] = kare
-                        
                     }
                 }
                 
                 // Tüm arka planı beyaz ile, sınırları siyah ile boya.
-                for (var y = 1; y <= 23; y++) {
-
-                    for (var x = 1; x <= 28; x++) {
+                for (var y = 1; y <= DIKEY_KARE_SAYISI; y++) {
+                    for (var x = 1; x <= YATAY_KARE_SAYISI; x++) {
 
                         // Genel arka plan rengi beyaz olsun.
                         var arkaplanRenk = "white"
@@ -153,20 +156,19 @@
                         // Eğer sınırlar boyanıyor ise, siyah olsun.
                         if (x == 1) { 
                             arkaplanRenk = "black"
-                        } else if (x == 28) { 
+                        } else if (x == YATAY_KARE_SAYISI) { 
                             arkaplanRenk = "black"
                         }
 
                         if (y == 1) { 
                             arkaplanRenk = "black"
-                        } else if (y == 23) { 
+                        } else if (y == DIKEY_KARE_SAYISI) { 
                             arkaplanRenk = "black"
                         }
 
                         // Konumu boya.
                         kareBoya(x, y, arkaplanRenk)
                     }
-
                 }
                 
                 // Başlangıçta, yılanı çiz.
@@ -295,9 +297,9 @@
             // Rasgele konumda, yeni bir yem oluşturur.
             var yemEkle = function() {
                 
-                // Rasgele bir konum seç.
-                var x = random(2, 27)
-                var y = random(2, 22)
+                // Rasgele bir konum seç. (Kenarlar hariç)
+                var x = random(2, YATAY_KARE_SAYISI - 1)
+                var y = random(2, DIKEY_KARE_SAYISI - 1)
                 
                 // Sorun: Rasgele seçilen yem koordinatları, düşük bir olasılık ile
                 // yılanın üzerinde çıkabilir. Bu sorun düzeltilmeli.
@@ -311,6 +313,7 @@
             // Not: Kendi, kareBoya fonksiyonumuzu yazalım.
             var kareBoya = function(pX, pY, pRenk) {
 
+                // Karenin, anahtarını oluştur.
                 var anahtar = pX + "-" + pY
                 
                 kareler[anahtar].color = pRenk
@@ -320,6 +323,7 @@
             // Not: Kendi kareNeRenk fonksiyonumuzu yazalım.
             var kareNeRenk = function(pX, pY) {
 
+                // Karenin, anahtarını oluştur.
                 var anahtar = pX + "-" + pY
                 
                 return kareler[anahtar].color

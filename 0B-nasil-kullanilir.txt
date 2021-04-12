@@ -10,7 +10,7 @@ Kod editörü olarak, Visual Studio Code uygulamasını öneriyorum.
 https://code.visualstudio.com/
 
 Kurulum ve kullanım için anlatım videosu:
-https://www.youtube.com/
+https://www.youtube.com/watch?v=vSt5EFDkhpI
 
 
 2. DOSYALARIN, NE İŞE YARADIĞI:
@@ -30,7 +30,7 @@ https://www.youtube.com/
 İlk örnek, "01-merhaba.htm" projesidir.
 
 Geliştirme ve ayrıntılı anlatımı videosu:
-https://www.youtube.com/
+https://youtu.be/zPOKz3w1YmY
 
 
 4. TEMEL PROGRAMLAMA EĞİTİMİ:
