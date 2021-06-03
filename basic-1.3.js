@@ -56,8 +56,9 @@ DEFAULT.ACTION_COLOR = "steelblue";
 DEFAULT.CANCEL_COLOR = "lightgray";
 DEFAULT.WARNING_COLOR = "tomato";
 DEFAULT.ALERT_COLOR = "gold";
-DEFAULT.TEXT_COLOR = "#333333";
+DEFAULT.TEXT_COLOR = "#4A4A4A";
 DEFAULT.BACKGROUND_COLOR = "whitesmoke";
+DEFAULT.FONT_SIZE = 20;
 DEFAULT.BUTTON_WIDTH = 130;
 DEFAULT.BUTTON_HEIGHT = 50;
 DEFAULT.BUTTON_COLOR = "steelblue";
@@ -65,8 +66,6 @@ DEFAULT.TEXTBOX_WIDTH = 270;
 DEFAULT.TEXTBOX_HEIGHT = 50;
 DEFAULT.LABEL_WIDTH = 270;
 DEFAULT.LABEL_HEIGHT = "auto";
-DEFAULT.LABEL_TEXT_SIZE = 20;
-DEFAULT.LABEL_TEXT_ALIGN = "left"
 DEFAULT.BOX_WIDTH = 100;
 DEFAULT.BOX_HEIGHT = 100;
 DEFAULT.IMAGE_WIDTH = 50;
@@ -592,15 +591,19 @@ class Box extends UIComponent {
         this.element.innerHTML = $value;
     }
 
+    get scrollX() {
+        return (this.contElement.style.overflowX == "overlay") ? 1 : 0;
+    }
+
     get scrollY() {
-        return (this.contElement.style.overflowY == "auto") ? 1 : 0;
+        return (this.contElement.style.overflowY == "overlay") ? 1 : 0;
     }
 
     set scrollX($value) {
         this.contElement.style.overflowX = "hidden";
 
         if ($value == 1) {
-            this.contElement.style.overflowX = "auto";
+            this.contElement.style.overflowX = "overlay";
         }
     }
 
@@ -608,7 +611,7 @@ class Box extends UIComponent {
         this.contElement.style.overflowY = "hidden";
 
         if ($value == 1) {
-            this.contElement.style.overflowY = "auto";
+            this.contElement.style.overflowY = "overlay";
         }
     }
 
@@ -619,11 +622,11 @@ class Box extends UIComponent {
         this.contElement.style.overflowY = "hidden";
 
         if ($value == "x" || $value == "xy") {
-            this.contElement.style.overflowX = "auto";
+            this.contElement.style.overflowX = "overlay";
         }
 
         if ($value == "y" || $value == "xy") {
-            this.contElement.style.overflowY = "auto";
+            this.contElement.style.overflowY = "overlay";
         }
 
     }

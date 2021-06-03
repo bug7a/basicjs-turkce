@@ -2,11 +2,11 @@
 <html>
     <head>
         
-        <title>Programlamaya yeni başlayanlar için Örnek Projeler</title>
+        <title>Programlamaya Yeni Başlayanlar için Örnekler Projeler (JavaScript)</title>
 
         <meta charset="UTF-8">
-          <meta name="description" content="En sade ve basit şekilde, nesne tabanlı yazılım projeleri geliştirin. Örnekleri bilgisayarınıza indirin ve anlatım videolarını izleyin.">
-          <meta name="keywords" content="JavaScript, programlama, eğitim">
+          <meta name="description" content="Basit yoldan, nesne tabanlı yazılım projeleri geliştirin: Örnekleri bilgisayarınıza indirin ve anlatım videolarını izleyin. Yazılım öğrenmeye, buradan başlayın.">
+          <meta name="keywords" content="programlamaya nerden başlanır, programlamaya nerden başlamalıyım, JavaScript, temel programlama eğitimi, yazılım öğrenmek için Türkçe kaynak, örnek projeler, javascripti nasıl öğrenirim, yazılımcı olmak istiyorum, yazılımcı olmak için ne yapmalıyım, kodlama öğrenmek istiyorum, nasıl yazılımcı olurum">
           <meta name="author" content="Buğra ÖZDEN">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -26,6 +26,34 @@
                 text-decoration: none;
                 
             }
+
+            /* SCROLLBAR */
+
+            .box::-webkit-scrollbar, .box::-webkit-scrollbar-corner {
+                
+                background: transparent;
+                height: 16px;
+                width: 16px;
+                
+            }
+
+            .box::-webkit-scrollbar-button {
+                
+                height: 0;
+                width: 0;
+                
+            }
+
+            .box::-webkit-scrollbar-thumb {
+                
+                background: content-box currentColor;
+                border: 6px solid transparent;
+                border-radius: 8px;
+                color: rgba(255, 255, 255, 0.2);
+                min-height: 60px;
+                min-width: 60px;
+                
+            }
             
         </style>
 
@@ -39,6 +67,7 @@
         var mp
             
         var boxAnimation
+        var mainPage
         var page1
         var page2 
         var page3
@@ -57,6 +86,15 @@
             //page.element.style.backgroundImage = "radial-gradient(yellow, white)";
             
             page.fit(DEFAULT_WIDTH, 700)
+
+            boxMainBackground = createImage(0, 0, page.width, page.height)
+            that.load("images/bg.jpeg")
+            that.border = 0
+            that.opacity = 0.1
+            that.left = 0
+            that.top = 0
+
+            createBackgroundAnimation()
             
             // İLK SAYFA
             /*
@@ -65,6 +103,12 @@
             mp.border = 0;
             mp.scrollY = 1;
             */
+
+            mainPage = createBox(0, 0, page.width, page.height)
+            that.color = "transparent"
+            //that.element.style.backgroundImage = "radial-gradient(rgba(0,0,0,0.1), #141414)";
+            that.border = 0
+            that.scrollY = 1
             
             // PAGE1
             page1 = createBox()
@@ -75,9 +119,11 @@
             //that.element.style.backgroundImage = "radial-gradient(yellow, white)";
             that.border = 0
             that.center("left")
-            that.scrollY = 1
+            //that.scrollY = 1
 
             //mp.add(page1)
+            that.height = 1200
+            mainPage.add(page1)
             createPage1()
             
             // PAGE2
@@ -94,6 +140,24 @@
             createPage2()
             
             //page2.visible = 1
+            
+        }
+
+        // Her saniye çalışan fonksiyon.
+        var loop = function() {
+                        
+            for (var i = 1; i <= 16; i++) {
+
+                var objName = "bck" + i;
+
+                boxAnimation[objName].rotate += boxAnimation[objName].value;
+                boxAnimation[objName].top -= boxAnimation[objName].value;
+
+                if (boxAnimation[objName].top < -150) {
+                    boxAnimation[objName].top = boxAnimation.height + 100;
+                }
+
+            }
             
         }
         
@@ -125,7 +189,7 @@
             // sub desc1
             page1.sub_desc1 = createLabel()
             //that.text = "Bir yazılım projesinin, nasıl yapılacağını, en sade ve basit şekilde öğretmek için tasarlanmış algoritma örnekleri ve anlatım videoları içerir."
-            that.text = "En sade ve basit şekilde, nesne tabanlı yazılım projeleri geliştirin."
+            that.text = "Basit yoldan, nesne tabanlı yazılım projeleri geliştirin:"
             that.color = "transparent"
             // #33A5D3
             //that.textColor = "tomato"
@@ -142,6 +206,7 @@
             // sub desc 2
             page1.sub_desc2 = createLabel()
             that.text = "- Temel konuları, <a href='https://play.google.com/store/apps/details?id=com.bugraozden.cik' style='color:#33A5D3;text-decoration: underline;pointer-events:auto;' target='_blank'>android uygulaması</a> üzerinden öğrenin."
+            // APPSTORE için
             //that.text = "- Temel konuları, <a href='https://play.google.com/store/apps/details?id=com.bugraozden.cik' style='color:#33A5D3;text-decoration: underline;pointer-events:auto;' target='_blank'>Android</a> veya <a href='https://play.google.com/store/apps/details?id=com.bugraozden.cik' style='color:#33A5D3;text-decoration: underline;pointer-events:auto;' target='_blank'>iOS</a> uygulaması üzerinden öğrenin."
             that.text += "<br>- Örnekleri bilgisayarınıza indirin ve anlatım videolarını izleyin."
             that.color = "transparent"
@@ -151,7 +216,7 @@
             that.opacity = 0.4 // 0.4
             that.fontSize = 14
             that.aline(page1.sub_desc1, "bottom", 0)
-            that.left = 90
+            that.left = 105
             
             // TRAILER BUTTON
             page1.trailer_button = createButton()
@@ -243,12 +308,12 @@
             var topSpace = 120 + 700
             var itemTitles = ["Merhaba", "Çarpım Tablosu", "Hesap Makinesi", "Zarlar", "Tic-tac-toe", "Sayaç"]
             var itemURLs = [
-                "https://jsfiddle.net/bug7a/71950mj8/7/", 
-                "https://jsfiddle.net/bug7a/71950mj8/7/", 
-                "https://jsfiddle.net/bug7a/71950mj8/7/", 
-                "https://jsfiddle.net/bug7a/71950mj8/7/", 
-                "https://jsfiddle.net/bug7a/71950mj8/7/", 
-                "https://jsfiddle.net/bug7a/71950mj8/7/"
+                "https://codepen.io/bug7a/pen/yLgbEQR", 
+                "https://codepen.io/bug7a/pen/QWpQQzp", 
+                "https://codepen.io/bug7a/pen/GRWQGjL", 
+                "https://codepen.io/bug7a/pen/dyvdKOq", 
+                "https://codepen.io/bug7a/pen/YzZeoWz", 
+                "https://codepen.io/bug7a/pen/OJpQeWb"
             ]
             
             for (var i = 1; i <= 6; i++) {
@@ -260,9 +325,10 @@
                 that.load("images/pro" + i + ".png")
                 that.opacity = 0.7
                 that.round = 0
-                var savedURL = itemURLs[i - 1];
-                that.onClick(function(){
-                    window.open(savedURL, "_blank");
+                that.value = itemURLs[i - 1];
+                //var savedURL = itemURLs[i - 1];
+                that.onClick(function(self){
+                    window.open(self.value, "_blank");
                 });
                 
                 createLabel()
@@ -278,15 +344,17 @@
             }
             
             topSpace = 270 + 700
-            itemTitles = ["Duvar Saati", "Kronometre", "Matematik Oyunu", "Renk Sözlüğü"]
+            itemTitles = ["Duvar<br>Saati", "Kronometre", "Matematik<br>Oyunu", "Renk<br>Sözlüğü", "Yılan<br>Oyunu", "Satranç"]
             itemURLs = [
-                "https://jsfiddle.net/bug7a/71950mj8/7/", 
-                "https://jsfiddle.net/bug7a/71950mj8/7/", 
-                "https://jsfiddle.net/bug7a/71950mj8/7/", 
-                "https://jsfiddle.net/bug7a/71950mj8/7/"
+                "https://codepen.io/bug7a/pen/jOBZgxj", 
+                "https://codepen.io/bug7a/pen/dyvdxjV", 
+                "https://codepen.io/bug7a/pen/dyvdxqZ", 
+                "https://codepen.io/bug7a/pen/VwpQoEy",
+                "https://codepen.io/bug7a/pen/QWpmLxK",
+                "https://codepen.io/bug7a/pen/ZEexzjJ"
             ]
             
-            for (var i = 1; i <= 4; i++) {
+            for (var i = 1; i <= 6; i++) {
                 
                 var projectName = "projectb" + i
                 var projectLeft = 20 + ((i - 1) * 92)
@@ -295,9 +363,9 @@
                 that.load("images/pro" + (6 + i) + ".png")
                 that.opacity = 0.7
                 that.round = 0
-                var savedURL = itemURLs[i - 1];
-                that.onClick(function(){
-                    window.open(savedURL, "_blank");
+                that.value = itemURLs[i - 1];
+                that.onClick(function(self){
+                    window.open(self.value, "_blank");
                 });
                 
                 createLabel()
@@ -326,6 +394,50 @@
         
         var createPage3 = function() {
 
+        }
+
+        createBackgroundAnimation = function() {
+            
+            boxAnimation = createBox()
+            boxAnimation.border = 0
+            boxAnimation.width = page.width
+            boxAnimation.height = page.height
+            boxAnimation.color = "transparent"
+            
+            for (var i = 1; i <= 16; i++) {
+
+                var rNum = 0.2 + num(random(100) / 100);
+                var objName = "bck" + i;
+                boxAnimation[objName] = createBox();
+
+                boxAnimation[objName].width = 120 * rNum; //93
+                boxAnimation[objName].height = 120 * rNum; //93
+                boxAnimation[objName].color = "transparent";
+                //boxAnimation[objName].border = 1;
+                var _random = random(2, 2)
+                if (_random == 1) {
+                    boxAnimation[objName].border = 1;
+                    boxAnimation[objName].borderColor = "#33A5D3";
+                } else if (_random == 2) {
+                    boxAnimation[objName].border = 1;
+                    boxAnimation[objName].round = 6;
+                    boxAnimation[objName].borderColor = "white";
+                } else if (_random == 3) {
+                    boxAnimation[objName].border = 0;
+                    boxAnimation[objName].color = "white";
+                } else {
+                    boxAnimation[objName].border = 0;
+                    boxAnimation[objName].color = "#33A5D3";
+                }
+                
+                
+                boxAnimation[objName].value = random(4);
+                boxAnimation[objName].opacity = num(random(20) / 100);
+                boxAnimation[objName].left = random(page.width);
+                boxAnimation[objName].top = random(page.height);
+
+            }
+            
         }
         
 
