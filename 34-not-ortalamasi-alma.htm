@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Not Ortalaması Alma</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.3.css">
+        <script src="kutuphane/basic-1.3.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+            
+        // DEĞİŞKENLER
+            
+        var txtNot
+        var btnEkle
+        var lblGecmis
+
+        var notlarinToplami = 0
+        var eklenenNotSayisi = 0
+        
+        // ÖZEL FONKSİYONLAR
+            
+        // İlk çalışan fonksiyon.
+        var start = function() {
+
+            page.color = "whitesmoke"
+
+            // Yeni notun yazıldığı metin kutusu
+            txtNot = createTextBox()
+            that.top = 50
+            that.left = 50
+            that.title = "İlk notu giriniz:"
+
+            // Notu ekleyen düğme
+            btnEkle = createButton()
+            that.text = "Not Ekle"
+            that.color = "lightgreen"
+            that.aline(txtNot, "right", 10)
+            that.onClick(notEkle)
+
+            // Geçmiş işlemlerin kayıtları
+            lblGecmis = createLabel()
+            that.text = ""
+            that.fontSize = 13
+            that.textColor = "gray"
+            that.aline(txtNot, "bottom", 20)
+            
+        }
+        
+        // Her saniye çalışan fonksiyon.
+        var loop = function() {
+            
+            
+        }
+        
+        // DİĞER FONKSİYONLAR
+        
+        var notEkle = function() {
+
+            // Eğer boş değil ise ekle.
+            if (txtNot.text != "") {
+                
+                // Metin kutusundaki sayıyı, değişkene ekle.
+                notlarinToplami += num(txtNot.text)
+                // Değişkeni bir attır.
+                eklenenNotSayisi++
+
+                // Yeni not girişi için başlığı düzenle.
+                txtNot.title = (eklenenNotSayisi + 1) + ". notu giriniz:"
+
+                // Ortalamayı hesapla ve geçici bir değişkene aktar.
+                var ortalama = num(notlarinToplami / eklenenNotSayisi, "integer")
+                // Geçmişe, eklenecek metni oluştur.
+                var eklenecekMetin = eklenenNotSayisi + " - " + txtNot.text + ", ortalama: " + ortalama
+                
+                // Metni en üste ekle.
+                lblGecmis.text = eklenecekMetin + "<br>" + lblGecmis.text
+                // Yeni not girişi için metin kutusunu temizle.
+                txtNot.text = ""
+
+            }
+            
+        }
+        
+        var fonksiyon2 = function() {
+            
+            
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML içeriği -->
+        
+    </body>
+</html>

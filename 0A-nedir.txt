@@ -1,9 +1,7 @@
 
-NEDİR?
+BU NEDİR?
 
-Programlamaya yeni başlayanlar için:
-Bir yazılım projesinin, nasıl yapılacağını, en sade ve basit şekilde 
-öğretmek amacı ile tasarlanmış örnek algoritmalar ve anlatım videolarıdır.
+Programlamaya yeni başlayanlar için örnek yazılım projeleri ve anlatım videoları.
 
 
 KİMLER FAYDALANABİLİR?
@@ -16,14 +14,32 @@ KİMLER FAYDALANABİLİR?
 
 EK AÇIKLAMA:
 
-- Tüm projelerde, JavaScript'i sadeleştiren basic.js kütüphanesi kullanılmıştır. 
-  Gereken HTML ve CSS kodlarını kütüphane, otomatik eklenmektedir. Böylece öğrenci, 
-  başlangıçta sadece algoritma geliştirmeye odaklanabilir.
+- Kullanılan programlama dili JavaScript'dir. 
+- Tüm projelerde, HTML ve CSS kodlarını otomatik ekleyen basic.js kütüphanesi kullanılmıştır. Böylece öğrenciler, başlangıçta sadece algoritma geliştirmeye odaklanabilirler.
+
+
+NEDEN JAVASCRIPT KULLANIYORUM:
+
+- Programlama dilinin, söz dizimi (syntax) basit. Bu da öğrenmeyi kolaylaştırıyor.
+- Kaynak çok fazla. Yapmak istediğiniz proje ile ilgili bir örnek veya kütüphane bulabilme olasılığınız yüksek.
+- En olgunlaşmış, arayüz oluşturma teknolojisine (HTML ve CSS) sahip olduğunu düşünüyorum.
+- Genel kullanım için uygun. Aynı bilgi ile farklı alanlarda yazılım geliştirilebiliyor.
+
+
+KULLANIM ALANLARI:
+
+1. Web uygulamaları.
+2. Mobil uygulamalar.
+    - Yardımcı teknoloji: https://cordova.apache.org/
+3. Masaüstü uygulamalar.
+    - Yardımcı teknoloji: https://www.electronjs.org/
+4. İki Boyutlu veya basit üç boyutlu oyunlar.
+    - Yardımcı teknoloji: https://threejs.org/
+5. Web siteleri.
 
 
 İLETİŞİM BİLGİLERİ:
 
-Başlangıç: 25 Ekim 2020
 Geliştirici: Buğra ÖZDEN
 Eposta: bugra.ozden@gmail.com
 İnternet Sitesi: http://bugraozden.com

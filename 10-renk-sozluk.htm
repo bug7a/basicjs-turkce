@@ -73,7 +73,7 @@
             that.minimal = 1
             that.color = "lightgray"
             // Nesneye, metin girişi yapılamasın.
-            txtInglizce.enabled = 0
+            that.enabled = 0
             // txtTurkce nesnesinin sağına, 25px boşluk bırakarak hizala.
             that.aline(txtTurkce, "right", 25)
 
@@ -85,7 +85,7 @@
             // txtTurkce nesnesinin altına, 10px boşluk bırakarak hizala.
             that.aline(txtTurkce, "bottom", 10)
             // Nesneye basıldığında, hangi fonksiyonun çalışacağını belirle.
-            btnCevir.onClick(kelimeCevir)
+            that.onClick(kelimeCevir)
 
         }
 

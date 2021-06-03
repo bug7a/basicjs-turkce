@@ -20,9 +20,7 @@ https://www.youtube.com/watch?v=vSt5EFDkhpI
 - Her bir proje, her hangi bir tarayıcı üzerinde çalışabilir.
 - "kutuphane" klasörü, basic.js kütüphanesini içermektedir.
 - "resimler" klasörü, bazı örnek projelerin kullandığı resimleri içermektedir.
-- Yeni bir proje oluştururken; "0C-bos-proje-sablonu.htm" dosyasını ve "kutuphane" klasörünü, 
-  farklı bir klasöre kopyalayın. Kopyaladığınız HTM dosyasını, yeniden isimlendirin (proje-ismi.htm vb.) 
-  ve bu klasörü, geliştirme ortamında açın.
+- Yeni bir proje oluştururken; "0C-bos-proje-sablonu.htm" dosyasını ve "kutuphane" klasörünü, farklı bir klasöre kopyalayın. Kopyaladığınız HTM dosyasını, yeniden isimlendirin (proje-ismi.htm vb.) ve bu klasörü, geliştirme ortamında açın.
 
 
 3. İLK ÖRNEK PROJE:

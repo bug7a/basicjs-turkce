@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Color Select</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.3.css">
+        <script src="kutuphane/basic-1.3.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+            
+        // DEĞİŞKENLER
+            
+        var box1
+        
+        // ÖZEL FONKSİYONLAR
+            
+        // İlk çalışan fonksiyon.
+        var start = function() {
+            
+            // Kutu 1 (Taşıyıcı Kutu)
+            box1 = createBox()
+            that.width = 377
+            that.height = 246
+            that.round = 13
+            that.border = 0
+            that.center()
+
+            // Seçilen Renk (Daire)
+            box1.boxSelectedColor = createBox(143, 18, 90, 90)
+            that.color = "white"
+            that.border = 3
+            that.borderColor = "#141414"
+            that.round = 45
+
+            // Seçilen Renk İsmi
+            box1.lblSelectedColorName = createLabel(0, 117, box1.width)
+            that.text = "white"
+            that.fontSize = 25
+            that.textAlign = "center"
+
+            // Seçilen Renk Kodu
+            box1.lblSelectedColorCode = createLabel(0, 146, box1.width)
+            that.text = "#FFFFFF"
+            that.fontSize = 16
+            that.textAlign = "center"
+            that.opacity = 0.7
+
+            // Seçilen Düğme Arkası
+            box1.boxSelectedButtonBack = createBox(0, 0, 43, 43)
+            that.round = 22
+            that.border = 2
+            that.borderColor = "#FE5D49"
+            that.color = "transparent"
+            that.visible = 0
+
+            // Renk 1 Düğme
+            box1.boxColor1 = createBox(72, 192, 35, 35)
+            that.round = 18
+            that.color = "#FE5D49"
+            that.colorName = "red"
+            that.borderColor = "#141414"
+            that.onClick(selectColor)
+
+            // Renk 2 Düğme
+            box1.boxColor2 = createBox(171, 192, 35, 35)
+            that.round = 18
+            that.color = "#588ABE"
+            that.colorName = "blue"
+            that.borderColor = "#141414"
+            that.onClick(selectColor)
+
+            // Renk 3 Düğme
+            box1.boxColor3 = createBox(270, 192, 35, 35)
+            that.round = 18
+            that.color = "#5ABB9F"
+            that.colorName = "green"
+            that.borderColor = "#141414"
+            that.onClick(selectColor)
+
+        }
+        
+        // DİĞER FONKSİYONLAR
+        
+        // Bir renk seç.
+        var selectColor = function(clickedBox) {
+
+            // Seçilen rengin bilgilerini göster.
+            box1.boxSelectedColor.color = clickedBox.color
+            box1.lblSelectedColorName.text = clickedBox.colorName
+            box1.lblSelectedColorCode.text = clickedBox.color
+
+            // Düğme arkasının özelliklerini düzenle.
+            box1.boxSelectedButtonBack.top = clickedBox.top - 4
+            box1.boxSelectedButtonBack.left = clickedBox.left - 4
+            box1.boxSelectedButtonBack.visible = 1
+            box1.boxSelectedButtonBack.borderColor = clickedBox.color
+            
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML içeriği -->
+        
+    </body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Roket Kontrol Panel</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.3.css">
+        <script src="kutuphane/basic-1.3.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+            
+        /*
+        
+        Bir roketin, konum ve açı özelliklerinin; metin kutusuna girilen veriler ile değiştirilmesi.
+        
+        */
+            
+        // DEĞİŞKENLER
+        
+        // Roket resmi.
+        var roket
+        // Kontrol paneli kutusu.
+        var boxKontrol
+        
+        // BAŞLANGIÇ FONKSİYONLARI
+            
+        // İlk çalışan fonksiyon.
+        var start = function() {
+            
+            page.color = "black"
+
+            // Kontrol Paneli (Box)
+            boxKontrol = createBox()
+            that.right = 30
+            that.bottom = 30
+            that.width = 310
+            that.height = 350
+            that.border = 0
+            that.round = 6
+            that.color = "whitesmoke"
+            // Paneli ve taşıdığı nesneleri %70 oranına küçült.
+            that.contElement.style.zoom = 0.7
+            
+            // Roket X (TextBox)
+            boxKontrol.txtRoketX = createTextBox()
+            that.title = "Roketin Yatay Konumu:"
+            that.minimal = 1
+            that.top = 40
+            that.left = 20
+            
+            // NOT: boxKontrol nesnesinde, txtRoketX isminde yeni bir eleman oluşturuyoruz.
+            // Oluşturulan yeni nesne, otomatik olarak boxKontrol nesnesinin içine taşınıyor.
+            // Bu, Box nesnesine eklenmiş bir özelliktir. 
+            // Sadece Label, TextBox, Button, Image, Box nesneleri otomatik taşınır.
+            
+            // Roket Y (TextBox)
+            boxKontrol.txtRoketY = createTextBox()
+            that.title = "Roketin Dikey Konumu:"
+            that.minimal = 1
+            // boxKontrol.txtRoketX metin kutusunun 30px altına hizala.
+            that.aline(boxKontrol.txtRoketX, "bottom", 30)
+            
+            // Roket Yön (TextBox)
+            boxKontrol.txtRoketYon = createTextBox()
+            that.title = "Roketin Açısı:"
+            that.minimal = 1
+            that.aline(boxKontrol.txtRoketY, "bottom", 30)
+            
+            // Roket Uygula Butonu (Button)
+            boxKontrol.btnUygula = createButton()
+            that.text = "Değişiklikleri Uygula"
+            that.color = "tomato"
+            that.width = boxKontrol.txtRoketYon.width
+            that.minimal = 1
+            that.aline(boxKontrol.txtRoketYon, "bottom", 30)
+            that.onClick(degisikligiUygula)
+            
+            // Roket (Image)
+            roket = createImage()
+            that.load("resimler/roket.png")
+            that.width = 100
+            that.height = 100
+            that.top = 250
+            that.left = 150
+            that.rotate = 45
+            
+            // Not: roket nesnesi, diğer nesnelerin üzerinde görünmesi için
+            // en son oluşturulmuştur. İlk oluşturulan nesne en altta kalır.
+            
+            // Roketin mevcut verilerini, metin kutularında göster.
+            boxKontrol.txtRoketX.text = roket.left
+            boxKontrol.txtRoketY.text = roket.top
+            boxKontrol.txtRoketYon.text = roket.rotate
+            
+        }
+        
+        // DİĞER FONKSİYONLAR
+        
+        // Roketin konum ve açı bilgilerini güncelle.
+        var degisikligiUygula = function() {
+            
+            // Yeni bilgileri, metin kutularından al.
+            roket.left = num(boxKontrol.txtRoketX.text)
+            roket.top = num(boxKontrol.txtRoketY.text)
+            roket.rotate = num(boxKontrol.txtRoketYon.text)
+            
+        }
+        
+        /*
+        
+        GELİŞTİRME ÖNERİSİ (ZOR):
+        
+        - Roket, yeni konumuna yavaş yavaş gitsin. Açı değişikliği de yavaş yavaş olsun.
+          (Hız: 1px / 20ms, Dönüş Hızı: 1deg / 20ms)
+        
+        */
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML içeriği -->
+        
+    </body>
+</html>

@@ -37,16 +37,18 @@
             page.color = "indianred"
 
             // Saatin arka plan resmini oluştur.
-            imgArkaplan = new Image(0, 0, 200, 200)
+            imgArkaplan = createImage(0, 0, 200, 200)
             that.load("resimler/saat-bos.png")
             // Nesneyi, page nesnesinin tam ortasına hizala.
             that.center()
             
             // Not: nesne.center() fonksiyonu, nesneyi, 
             // içinde bulunduğu nesneye göre, otomatik ortalar.
+            // Sadece yatay ortalama için: nesne.center("left")
+            // Sadece dikey ortalama için: nesne.center("top")
             
             // Saat üzerindeki, sayısal bilgi.
-            lblSayac = new Label()
+            lblSayac = createLabel()
             that.text = "00:00"
             that.textAlign = "center"
             that.width = imgArkaplan.width
@@ -58,17 +60,17 @@
             // Son oluşturulan nesne, en üstte görünür.
             
             // Saatin dakika çubuğu.
-            imgDakika = new Image()
+            imgDakika = createImage()
             that.load("resimler/saat-dakika.png")
             boyutKopyala(that, imgArkaplan)
             
             // Saatin saniye çubuğu.
-            imgSaniye = new Image()
+            imgSaniye = createImage()
             that.load("resimler/saat-saniye.png")
             boyutKopyala(that, imgArkaplan)
             
             // Kronometre başlatma/durdurma düğmei
-            btnBaslat = new Button()
+            btnBaslat = createButton()
             that.text = "Başlat"
             that.color = "cadetblue"
             // Nesneyi, saatin altında ortalanmış ve 25px boşluk bırakarak hizala.
