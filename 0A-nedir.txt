@@ -12,6 +12,15 @@ KİMLER FAYDALANABİLİR?
 - Eğitim içeriği olarak kullanmak isteyen, öğretmen ve ebeveynler.
 
 
+NELERİ ÖĞRENECEKSİNİZ?
+
+- Programlama dillerinde kullanılan temel birimleri.
+- Daha iyi algoritmalar geliştirebilmeyi.
+- Nesne tabanlı programlama mantığını.
+- Bir projeyi, küçük parçalara bölerek geliştirebilmeyi.
+- JavaScript programlama dilini kullanmayı.
+
+
 EK AÇIKLAMA:
 
 - Kullanılan programlama dili JavaScript'dir. 
@@ -43,6 +52,10 @@ KULLANIM ALANLARI:
 Geliştirici: Buğra ÖZDEN
 Eposta: bugra.ozden@gmail.com
 İnternet Sitesi: http://bugraozden.com
+Projenin Sitesi: https://bug7a.github.io/basicjs-turkce/
+
+
+LİSANS:
 
 You are free:
 
