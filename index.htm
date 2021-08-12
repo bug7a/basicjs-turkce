@@ -2,17 +2,17 @@
 <html>
     <head>
         
-        <title>Programlamaya Yeni Başlayanlar için Örnekler Projeler (JavaScript)</title>
+        <title>Programlamaya Yeni Başlayanlar için Örnek Projeler (JavaScript)</title>
 
         <meta charset="UTF-8">
-          <meta name="description" content="Basit yoldan, nesne tabanlı yazılım projeleri geliştirin: Örnekleri bilgisayarınıza indirin ve anlatım videolarını izleyin. Yazılım öğrenmeye, buradan başlayın.">
-          <meta name="keywords" content="programlamaya nerden başlanır, programlamaya nerden başlamalıyım, JavaScript, temel programlama eğitimi, yazılım öğrenmek için Türkçe kaynak, örnek projeler, javascripti nasıl öğrenirim, yazılımcı olmak istiyorum, yazılımcı olmak için ne yapmalıyım, kodlama öğrenmek istiyorum, nasıl yazılımcı olurum">
+          <meta name="description" content="JavaScript ile nesne tabanlı yazılım projeleri geliştirin: Örnekleri bilgisayarınıza indirin ve anlatım videolarını izleyin. Yazılım öğrenmeye, buradan başlayın.">
+          <meta name="keywords" content="programlamaya nerden başlanır, programlamaya nerden başlamalıyım, JavaScript, temel programlama eğitimi, yazılım öğrenmek için Türkçe kaynak, örnek projeler, javascripti nasıl öğrenirim, yazılımcı olmak istiyorum, yazılımcı olmak için ne yapmalıyım, kodlama öğrenmek istiyorum, nasıl yazılımcı olurum, nesne tabanlı javascript">
           <meta name="author" content="Buğra ÖZDEN">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
-        <link rel="stylesheet" type="text/css" href="basic-1.3.css">
-        <script src="basic-1.3.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="basic-1.4.css">
+        <script src="basic-1.4.js" type="text/javascript" charset="utf-8"></script>
         
         <style>
         
@@ -29,7 +29,7 @@
 
             /* SCROLLBAR */
 
-            .box::-webkit-scrollbar, .box::-webkit-scrollbar-corner {
+            .basic_box::-webkit-scrollbar, .basic_box::-webkit-scrollbar-corner {
                 
                 background: transparent;
                 height: 16px;
@@ -37,14 +37,14 @@
                 
             }
 
-            .box::-webkit-scrollbar-button {
+            .basic_box::-webkit-scrollbar-button {
                 
                 height: 0;
                 width: 0;
                 
             }
 
-            .box::-webkit-scrollbar-thumb {
+            .basic_box::-webkit-scrollbar-thumb {
                 
                 background: content-box currentColor;
                 border: 6px solid transparent;
@@ -53,6 +53,15 @@
                 min-height: 60px;
                 min-width: 60px;
                 
+            }
+
+            .btn-type1 {
+                background-color: rgba(255, 255, 255, 0.02);
+                transition: background-color 0.5s;
+            }
+
+            .btn-type1:hover {
+                background-color: rgba(0, 0, 0, 0.6) !important;
             }
             
         </style>
@@ -140,6 +149,8 @@
             createPage2()
             
             //page2.visible = 1
+
+            page.onResize(pageResized)
             
         }
 
@@ -159,6 +170,24 @@
 
             }
             
+        }
+
+        var pageResized = function() {
+
+            page.fit(DEFAULT_WIDTH, 700)
+
+            boxMainBackground.width = page.width
+            boxMainBackground.height = page.height
+
+            mainPage.width = page.width
+            mainPage.height = page.height
+
+            boxAnimation.width = page.width
+            boxAnimation.height = page.height
+
+            page1.center("left")
+
+
         }
         
         // DİĞER FONKSİYONLAR
@@ -189,14 +218,14 @@
             // sub desc1
             page1.sub_desc1 = createLabel()
             //that.text = "Bir yazılım projesinin, nasıl yapılacağını, en sade ve basit şekilde öğretmek için tasarlanmış algoritma örnekleri ve anlatım videoları içerir."
-            that.text = "Basit yoldan, nesne tabanlı yazılım projeleri geliştirin:"
+            that.text = "JavaScript ile nesne tabanlı yazılım projeleri geliştirin:"
             that.color = "transparent"
             // #33A5D3
             //that.textColor = "tomato"
             that.textColor = "#33A5D3"
             that.width = DEFAULT_WIDTH
             that.height = 30
-            that.opacity = 0.8 // 0.5
+            that.opacity = 0.9 // 0.5
             that.fontSize = 16
             that.textAlign = "center"
             that.aline(page1.desc1, "bottom", 100)
@@ -213,7 +242,7 @@
             that.textColor = "#33A5D3"
             that.width = 550
             that.height = 60
-            that.opacity = 0.4 // 0.4
+            that.opacity = 0.5 // 0.4
             that.fontSize = 14
             that.aline(page1.sub_desc1, "bottom", 0)
             that.left = 105
@@ -234,6 +263,7 @@
             that.aline(page1.sub_desc1, "bottom", 80)
             that.center("left")
             that.left -= 115
+            that.contElement.classList.add("btn-type1")
             that.onClick(function() {
                 window.open("https://www.youtube.com/watch?v=CemAvscdzQg", "_blank");
             });
@@ -254,6 +284,7 @@
             that.aline(page1.sub_desc1, "bottom", 80)
             that.center("left")
             that.left += 115
+            that.contElement.classList.add("btn-type1")
             that.onClick(function() {
                 window.open("https://github.com/bug7a/basicjs-turkce", "_blank");
             });
@@ -263,7 +294,7 @@
             that.text = "Yeşil Düğme, Download ZIP"
             that.textColor = "#33A5D3"
             that.fontSize = 14
-            that.opacity = 0.3 // 0.3
+            that.opacity = 0.5 // 0.3
             that.width = page1.download_button.width
             that.textAlign = "center"
             that.aline(page1.download_button, "bottom", 10)
@@ -273,7 +304,7 @@
             that.load("images/bottom-arrow.svg")
             that.width= 33
             that.height= 16
-            that.top = page1.download_button.top + 200
+            that.top = page1.download_button.top + 160
             that.opacity = 0.6
             that.center("left")
             
@@ -306,7 +337,7 @@
             that.aline(page1.desc1, "bottom", 0)
             
             var topSpace = 120 + 700
-            var itemTitles = ["Merhaba", "Çarpım Tablosu", "Hesap Makinesi", "Zarlar", "Tic-tac-toe", "Sayaç"]
+            var itemTitles = ["Merhaba<br>Dünya", "Çarpım Tablosu", "Hesap Makinesi", "Zarlar", "Tic-tac-toe", "Sayaç"]
             var itemURLs = [
                 "https://codepen.io/bug7a/pen/yLgbEQR", 
                 "https://codepen.io/bug7a/pen/QWpQQzp", 
@@ -324,7 +355,7 @@
                 page1[projectName] = createImage(projectLeft, topSpace, 90, 90)
                 that.load("images/pro" + i + ".png")
                 that.opacity = 0.7
-                that.round = 0
+                that.round = 6
                 that.value = itemURLs[i - 1];
                 //var savedURL = itemURLs[i - 1];
                 that.onClick(function(self){
@@ -362,7 +393,7 @@
                 page1[projectName] = createImage(projectLeft, topSpace, 90, 90)
                 that.load("images/pro" + (6 + i) + ".png")
                 that.opacity = 0.7
-                that.round = 0
+                that.round = 6
                 that.value = itemURLs[i - 1];
                 that.onClick(function(self){
                     window.open(self.value, "_blank");
@@ -406,7 +437,7 @@
             
             for (var i = 1; i <= 16; i++) {
 
-                var rNum = 0.2 + num(random(100) / 100);
+                var rNum = 0.2 + num(random(1, 100) / 100);
                 var objName = "bck" + i;
                 boxAnimation[objName] = createBox();
 
@@ -431,10 +462,10 @@
                 }
                 
                 
-                boxAnimation[objName].value = random(4);
-                boxAnimation[objName].opacity = num(random(20) / 100);
-                boxAnimation[objName].left = random(page.width);
-                boxAnimation[objName].top = random(page.height);
+                boxAnimation[objName].value = random(1, 4);
+                boxAnimation[objName].opacity = num(random(1, 20) / 100);
+                boxAnimation[objName].left = random(1, page.width);
+                boxAnimation[objName].top = random(1, page.height);
 
             }
             
