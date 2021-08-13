@@ -1,24 +1,14 @@
-<!-- PROJECT LOGO -->
-<br />
-<p align="center">
-  <!-- <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a> -->
+### Bilgi
 
-  <h3 align="center">basic.js</h3>
-
-  <p align="center">
-    Programlamaya yeni başlayanlar için: Nesne tabanlı örnek yazılım projeleri.
-    <br />
-    Ve proje geliştirmeyi kolaylaştıran JavaScript kütüphanesi.
-  </p>
-</p>
-
-Bilgi:
-==============
-
-Programlamaya yeni başlayanlar için: Nesne tabanlı örnek yazılım projeleri. 
+Programlamaya yeni başlayanlar için: Nesne tabanlı örnek yazılım projeleri.<br>
 Ve proje geliştirmeyi kolaylaştıran JavaScript kütüphanesi.<br /><br />
+
+* İlk 10 proje, yazılım geliştirme mantığını öğrenmenize yardımcı olmak için özel olarak tasarlanmıştır.
+* HTML ve CSS kodları, kütüphane tarafından otomatik yazılır. Böylece öğrenciler, başlangıçta sadece algoritma geliştirmeye odaklanabilirler.
+* Beş temel nesne üzerine inşa edilmiştir. (Label, Button, TextBox, Image, Box)
+* Masaüstü ve mobil uygulama geliştirme deneyimine yakın, nesne tabanlı bir mantık ile tasarlanmıştır.
+* Arayüz tasarım araçları ile uyumlu çalışır. Böylece tasarımlarınızı, kolayca uygulamaya çevirebilmenize imkan sağlar.
+* Kullanılan programlama dili JavaScript'dir.
 
 ![alt tag](https://bug7a.github.io/basicjs-turkce/projeler.png)
 
