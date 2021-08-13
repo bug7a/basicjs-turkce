@@ -1,7 +1,8 @@
-Programlamaya yeni başlayanlar için:
+Bilgi:
 ==============
 
-Bir yazılım projesinin, nasıl yapılacağını, basit yoldan öğretmek amacı ile tasarlanmış örnek algoritmalar ve anlatım videolarından oluşmaktadır. Tüm projelerde, JavaScript'i sadeleştiren basic.js kütüphanesi kullanılmıştır. Gereken HTML ve CSS kodlarını kütüphane, otomatik eklenmektedir. Böylece öğrenci, başlangıçta sadece algoritma geliştirmeye odaklanabilir.<br /><br />
+Programlamaya yeni başlayanlar için: Nesne tabanlı örnek yazılım projeleri. 
+Ve proje geliştirmeyi kolaylaştıran JavaScript kütüphanesi.<br /><br />
 
 ![alt tag](https://bug7a.github.io/basicjs-turkce/projeler.png)
 
