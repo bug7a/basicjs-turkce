@@ -1,7 +1,8 @@
 
 BU NEDİR?
 
-Programlamaya yeni başlayanlar için örnek yazılım projeleri ve anlatım videoları.
+Programlamaya yeni başlayanlar için: Nesne tabanlı örnek yazılım projeleri. 
+Ve proje geliştirmeyi kolaylaştıran JavaScript kütüphanesi.
 
 
 KİMLER FAYDALANABİLİR?
@@ -15,16 +16,22 @@ KİMLER FAYDALANABİLİR?
 NELERİ ÖĞRENECEKSİNİZ?
 
 - Programlama dillerinde kullanılan temel birimleri.
-- Daha iyi algoritmalar geliştirebilmeyi.
+- Pratik yaptıkça, daha iyi algoritmalar geliştirebilmeyi.
 - Nesne tabanlı programlama mantığını.
 - Bir projeyi, küçük parçalara bölerek geliştirebilmeyi.
+- Bilgileri yönetebilmeyi ve dinamik arayüzler oluşturabilmeyi.
+- Temel nesneleri birleştirerek, yeni ve benzersiz nesneler oluşturabilmeyi.
 - JavaScript programlama dilini kullanmayı.
 
 
 EK AÇIKLAMA:
 
-- Kullanılan programlama dili JavaScript'dir. 
-- Tüm projelerde, HTML ve CSS kodlarını otomatik ekleyen basic.js kütüphanesi kullanılmıştır. Böylece öğrenciler, başlangıçta sadece algoritma geliştirmeye odaklanabilirler.
+- İlk 10 proje, yazılım geliştirme mantığını öğrenmenize yardımcı olmak için özel olarak tasarlanmıştır.
+- HTML ve CSS kodları, kütüphane tarafından otomatik yazılır. Böylece öğrenciler, başlangıçta sadece algoritma geliştirmeye odaklanabilirler.
+- Beş temel nesne üzerine inşa edilmiştir. (Label, Button, TextBox, Image, Box)
+- Masaüstü ve mobil uygulama geliştirme deneyimine yakın, nesne tabanlı bir mantık ile tasarlanmıştır.
+- Arayüz tasarım araçları ile uyumlu çalışır. Böylece tasarımlarınızı, kolayca uygulamaya çevirebilmenize imkan sağlar.
+- Kullanılan programlama dili JavaScript'dir.
 
 
 NEDEN JAVASCRIPT KULLANIYORUM:
@@ -51,7 +58,7 @@ KULLANIM ALANLARI:
 
 Geliştirici: Buğra ÖZDEN
 Eposta: bugra.ozden@gmail.com
-İnternet Sitesi: http://bugraozden.com
+Kişisel Sitem: http://bugraozden.com
 Projenin Sitesi: https://bug7a.github.io/basicjs-turkce/
 
 

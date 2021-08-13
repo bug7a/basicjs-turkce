@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Minik Mesaj Alanı</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
+        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+
+        <style>
+
+            /* scroll rengini beyaz yap. */
+            .basic_box::-webkit-scrollbar-thumb {
+                color: rgba(255, 255, 255, 0.4);
+            }
+
+        </style>
+
+        <script>
+
+        /*
+
+        Sayfada küçük bir konsol oluşturalım.
+
+        */
+            
+        // DEĞİŞKENLER
+        
+        // Bilgilerin gösterileceği konsol nesnesi.
+        var mclConsole1
+
+
+        // ÖZEL FONKSİYONLAR
+            
+        // İlk çalışan fonksiyon.
+        var start = function() {
+
+            // Yeni bir konsol oluştur.
+            mclConsole1 = createMiniConsole(350, 250)
+            that.right = 10
+            that.bottom = 10
+
+            // Nesneye, 100 tane mesaj gönder.
+            for (var i = 0; i <= 100; i++) {
+
+                mclConsole1.print(i + ". kayıt, döngü ile oluşturuldu.")
+
+                if (i == 4) {
+                    mclConsole1.print("UYARI: Sarı renkte bir uyarı yazısı.", "yellow")
+                }
+
+                if (i == 6) {
+                    mclConsole1.print("HATA: Kırmızı renkte bir hata yazısı.", "red")
+                }
+
+            }
+
+            // Tüm mesajları temizle.
+            // mclConsole1.clean()
+            
+        }
+
+        // Küçük konsol nesnesi oluşturan bir fonksiyon.
+        var createMiniConsole = function(width, height) {
+
+            // Konsolun taşıcı kutusu.
+            var consoleObject = createBox(0, 0, width, height)
+            that.color = "#141414"
+            that.round = 6
+            that.border = 0
+            // Dikey kaydırma çubuğunu aktif yap.
+            that.scrollY = 1
+
+            // NOT: Taşıyıcı kutu, dikey düzlemde kaydırma özelliği aktiftir.
+            // Label nesnesinin yüksekliği, Box nesnesinin yüksekliğini aştığında,
+            // otomatik kaydırma çubuğu çıkacaktır.
+
+            // Konsolun içindeki etiket nesnesi.
+            consoleObject.lblTextArea = createLabel(0, 0, width, "auto")
+            that.text = ""
+            that.textColor = "white"
+            that.opacity = 0.8
+            that.space = 10
+            that.fontSize = 14
+
+            // NOT: Label nesnesinin yüksekliği otomatiktir.
+            // Yeni mesajlar eklendikçe, aşağıya doğru uzayacak.
+
+            // Nesneye, mesaj gönderme fonksiyonu ekle.
+            consoleObject.print = function(text, color = "white") {
+                consoleObject.lblTextArea.text += "<span style='color:" + color + ";'>" + text + "</span><br>"
+
+            }
+
+            // Nesneye, tüm mesajları silme fonksiyonu ekle.
+            consoleObject.clean = function() {
+                consoleObject.lblTextArea.text = ""
+
+            }
+
+            // Son oluşturulan nesne olarak belirle.
+            setAsThat(consoleObject)
+
+            // Oluşturulan nesneyi geri gönder.
+            return consoleObject
+
+        }
+
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML içeriği -->
+        
+    </body>
+</html>

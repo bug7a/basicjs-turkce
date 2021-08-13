@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Farenin Konumu</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
+        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+
+        <style>
+
+            /* Web sayfası gibi seçilebilmesini engelle. */
+
+            * {
+                -webkit-tap-highlight-color: rgba(0,0,0,0);
+            }
+            
+            body {
+                -webkit-touch-callout: none;
+                -webkit-text-size-adjust: none;
+                -webkit-user-select: none;   
+            }
+
+        </style>
+
+        <script>
+
+        /*
+
+        Farenin konumunu gösteren ve bu konumu kullanarak işlem yapan algoritma.
+
+        */
+            
+        // DEĞİŞKENLER
+            
+        var lblMouseInfo
+
+        var mouseX, mouseY
+
+
+        // ÖZEL FONKSİYONLAR
+            
+        // İlk çalışan fonksiyon.
+        var start = function() {
+
+            // LABEL: Farenin koordinat bilgileri.
+            lblMouseInfo = createLabel(30, 30)
+            that.text = ""
+
+            // LABEL: Ekranın ortasındaki bilgi yazısı.
+            createLabel(0, 0, 200)
+            that.text = "Lütfen, ekrana tıklayınız..."
+            that.fontSize = 14
+            that.textAlign = "center"
+            // Ekranın ortasına hizala.
+            that.center()
+
+            // Fare hareket ettiğinde çalıştır.
+            window.addEventListener('mousemove', mouseMoved);
+
+            // Fare basılı iken çalıştır.
+            window.addEventListener('mousedown', mouseDown);
+
+            // Fare basmayı bıraktığında çalıştır.
+            window.addEventListener('mouseup', mouseUp);
+            
+            
+        }
+
+        
+        // DİĞER FONKSİYONLAR
+        
+        var mouseMoved = function(event) {
+            
+            // Farenin konumunu global değişkenlere aktar.
+            mouseX = event.offsetX;
+            mouseY = event.offsetY;
+
+            lblMouseInfo.text = mouseX + ", " + mouseY
+            
+        }
+        
+        var mouseDown = function(event) {
+
+            // Farenin konumu geçici değişkenlere aktar.
+            // var x = event.offsetX;
+            // var y = event.offsetY;
+            
+            // veya global değişkenleri kullan.
+
+            createShape(mouseX, mouseY)
+
+        }
+
+        var mouseUp = function(event) {
+            
+            
+            
+        }
+
+        // Rasgele renk ve boyutta bir daire oluştur.
+        var createShape = function(x, y) {
+
+            var colors = ["red", "green", "blue", "pink", "yellow", "black", "orange"]
+
+            // Rasgele boyut belirle.
+            var width = random(30, 90)
+            var height = width
+
+            // Yarı çap belirle.
+            var r = num(width / 2, "integer")
+
+            // Dairenin, farenin konumunda ortalanmış olarak çıkması için.
+            x -= r
+            y -= r
+
+            createBox(x, y, width, height)
+            that.round = r
+            that.border = 0
+            // 0.3 ile 1 arasında bir şeffaflık belirle.
+            that.opacity = num(random(30, 100) / 100)
+            // dizideki renklerden birini seç.
+            that.color = colors[random(0, colors.length - 1)]
+
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML içeriği -->
+        
+    </body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Roket İlerle</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
+        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+
+        /*
+
+        - Bir resim nesnesinin, butonlar ile basit hareketi.
+
+        */
+
+        // Roket (Image) nesnesi.
+        var roket
+        // Basıldığında, roketi ilerletecek tuşlar.
+        var imgYukari
+        var imgAsagi
+        var imgSag
+        var imgSol
+
+        // İlk çalışan fonksiyon.
+        var start = function() {
+
+            page.color = "gold"
+            
+            // NESNE: roket resmi
+            roket = createImage(0, 0, 60, 60)
+            roket.load("resimler/roket.png")
+            roket.center()
+
+            // NESNE: Yukarı tuşu
+            imgYukari = createImage(100, 50, 50, 50)
+            that.value = "yukarı"
+            that.load("resimler/yukari-ok.png")
+            that.onClick(ilerle)
+
+            // NESNE: Aşağı tuş
+            imgAsagi = createImage(0, 0, 50, 50)
+            that.value = "aşağı"
+            that.load("resimler/asagi-ok.png")
+            that.aline(imgYukari, "bottom", 5)
+            that.onClick(ilerle)
+
+            // Nesne Sağ tuşu
+            imgSag = createImage(0, 0, 50, 50)
+            that.value = "sağ"
+            that.load("resimler/sag-ok.png")
+            that.aline(imgAsagi, "right", 5)
+            that.onClick(ilerle)
+
+            // NESNE: Sola tuşu
+            imgSol = createImage(0, 0, 50, 50)
+            that.value = "sol"
+            that.load("resimler/sol-ok.png")
+            that.aline(imgAsagi, "left", 5)
+            that.onClick(ilerle)
+
+        }
+        
+        // Basılan yöne göre, roketi ilerlet.
+        var ilerle = function(basilanButon) {
+            
+            if (basilanButon.value == "yukarı") {
+                // Roketin yönünü çevir.
+                roket.rotate = 0
+                // Roketin konumunu 15px azalt.
+                roket.top = roket.top - 15
+                
+            } else if (basilanButon.value == "sol") {
+                
+                roket.rotate = 270
+                roket.left = roket.left - 15
+                
+            } else if (basilanButon.value == "aşağı") {
+                
+                roket.rotate = 180
+                roket.top = roket.top + 15
+                
+            } else if (basilanButon.value == "sağ") {
+                
+                roket.rotate = 90
+                roket.left = roket.left + 15
+                
+            }
+            
+        }
+        
+        // Geliştirme Önerisi:
+        
+        // * 1. Her bir yön tuşuna basıldığında, roket 100px 
+        // * ilerlesin ve her 1px de bir 10 milisaniye bekleyerek
+        // * Aracın ilerlemesi zaman alacağı için, hareket halindeyken tuşlar pasif olmalı.
+
+        </script>
+
+    </head>
+    <body>
+        
+    </body>
+</html>

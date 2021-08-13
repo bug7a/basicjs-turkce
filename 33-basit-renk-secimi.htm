@@ -8,10 +8,22 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
-        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.3.css">
-        <script src="kutuphane/basic-1.3.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
+        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
 
         <script>
+
+        /*
+
+        Figma veya bir arayüz tasarım aracı, basic.js kütüphanesi ile uyumlu çalışır.
+        Bu örnekte, tasarladığınız bir taslağı nasıl çalışan bir uygulamaya çevirdiğimizi anlatıyorum.
+
+        Bu örnek, başlangıç için uygundur.
+
+        Anlatım videosu;
+        https://www.youtube.com/watch?v=pM-iAn7DE7w
+
+        */
             
         // DEĞİŞKENLER
         
@@ -80,6 +92,9 @@
             // NESNE: Renk #3 düğmesi olarak kullanılan kutu.
             b1.boxColor3 = createColorBtn(270, "#5ABB9F", "green")
 
+            // Sayfa boyutu değiştirildiğinde, fonksiyonu çalıştır.
+            page.onResize(centerAll)
+
         }
         
         // DİĞER FONKSİYONLAR
@@ -115,6 +130,14 @@
 
             // Oluşturulan nesnesi cevap ver.
             return btnObject
+
+        }
+
+        // Sayfa (page) boyutu değitiğinde çalışıcak.
+        var centerAll = function() {
+
+            // Kutuyu yeniden ortala.
+            b1.center()
 
         }
 

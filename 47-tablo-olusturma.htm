@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Tablo Oluşturma</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
+        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+
+        /*
+
+            Bu tablo örneği, üç temel nesneden üretilmiştir.
+            - Button (düğme)
+            - Label (etiket)
+            - Box (kutu)
+
+            Bu teknik sayesinde, ihtiyacının olan tüm özellikleri, bu algoritmaya ekleyebilirsiniz.
+
+        */
+            
+        // DEĞİŞKENLER
+
+        var TABLE_HEIGHT = 450
+        var TITLE_HEIGHT = 40
+
+        // Listeye eklenecek bilgiler.
+        var people = [
+            {id: "001", name: "Ahmet", email: "ahmet.test@gmail.com"},
+            {id: "002", name: "Mehmet", email: "mehmet.test@gmail.com"},
+            {id: "003", name: "Filiz", email: "filiz.test@gmail.com"},
+            {id: "004", name: "Hasan", email: "hasan.test@gmail.com"},
+            {id: "005", name: "Duygu", email: "duygu.test@gmail.com"},
+            {id: "006", name: "Anıl", email: "anil.test@gmail.com"},
+            {id: "007", name: "Dilara", email: "dilara.test@gmail.com"},
+            {id: "008", name: "Alperen", email: "alp.test@gmail.com"},
+        ]
+        
+        // Tablonun adı
+        var tblListe
+        
+        // Ortak özellikler
+        var propListeTitle = {color: "white", round: 4}
+
+
+        // ÖZEL FONKSİYONLAR
+            
+        // İlk çalışan fonksiyon.
+        var start = function() {
+
+            page.color = "white"
+
+            page.fit(600, 650)
+
+            // NESNE: Liste ana taşıyıcı
+            tblListe = createBox(10, 50, 580, TABLE_HEIGHT)
+            that.border = 0
+            that.round = 4
+
+            // NESNE: Başlık 1
+            tblListe.title1 = createButton(0, 0, 140, TITLE_HEIGHT)
+            that.text = "Sıra"
+            that.prop(propListeTitle)
+            that.color = "lightblue"
+
+            // NESNE: Başlık 2
+            tblListe.title2 = createButton(0, 0, 200, TITLE_HEIGHT)
+            that.text = "İsim"
+            that.prop(propListeTitle)
+            that.aline(tblListe.title1, "right")
+
+            // NESNE: Başlık 3
+            tblListe.title3 = createButton(0, 0, 240, TITLE_HEIGHT)
+            that.text = "EPosta"
+            that.prop(propListeTitle)
+            that.aline(tblListe.title2, "right")
+            
+            // NESNE: Tüm satırları taşıyan kaydırılabilir kutu.
+            tblListe.b1 = createBox(0, TITLE_HEIGHT, tblListe.width, tblListe.height - TITLE_HEIGHT)
+            that.color = "transparent"
+            that.border = 0
+            that.scrollY = 1
+
+            // Her bir birim
+            for (var i = 0; i < people.length; i++) {
+
+                // NESNE: Bir satırı taşıyan kutu.
+                tblListe.b1["b" + i] = createBox(0, (i * 30), tblListe.width, 30)
+                that.border = 0
+                // Her bir satıra, o kişinin bilgilerini ekle.
+                that.person = people[i]
+                that.onClick(itemClicked)
+
+                // Bazı satırların rengi beyaz olsun (2'ye tam bölünebilen)
+                if (i % 2) {
+                    that.color = "white"
+                }
+
+                var item = tblListe.b1["b" + i]
+
+                // NESNE: Sıra
+                item.lblID = createLabel(tblListe.title1.left, 0, tblListe.title1.width, item.height)
+                that.textAlign = "center"
+                that.text = people[i].id
+
+                // NESNE: İsim
+                item.lblName = createLabel(tblListe.title2.left + 10, 0, tblListe.title2.width - 10, item.height)
+                that.textAlign = "left"
+                that.text = people[i].name
+
+                // NESNE: EPosta
+                item.lblEMail = createLabel(tblListe.title3.left + 10, 0, tblListe.title3.width - 10, item.height)
+                that.textAlign = "left"
+                that.text = people[i].email
+
+
+            }
+            
+            
+        }
+        
+        // DİĞER FONKSİYONLAR
+        
+        // Bir satıra basıldığında, ismini yazdır.
+        var itemClicked = function(self) {
+            
+            print(self.person.name)
+            
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML içeriği -->
+        
+    </body>
+</html>

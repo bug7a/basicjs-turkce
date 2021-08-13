@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>HTML ile Birlikte Kullanım</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
+        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+
+        <style>
+
+            body {
+
+                font-family: Arial;
+
+            }
+
+            .color-btn {
+
+                background-color: white;
+                padding: 10px;
+                border-radius: 8px;
+                opacity: 0.9;
+                font-weight: bold;
+                color:rgba(14, 14, 14, 0.85);
+
+            }
+
+        </style>
+
+        <script>
+
+        /*
+
+            Klasik HTML ve CSS ile geliştirilmiş, bir web sayfasının veya uygulamanın,
+            html kodlarının içindeki bir elemente, basic js nesnelerini eklemek.
+
+        */
+            
+        // DEĞİŞKENLER
+            
+        var boxDIV
+        var boxColor
+        var lblColor
+        
+        // ÖZEL FONKSİYONLAR
+            
+        // İlk çalışan fonksiyon.
+        var start = function() {
+
+            // Renk kutusunu oluştur.
+
+            // Renk Arka Plan Kutusu
+            boxDIV = createBox(0, 0, 80, 80)
+            boxDIV.border = 0
+            boxDIV.color = "#141414"
+            boxDIV.round = 8
+            // Bu nesneyi, Belirtilen DIV elementinin içine taşı.
+            document.getElementById("color-box").appendChild(boxDIV.contElement)
+
+            // Renk Kutusu
+            boxDIV.boxColor = createBox(0, 0, 30, 30)
+            that.color = "white"
+            that.border = 0
+            that.round = 4
+            that.center()
+            that.top -= 10
+            
+            // Renk İsmi
+            boxDIV.lblColor = createLabel(0, 0)
+            that.aline(boxDIV.boxColor, "bottom", 5)
+            that.text = "white"
+            that.left = 0
+            that.width = boxDIV.width
+            that.textAlign = "center"
+            that.fontSize = 14
+            that.textColor = "white"
+            
+            
+        }
+        
+        // DİĞER FONKSİYONLAR
+        
+        // Renk kutusunu değiştiren fonksiyon.
+        var changeColor = function(color) {
+            
+            // Renk ve ismini değiştir.
+            boxDIV.boxColor.color = color
+            boxDIV.lblColor.text = color
+            
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <div style="position:relative;width:500px;background-color:whitesmoke;padding: 30px;border-radius: 8px;">
+
+            <h2>Kodlama Nedir?</h2>
+
+            <p>Yapılmasını istediğimiz görevlerin, bilgisayar tarafından gerçekleştirilmesini sağlamak için kod olarak adlandırılan kelimeleri kullanıyoruz. Bu kodların, yazılma eylemine ise kodlama yapmak (kod yazmak) diyoruz.</p>
+            <p>Aşağıdaki renkler, basıldığında işlem yapar:</p>
+            
+            <p style="margin-bottom: 40px;">
+                <span onclick="changeColor('orangered')" class="color-btn" style="background-color:orangered;">Kırmızı</span>
+                <span onclick="changeColor('steelblue')" class="color-btn" style="background-color:steelblue;">Mavi</span>
+                <span onclick="changeColor('seagreen')" class="color-btn" style="background-color:seagreen;">Yeşil</span> 
+            </p>
+
+            <p>Aşağıdaki görüntü alanında, robot isminde bir resim var. robot.ilerle() kodunu çalıştırarak; bilgisayardan, robot resmini bir adım sağ doğru hareket ettirmesini istemiş olacağız.</p>
+            <p>Kodu çalıştır düğmesine basalım ve bilgisayarın, kod alanına yazılanları nasıl uyguladığını görelim.</p>
+
+            <!-- RENK KUTUSUNU TAŞIYAN DIV -->
+            <div id="color-box" style="position: absolute;top:20px;right:20px;width:80px;height:80px;"></div>
+
+        </div>
+        
+    </body>
+</html>

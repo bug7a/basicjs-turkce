@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Roket İlerle V2</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
+        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+
+        /*
+
+        - Koordinat sistemini ve belli aralıklar ile çalıştırılan loop() fonksiyonunu kullanarak,
+          basit hareket ettirme tekniği.
+
+        Projenin öncelikli amacı;
+        - Değişken ve koşullu ifadeleri birlikte kullanabilme beceresini geliştirmek.
+          Ve bir hareketin temelde nasıl oluştuğunun mantığının kavranması.
+
+        NOT: Gelişmiş hareket kütüphaneleri veya farklı teknikler kullanılarak,
+        çok daha basit kod arabirimine sahip animasyonlar oluşturulabilir.
+
+        */
+
+        // Roket (Image) nesnesi.
+        var roket
+        // Roketin yön tuşları.
+        var imgIleri
+        var imgSag
+        var imgSol
+        
+        // Yönlerin sırası. 0: yukarı, 1: sağ, 2: aşağı, 3: sol
+        var yonListe = ["yukarı", "sağ", "aşağı", "sol"]
+
+        // NOT: Mesela yönü 1 (sağ) olan bir cismi sağ döndürmek istediğimizde
+        // 1 + 1 = 2 (aşağı) yönüne döner gibi kullanmamızı sağlayacak.
+        // sola döndürmek için 1 - 1 = 0 (yukarı) yönüne döner.
+        
+        // yonListe dizisinin, seçili olan index değerini tutuyor. 0: yukarı
+        var hareketYon = 0
+        // Cismi ne kadar hareket ettirmek istediğimizi
+        // bu değişkenlere yazacağız ve tekrar 0 olana kadar istediğimiz mesafeyi hareket edecek.
+        var hareketMesafe = 0
+        
+        // +: Saat yönünde açı değiştir, -: saat yönünün tersine.
+        var donmeYon = "+"
+        // Kaç derece dönecek.
+        var donmeAci = 0
+
+        // İlk çalışan fonksiyon.
+        var start = function() {
+
+            // Programın görünümünü oluştur.
+            
+            page.color = "gold"
+            
+            // NESNE: roket resmi
+            roket = createImage(0, 0, 80, 80)
+            that.load("resimler/roket.png")
+            that.center()
+            
+            // NESNE: İlerle tuşu
+            imgIleri = createImage(100, 50, 50, 50)
+            that.value = "ileri"
+            that.load("resimler/yukari-ok.png")
+            that.onClick(roketiUcur)
+
+            // NESNE: Sağa tuşu
+            imgSag = createImage(0, 0, 50, 50)
+            that.value = "sağ"
+            that.load("resimler/sag-ok.png")
+            // ilerle nesnesinin altına, -10px ile hizala.
+            that.aline(imgIleri, "bottom", -10)
+            // nesneyi, sağ doğru 45px kaydır.
+            that.left += 45
+            that.onClick(roketiCevir)
+
+            // NESNE: Sola tuşu
+            imgSol = createImage(0, 0, 50, 50)
+            that.value = "sol"
+            that.load("resimler/sol-ok.png")
+            that.aline(imgIleri, "bottom", -10)
+            // nesneyi, sola doğru 45px kaydır.
+            that.left -= 45
+            that.onClick(roketiCevir)
+            
+            // loop() fonksiyonunu, 5ms de bir çalıştır.
+            setLoopTimer(5)
+                
+        }
+        
+        // Tekrar tekrar çalışan fonksiyon.
+        var loop = function() {
+            
+            // Dönmesi istenen açı 0 olana kadar döndürmeye devam et.
+            if (donmeAci > 0) {
+                
+                // Saat yönüne doğru ise,
+                if (donmeYon == "+") {
+                    // Açıyı 1 arttır.
+                    roket.rotate++
+                    
+                } else {
+                    // Açıyı 1 eksilt.
+                    roket.rotate--
+                    
+                }
+                
+                // 1 derecelik dönüş tamamlandı.
+                donmeAci--
+                
+            } else if (hareketMesafe > 0) {
+
+                // NOT: Dönüş tamamlanmış ise, ileri hareket etmeyi
+                // kontrol eder. Dönerken, ilerlemeyecek.
+                
+                // Roketin yönüne göre, konum ilerlet.
+                if (hareketYon == 0) {
+                    roket.top--
+
+                } else if (hareketYon == 3) {
+                    roket.left--
+
+                } else if (hareketYon == 2) {
+                    roket.top++
+
+                } else if (hareketYon == 1) {
+                    roket.left++
+
+                }
+                
+                // Bir 1px lik hareket tamamlandı.
+                hareketMesafe--
+                // Ekrana bazı bilgileri yazdır.
+                print("Roketin hareket edeceği mesafe: " + hareketMesafe)
+                print("Roketin yönü: " + yonListe[hareketYon])
+                
+            } else {
+                // Hiçbir şey yapma.
+                
+            }
+            
+        }
+
+        // Roketi ilerlet.
+        var roketiUcur = function() {
+            // Roketi 100px ilerleyene kadar hareket ettir.
+            hareketMesafe += 100
+
+            // NOT: Yakıt birikebilir. Arka arkaya ilerle butonuna basıldığında
+            // sayı devamlı olarak arttırılır.
+
+        }
+        
+        // Roketi çevir.
+        var roketiCevir = function(basilanButon) {
+            
+            // Cisim dönmüyor ise, yeni dönüş talimatı verilebilsin.
+            if (donmeAci == 0) {
+
+                // Eğer sağa dönecek ise,
+                if (basilanButon.value == "sağ") {
+                    // Dönüş, saat yönü olacak.
+                    donmeYon = "+"
+                    // Artık cismin yönü bir sonraki eleman.
+                    hareketYon++
+                    // Eleman kalmamış ise, başa dön.
+                    if (hareketYon == yonListe.length) {
+                        hareketYon = 0
+
+                    }
+                    // 90 derece dönecek.
+                    donmeAci = 90
+
+                } else if (basilanButon.value == "sol") {
+                    // Aynı işlemlerin tersi.
+                    donmeYon = "-"
+                    hareketYon--
+                    if (hareketYon < 0) {
+                        hareketYon = yonListe.length - 1
+
+                    }
+                    donmeAci = 90
+
+                }
+                
+            }
+            
+        }
+        
+        </script>
+
+    </head>
+    <body>
+        
+    </body>
+</html>

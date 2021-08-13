@@ -8,10 +8,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
-        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.3.css">
-        <script src="kutuphane/basic-1.3.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
+        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
 
         <script>
+
+        /*
+
+        Anlatım videosu;
+        https://www.youtube.com/watch?v=hyw6IVWV1Tc
+
+        */
             
         // DEĞİŞKENLER
             
@@ -29,20 +36,20 @@
 
             page.color = "whitesmoke"
 
-            // Yeni notun yazıldığı metin kutusu
+            // NESNE: Yeni notun yazıldığı metin kutusu.
             txtNot = createTextBox()
             that.top = 50
             that.left = 50
             that.title = "İlk notu giriniz:"
 
-            // Notu ekleyen düğme
+            // NESNE: Notu ekleyen düğme.
             btnEkle = createButton()
             that.text = "Not Ekle"
-            that.color = "lightgreen"
+            that.color = "palegoldenrod"
             that.aline(txtNot, "right", 10)
             that.onClick(notEkle)
 
-            // Geçmiş işlemlerin kayıtları
+            // NESNE: Geçmiş işlemlerin kayıtları.
             lblGecmis = createLabel()
             that.text = ""
             that.fontSize = 13

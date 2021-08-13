@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Tarih ve Saat</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
+        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+
+        /*
+
+        - Tarih ve saat bilgilerine ulaşmak.
+
+        */
+            
+        // DEĞİŞKENLER
+
+        // Gün isimlerinin listesi
+        var gunler = [
+            "Pazar",
+            "Pazartesi", 
+            "Salı", 
+            "Çarşamba", 
+            "Perşembe", 
+            "Cuma", 
+            "Cumartesi"
+        ];
+
+        // NOT: Dizilerin sıra numaraları 0'dan başladığı için,
+        // Pazartesiyi temsil eden 1 sayısı yerine 0 kullanmalıyız. date.week - 1
+
+        // Ay isimlerinin listesi
+        var aylar = [
+            "Ocak", 
+            "Şubat", 
+            "Mart", 
+            "Nisan",
+            "Mayıs",
+            "Haziran",
+            "Temmuz",
+            "Ağustos",
+            "Eylül",
+            "Ekim",
+            "Kasım",
+            "Aralık"
+        ];
+
+        // NOT: Ocak ayını temsil eden 1 sayısı yerine 0 kullanmalıyız. date.mount - 1
+        
+        // Bilgilerin gösterileceği Label
+        var lblToday
+
+        // ÖZEL FONKSİYONLAR
+            
+        // İlk çalışan fonksiyon.
+        var start = function() {
+
+            // 25/6/2021
+            var date1 = date.today + "/" + date.mountNumber + "/" + date.year
+            //print(date1)
+
+            // 25 Temmuz 2021
+            var date2 = date.today + " " + aylar[date.mountNumber - 1] + " " + date.year
+            //print(date2)
+
+            // Bugün, Temmuz ayının 25. günü.
+            var date3 = "Bugün, " + aylar[date.mountNumber - 1] + " ayının " + date.today + ". günü."
+            //print(date3)
+
+            // Günlerden Pazartesi
+            var date4 = "Ve günlerden " + gunler[date.dayNumber] + "."
+
+            // Saat 12:30:00
+            var time1 = "Saat " + clock.hour + ":" + clock.minute + ":" + clock.second
+            //print(time1)
+
+            // Label nesnesi oluştur.
+            lblToday = createLabel(30, 30, 350)
+            lblToday.text = date1
+
+            // Nesneye yeni bir fonksiyon ekle.
+            // Bir metni Label nesnesine eklesin.
+            lblToday.addText = function(text) {
+                this.text += "<br>" + text
+
+                // NOT: this kelimesi yerine lblToday de kullanılabilir.
+                // NOT: this kelimesi, içinde bulunduğu nesneyi temsil eder. 
+
+            }
+
+            lblToday.addText(date2)
+            lblToday.addText(date3)
+            lblToday.addText(date4)
+            lblToday.addText(time1)
+
+            // Diğer Kullanımlar.
+            lblToday.addText("<br><span style='font-family:opensans-bold;color:#000000;'>Diğer Kullanımlar:</span>")
+            lblToday.addText(date.ayAdi + " / " + date.mountName)
+            lblToday.addText(date.gunAdi + " / " + date.dayName)
+            lblToday.addText(twoDigitFormat(date.today) + "/" + twoDigitFormat(date.mountNumber) + "/" + date.year)
+            // Bir alt satıra değil, son eklenenin yanına ekle.
+            lblToday.text += " " + twoDigitFormat(clock.hour) + ":" + twoDigitFormat(clock.minute) + ":" + twoDigitFormat(clock.second)
+
+            // NOT: twoDigitFormat(number) fonksiyonu, 10'dan küçük sayıların başına,
+            // 0 koyarak iki basamaklı görünmesini sağlar. Saat 02:05:30 gibi.
+            
+            // Bu fonksiyon kullanıldıktan sonra, artık rakam bir sayı değildir. Gönderilen 5, gelen cevap "05"
+            
+            // Nasıl yaptığını incelemek için, basic.js kodlarında; twoDigitFormat olarak arama yapabilirsin.
+
+            
+        }
+
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML içeriği -->
+        
+    </body>
+</html>

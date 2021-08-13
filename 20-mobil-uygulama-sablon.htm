@@ -7,23 +7,30 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
-        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.3.css">
-        <script src="kutuphane/basic-1.3.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
+        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Ortak kullanılan kodlar, farklı bir dosyaya konulmuştur. -->
+        <script src="dosyalar/20/close-button.js" type="text/javascript" charset="utf-8"></script>
         
         <style>
             
-        /* İçeriğin, web sayfası gibi seçilmesini engelle */
-        
+        /* Web sayfası gibi seçilebilmesini engelle. */
+
         * {
-            
-            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
         }
 
         body {
-
             -webkit-touch-callout: none;
-            -webkit-user-select: none;
+            -webkit-text-size-adjust: none;
+            -webkit-user-select: none;   
+        }
 
+        /* scroll rengini beyaz yap. */
+
+        .basic_box::-webkit-scrollbar-thumb {
+            color: rgba(255, 255, 255, 0.4);
         }
         
         </style>
@@ -39,9 +46,24 @@
         // https://www.youtube.com/watch?v=MP20_9HXj0Q&list=PLlkulm4kNfGMGeh6sn2LSqkXbCw8p8fMc
             
         // DEĞİŞKENLER
+
+        var MAX_WIDTH = 400
+        var ORIGINAL_WIDTH = 600
         
-        // Uygulamanın sayfaları.
-        var boxStartPage, boxPage1, boxPage2
+        // a0: Başlangıç Sayfası
+        // a1: Sayfa 1
+        // a2: Sayfa 2
+        var a0, a1, a2
+
+        // Başlangıç sayfası butonlarının ortak özellikleri
+        var propButton = {
+            width: 450,
+            height: 80,
+            color: "tomato",
+            minimal: 1,
+            round: 16,
+            fontSize: 25
+        }
         
         // ÖZEL FONKSİYONLARI
             
@@ -50,197 +72,168 @@
             
             page.color = "white"
             
-            // 600px lik içeriğimi, en fazla 900px e kadar ekrana sığdır.
-            page.fit(600, 900)
+            // Maksimum genişliğe sığdır.
+            page.fit(ORIGINAL_WIDTH, MAX_WIDTH)
             
             // NOT: tüm mobil cihazlarda, ekrana tam oturur.
             // - Sayfa 600px genişliğinde tasarlanıyor.
             // - Cihazın ekran genişliği daha az veya daha çok olduğunda, 
             //   tüm içeriği, küçültüp, büyütür.
             
-            // Başlangıç sayfasının oluştur.
-            boxStartPage = createBox(0, 0, 600, page.height)
+            // NESNE: Başlangıç sayfasının taşıyan kutu.
+            a0 = createBox(0, 0, 600, page.height)
             // Görünmez olarak ayarla.
             that.visible = 0
             that.color = "lightgray"
             that.border = 0
             // Sayfanın içeriğini oluştur.
-            createStartPage()
+            createA0()
             
-            // Sayfa1 i oluştur.
-            boxPage1 = createBox(0, 0, 600, page.height)
+            // NESNE: Sayfa1 taşıyıcı.
+            a1 = createBox(0, 0, 600, page.height)
             that.visible = 0
             that.color = "tomato"
             that.border = 0
             // Eğer gerekirse, dikey kaydırma çubuğu çıksın.
             that.scrollY = 1
-            createPage1()
+            createA1()
             
-            // Sayfa2 yi oluştur.
-            boxPage2 = createBox(0, 0, 600, page.height)
+            // NESNE: Sayfa2 taşıyıcı.
+            a2 = createBox(0, 0, 600, page.height)
             that.visible = 0
             that.color = "tomato"
             that.border = 0
             that.scrollY = 1
-            createPage2()
-            
-        }
-        
-        // Her saniye çalışan fonksiyon.
-        var loop = function() {
-        
-            
+            createA2()
             
         }
         
         // DİĞER FONKSİYONLAR
         
         // Başlangıç sayfasının içeriğini oluştur.
-        var createStartPage = function() {
+        var createA0 = function() {
             
-            // Logoyu ekle.
-            createImage(0, 0, 110, 110)
-            boxStartPage.add(that)
+            // NESNE: Logo resmi
+            a0.imgLogo = createImage(0, 100, 110, 110)
+
+            // NOT: bir kutu nesnesinin elemanı olarak oluşturulan
+            // tüm nesneler, o kutunun içine taşınır.
+
             that.load("resimler/app-logo.svg")
-            that.top = 100
-            that.center("left")
             that.color = "white"
             that.border = 4
             that.borderColor = "tomato"
             that.round = 80
-            // Resmin etrafına, 15px lik boşluk ekle.
-            //that.space = 15
-            
-            // Not: bir nesneyi oluşturduktan sonra, tekar değiştirmeyi
-            // düşünüyorsak, onu bir değişkene aktarmadan oluşturabiliriz.
+            // Nesneyi yatay düzlemde ortala.
+            that.center("left")
 
-            // Menuyu oluştur.
-            createButton()
-            boxStartPage.add(that)
+            // NESNE: 1. buton
+            a0.btn1 = createButton()
+            // Ortak özellikleri ayarla.
+            that.prop(propButton)
             that.text = "Sayfa 1"
             that.top = 250
-            that.width = 450
-            that.height = 80
-            that.color = "tomato"
-            that.minimal = 1
-            that.round = 16
-            that.fontSize = 25
             that.center("left")
             that.onClick(showPage1)
             
-            createButton()
-            boxStartPage.add(that)
+            // NESNE: 2. button
+            a0.btn2 = createButton()
+            // Ortak özellikleri ayarla.
+            that.prop(propButton)
             that.text = "Sayfa 2"
-            that.width = 450
-            that.height = 80
-            that.color = "tomato"
-            that.minimal = 1
-            that.round = 16
-            that.fontSize = 25
-            that.aline(exThat, "bottom", 10)
+            // Önceki butonun altına hizala.
+            that.aline(a0.btn1, "bottom", 10)
             that.onClick(showPage2)
-            
-            // Not: exThat değişkeni, son oluşturulandan bir önceki
-            // nesneyi taşıyan değişken.
+
+            // NESNE: 3. button
+            a0.btn3 = createButton()
+            // Ortak özellikleri ayarla.
+            that.prop(propButton)
+            that.text = "Sayfa 3"
+            // Önceki butonun altına hizala.
+            that.aline(a0.btn2, "bottom", 10)
+            that.onClick(showPage3)
+
+            // NOT: sayfa3 farklı bir htm dosyası olarak tasarlanmıştır.
             
             // Başlangıç sayfasını oluşturduktan sonra, görünür yap.
-            boxStartPage.visible = 1
+            a0.visible = 1
             
         }
         
         // Sayfa1 in içeriğini oluştur.
-        var createPage1 = function() {
+        var createA1 = function() {
             
-            // Kapatma düğmesi.
-            var closeButton = createCloseButton()
-            boxPage1.add(closeButton)
-            closeButton.onClick(hidePage1)
+            // Kapatma düğmesi olutur.
+            a1.closeButton = createCloseButton()
+            a1.onClick(hidePage1)
+
+            // NOT: createCloseButton() fonksiyonu, ortak kullanım için
+            // dosyalar/20/close-button.js dosyasına yazılmıştır.
             
             // Sayfa1 yazısı.
-            createLabel()
-            boxPage1.add(that)
+            a1.lblDesc = createLabel()
             that.text = "Sayfa 1"
             that.fontSize = 40
             that.textColor = "white"
             that.textAlign = "center"
-            that.fontSize = 40
             that.center()
             
         }
         
         // Sayfa2 nin içeriğini oluştur.
-        var createPage2 = function() {
+        var createA2 = function() {
             
             // Kapatma düğmesi.
-            var closeButton = createCloseButton()
-            boxPage2.add(closeButton)
-            closeButton.onClick(hidePage2)
+            a2.closeButton = createCloseButton()
+            that.onClick(hidePage2)
             
             // Sayfa2 yazısı.
-            createLabel()
-            boxPage2.add(that)
+            a2.lblDesc = createLabel()
             that.text = "Sayfa 2"
             that.fontSize = 40
             that.textColor = "white"
             that.textAlign = "center"
-            that.fontSize = 40
             that.center()
             
             // Ekranın dışına çıkan içerik. yazısı.
-            createLabel()
-            boxPage2.add(that)
-            that.text = "Ekranın dışına çıkan içerik.<br>"
-            that.width = 560
-            that.height = 100
-            that.textColor = "white"
-            that.textAlign = "left"
-            that.fontSize = 20
-            that.left = 20
-            // Sayfanın en altından, 100px daha aşağıya yerleştir.
-            that.bottom = 0
-            that.bottom -= 100
+            a2.imgContent = createImage(0, 0, 100, 100)
+            that.load("resimler/app-logo.svg")
+            // Sayfaya resim ekle ve yatay olarak ortala.
+            that.center("left")
+            // Resmi, sayfa yüksekliğinden 200px daha aşağıya yerleştir.
+            that.top = page.height + 200
             
         }
         
         // Sayfa1 i göster.
         var showPage1 = function() {
-            boxPage1.visible = 1
+            a1.visible = 1
             
         }
         
         // Sayfa2 yi göster.
         var showPage2 = function() {
-            boxPage2.visible = 1
+            a2.visible = 1
+            
+        }
+
+        // Sayfa2 yi göster.
+        var showPage3 = function() {
+
+            go("dosyalar/20/sayfa3.htm")
             
         }
         
         // Sayfa1 i gizle.
         var hidePage1 = function() {
-            boxPage1.visible = 0
+            a1.visible = 0
             
         }
         
         // Sayfa2 yi gizle.
         var hidePage2 = function() {
-            boxPage2.visible = 0
-            
-        }
-        
-        var createCloseButton = function() {
-            
-            var createdButton = createButton()
-            
-            that.text = "X"
-            that.fontSize = 35
-            that.width = DEFAULT.BUTTON_HEIGHT
-            that.top = 30
-            that.right = 30
-            that.color = "rgba(255, 255, 255, 0.4)"
-            that.minimal = 1
-            that.round = 30
-            that.textColor = "tomato"
-            
-            return createdButton
+            a2.visible = 0
             
         }
 

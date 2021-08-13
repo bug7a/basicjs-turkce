@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>HTML İçeriğini Bir Kutuya Aktarmak</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
+        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+
+        <style>
+        
+            .colored-word {
+                
+                color: orangered;
+                font-family: opensans-bold;
+                background-color: white;
+                border: 1px solid orangered;
+                border-radius: 10px;
+                padding-left: 8px;
+                padding-right: 8px;
+                opacity: 0.7;
+                
+            }
+        
+        </style>
+
+        <script>
+
+        /*
+
+            Body içerisine, HTML içerikler yerleştirmek 
+            ve kod ile bu içeriği bir kutu nesnesinin içine aktarmak.
+
+        */
+            
+        // DEĞİŞKENLER
+            
+        var boxContent
+        
+        // BAŞLANGIÇ FONKSİYONLARI
+            
+        // İlk çalışan fonksiyon.
+        var start = function() {
+            
+            // NESNE: HTML içeriğini taşıyacak kutu.
+            boxContent = createBox(40, 40, 350, 250)
+            that.color = "whitesmoke"
+            that.round = 10
+            // HTML kodunu al ve nesnenin içine yerleştir.
+            that.text = document.getElementById("my-html-content").innerHTML
+            // Dikey kaydırmaya izin ver.
+            that.scrollY = 1
+            
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML içeriği -->
+
+        <div id="my-html-content" style="display:none;">
+
+            <div style="margin:20px;">
+                <h2 style="font-family:opensans-bold;color:black;">Kodlama Nedir?</h2>
+                <p>Yapılmasını istediğimiz görevlerin, bilgisayar tarafından gerçekleştirilmesini sağlamak için kod olarak adlandırılan kelimeleri kullanıyoruz. Bu kodların, yazılma eylemine ise kodlama yapmak <span style="color:gray;font-style:italic;">(kod yazmak)</span> diyoruz.</p>
+                <p style="font-family:opensans-bold;">Hadi şimdi biraz kodlama yapalım:</p>
+                <p>Aşağıdaki görüntü alanında, robot isminde bir resim var. <span class="colored-word">robot.ilerle()</span> kodunu çalıştırarak; bilgisayardan, robot resmini bir adım sağ doğru hareket ettirmesini istemiş olacağız.</p>
+                <p><span class="colored-word">Kodu çalıştır</span> düğmesine basalım ve bilgisayarın, kod alanına yazılanları nasıl uyguladığını görelim.</p>
+            </div>
+
+        </div>
+        
+    </body>
+</html>

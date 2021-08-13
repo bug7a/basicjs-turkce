@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Renk Oluşturucu</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
+        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+        
+        /*
+
+        - RGB nin alamı, RED GREEN BLUE kelimelerinin baş harfleridir. 
+        - Bu üç rengin, farklı oranlardaki karışımları ile diğer renkler oluşturulur.
+        - Her bir rengin oranı 0 ile 255 arasında bir sayı ile belirtilir.
+
+        Beyaz rengin farklı yazım şekilleri:
+        page.color = "white"
+        page.color = "#FFFFFF"
+        page.color = "rgb(255, 255, 255)"
+
+        Siyah rengin farklı yazım şekilleri:
+        page.color = "siyah"
+        page.color = "#000000"
+        page.color = "rgb(0, 0, 0)"
+
+        Kırmızı rengin farklı yazım şekilleri:
+        page.color = "red"
+        page.color = "#FF0000"
+        page.color = "rgb(255, 0, 0)"
+
+        NOT: FF, 255 in 16 lık sayı sistemindeki karşılığıdır.
+
+        */
+
+        // DEĞİŞKENLER
+        
+        // Seçilen renk.
+        var boxColorPanel
+        // Seçilen rengin rgb kodu.
+        var txtColorCode
+        
+        // Renk düzenleme
+        var cleRed
+        var cleGreen
+        var cleBlue
+        
+        // BAŞLANGIÇ FONKSİYONLARI
+            
+        // İlk çalışan fonksiyon.
+        var start = function() {
+
+            // Ürettiğiniz rengi arkaplan olarak deneyin.
+            page.color = "rgb(180, 180, 180)"
+            
+            // Renk düzenleme nesneleri.
+            cleRed = createColorEdit(250, 20, "orangered")
+            cleGreen = createColorEdit(250, 85, "seagreen")
+            cleBlue = createColorEdit(250, 150, "steelblue")
+            
+            // Seçilen renk.
+            boxColorPanel = createBox(40, 20, 190, 190)
+            that.border = 4
+            that.borderColor = "black"
+            that.round = 6
+
+            // Seçilen renk kodu.
+            txtColorCode = createTextBox(0, 0, 190)
+            that.aline(boxColorPanel, "bottom", 20)
+
+            // Rengi güncelle.
+            updateColorPanelAndCode()
+            
+        }
+        
+        // DİĞER FONKSİYONLAR
+        
+        // Bir rengin oranını düzenleyen nesne oluşturucu fonksiyon.
+        var createColorEdit = function(x, y, color) {
+            
+            // Arkaplan
+            var colorEditObject = createBox(x, y)
+            that.width = 220
+            that.height = 60
+            that.color = "whitesmoke"
+            that.round = 30
+            that.border = 0
+
+            // Nesnenin kullandığı alt fonksiyonları;
+            // Oluşturulan Box nesnesine, eleman olarak ekle.
+
+            // Bir renk sayısı 0 dan 255 e kadar olmalı.
+            colorEditObject.checkNumber = function(number) {
+
+                if (number < 0) {
+                    number = 0
+
+                } else if (number > 255) {
+                    number = 255
+
+                }
+
+                return number
+
+            }
+
+            colorEditObject.addNumberToT1 = function(count) {
+
+                // İçeriği sayıya çevir.
+                var number = num(colorEditObject.t1.text)
+                // Sayıya ekleme yap ve sınırlarını kontrol et.
+                number = colorEditObject.checkNumber(number + count)
+                // Düzeltilmiş sayıyı güncelle.
+                colorEditObject.t1.text = str(number)
+
+                // NOT: str fonksiyonu, sayıyı metne çevirir.
+
+                // Renk ve kodu güncelle.
+                updateColorPanelAndCode()
+
+            }
+
+            colorEditObject.increase = function() {
+
+                // 15 ekle
+                colorEditObject.addNumberToT1(15)
+
+            }
+
+            colorEditObject.decrease = function() {
+
+                // 15 çıkar
+                colorEditObject.addNumberToT1(-15)
+
+            }
+
+            colorEditObject.t1Changed = function() {
+
+                // Sadece güncelle
+                colorEditObject.addNumberToT1(0)
+
+            }
+            
+            // Arttır düğmesi
+            colorEditObject.b1 = createButton(5, 5, 50, 50)
+            that.color = "lightgray"
+            that.text = "-"
+            that.minimal = 1
+            that.round = 30
+            that.fontSize = 35
+            that.onClick(colorEditObject.decrease)
+            
+            // Renk sayısı
+            colorEditObject.t1 = createTextBox(60, 5, 100, 50)
+            that.text = "0"
+            that.minimal = 1
+            that.color = "transparent"
+            that.textColor = color
+            that.textAlign = "center"
+            that.onChange(colorEditObject.t1Changed)
+            
+            // Azalt düğmesi
+            colorEditObject.b2 = createButton(165, 5, 50, 50)
+            that.color = "lightgray"
+            that.text = "+"
+            that.minimal = 1
+            that.round = 30
+            that.fontSize = 35
+            that.onClick(colorEditObject.increase)
+            
+            return colorEditObject
+            
+        }
+        
+        // Düzenlenen rengi göster.
+        var updateColorPanelAndCode = function() {
+
+            var r = cleRed.t1.text
+            var g = cleGreen.t1.text
+            var b = cleBlue.t1.text
+            
+            boxColorPanel.color = "rgb(" + r + ", " + g + ", " + b + ")"
+            txtColorCode.text = boxColorPanel.color
+            
+        }
+
+        
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML içeriği -->
+        
+    </body>
+</html>

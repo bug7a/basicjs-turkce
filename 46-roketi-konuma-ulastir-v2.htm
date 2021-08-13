@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Rocketi Konuma Ulaştır V2</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
+        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+
+        /*
+
+            NESNENİN BASİT HAREKETİ
+
+            Bir cismin, hareket etmesinin temel mantığı,
+            konumunun belli aralıklar ile değiştirilmesidir.
+
+            BU ÖRNEKTE:
+            Bir resim nesnesini (rocket) ve koordinat sistemini kullanarak;
+            belli zaman aralığında çalışan bir fonksiyon (loop) yardımı ile;
+            resmin, istenilen konuma hareket etmesini sağlıyoruz.
+
+            EK BİLGİ:
+            Gelişmiş algoritmalar, bu hareketleri; 
+            çok daha estetik, akıcı ve kolay kod arayüzü ile yapabilirler.
+
+            Bu örnek ile, öğretilmek istenen; 
+            temel ve en basit mantığın kavranmasını sağlamaktır.
+
+        */
+            
+        // DEĞİŞKENLER
+
+        var rocket
+        
+        var newX = 50
+        var newY = 50
+
+        var calcX = 0
+        var calcY = 0
+
+        var lblFinish
+        var lblInfo
+        var lblRocketInfo
+
+
+        // ÖZEL FONKSİYONLAR
+            
+        // İlk çalışan fonksiyon.
+        var start = function() {
+
+            page.color = "#141414"
+
+            // NESNE: Fare tıklandığında, konumu işaretleyen X
+            lblFinish = createLabel(0, 0, 30, 30)
+            that.text = "x"
+            that.color = "transparent"
+            that.textColor = "orangeRed"
+            that.textAlign = "center"
+            that.round = 15
+            that.opacity = 0.4
+            that.visible = 0
+
+            // NESNE: Ekranın ortasındaki bilgi yazısı.
+            lblInfo = createLabel(0, 0, 260, 20)
+            that.text = "Başlamak için hedef seçin."
+            that.textColor = "orangered"
+            that.fontSize = 14
+            that.opacity = 0.8
+            that.textAlign = "center"
+            // Ekranın ortasına hizala.
+            that.center()
+
+            // NESNE: Roket konum ve açı bilgileri
+            lblRocketInfo = createLabel()
+            that.textColor = "orangered"
+            that.fontSize = 11
+            that.opacity = 0.8
+            that.textAlign = "right"
+            that.top = 15
+            that.right = 15
+
+
+            // NESNE: roket resmi
+            rocket = createImage(newX, newY, 50, 50)
+            that.load("resimler/roket.png")
+            // that.rotate = 0
+
+            // Fare basılı iken çalıştır.
+            window.addEventListener('mousedown', mouseDown);
+
+            // loop() fonksiyonunu 5ms aralık ile çalıştır.
+            setLoopTimer(8)
+            
+        }
+
+        var loop = function() {
+
+            calcX = 0
+            calcY = 0
+
+            // Yatay hareketi hesapla.
+            if (rocket.left > newX) {
+                calcX = -1
+
+            } else if (rocket.left < newX) {
+                calcX = 1
+
+            } 
+
+            // Dikey hareketi hesapla.
+            if (rocket.top > newY) {
+                calcY = -1
+
+            } else if (rocket.top < newY) {
+                calcY = 1
+
+            }
+
+            // Roketin açısını gideceği yöne göre değiştir.
+            rocket.rotate = calcDirection(calcX, calcY)
+            // Reketi yeniden konumlandır. 1px hareket ettir.
+            rocket.left += calcX
+            rocket.top += calcY
+
+            // Yeni konum bilgilerini göster.
+            refreshRocketInfo()
+
+            // Eğer hareket bitmiş ise
+            if (calcX == 0) {
+                if (calcY == 0) {
+                    if (lblFinish.visible != 0) {
+                        // Hedefe ulaşıldı, hedefi görünmez yap.
+                        lblFinish.visible = 0
+
+                        // NOT: Hedefe daha önce ulaşılmış ise,
+                        // Hedef görünmezdir ve bu kod tekrar çalıştırılmaz.
+
+                    }
+                }
+            }
+
+        }
+
+        
+        // DİĞER FONKSİYONLAR
+        
+        var mouseDown = function(event) {
+
+            // Uyarıyı gizle.
+            lblInfo.visible = 0
+            
+            // Farenin konumunu, yeni konum olarak sakla.
+            newX = event.offsetX;
+            newY = event.offsetY;
+
+            // Hedefi göster.
+            lblFinish.visible = 1
+            // Hedef nesnesinin boyutları 30x30
+            lblFinish.left = newX - 15
+            lblFinish.top = newY - 15
+
+            // rocketin merkezini hesapla.
+            newX = newX - (rocket.width / 2)
+            newY = newY - (rocket.height / 2)
+            
+        }
+
+        // rocketin yönünü açı olarak hesapla.
+        var calcDirection = function(x, y) {
+
+            // Eğer hareket yok ise yön aynı kalsın.
+            var direction = rocket.rotate
+
+            if (x == 1) {
+                // Sağ
+                direction = 90
+
+                if (y == 1) {
+                    // Sağ alt
+                    direction += 45
+
+                } else if (y == -1) {
+                    // Sağ ust
+                    direction -= 45
+
+                }
+
+            } else if (x == -1) {
+                // Sol
+                direction = 270
+
+                if (y == 1) {
+                    // Sol üst
+                    direction -= 45
+
+                } else if (y == -1) {
+                    // Sol alt
+                    direction += 45
+
+                }
+
+            } else {
+                if (y == 1) {
+                    // Aşağı
+                    direction = 180
+
+                } else if (y == -1) {
+                    // Yukarı
+                    direction = 0
+                    
+                }
+
+            }
+
+            return direction;
+
+        }
+
+        var refreshRocketInfo = function() {
+
+            lblRocketInfo.text = "x: " + rocket.left + " y: " + rocket.top + " angle: " + rocket.rotate
+
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML içeriği -->
+        
+    </body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Dinamik Tablo Oluşturma</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
+        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+
+        <style>
+
+            /* Web sayfası gibi seçilebilmesini engelle. */
+
+            * {
+                -webkit-tap-highlight-color: rgba(0,0,0,0);
+            }
+            
+            body {
+                -webkit-touch-callout: none;
+                -webkit-text-size-adjust: none;
+                -webkit-user-select: none;   
+            }
+
+        </style>
+
+        <script>
+
+        /*
+
+            Bir veri tabanı içerisinde bir çok tablo barındırabilir. 
+            Bu örnekte, biz dizi değişkeninde tutulan bilgiler, bir veri tabanından da alınabilir.
+
+            - Dizilerde tutulan bilgiyi yönetme becerisi.
+            - Dinamik olarak, istenilen yapıları oluşturabilme.
+
+
+        */
+            
+        // DEĞİŞKENLER
+
+        var table1Titles = [
+            {name: "Sıra", width: 140, textAlign: "center", contentID: "id"},
+            {name: "İsim", width: 200, textAlign: "left", contentID: "name"},
+            {name: "EPosta", width: 240, textAlign: "left", contentID: "email"},
+            {name: "Test", width: 60, textAlign: "left", contentID: "id"},
+            {name: "Test2", width: 80, textAlign: "left", contentID: "id"}
+        ]
+
+        var table1Contents = [
+            {id: "001", name: "Ahmet", email: "ahmet.test@gmail.com"},
+            {id: "002", name: "Mehmet", email: "mehmet.test@gmail.com"},
+            {id: "003", name: "Filiz", email: "filiz.test@gmail.com"},
+            {id: "004", name: "Hasan", email: "hasan.test@gmail.com"},
+            {id: "005", name: "Duygu", email: "duygu.test@gmail.com"},
+            {id: "006", name: "Anıl", email: "anil.test@gmail.com"},
+            {id: "007", name: "Dilara", email: "dilara.test@gmail.com"},
+            {id: "008", name: "Alperen", email: "alp.test@gmail.com"},
+        ]
+            
+        var tblPeople
+        
+        // Ortak özellikler
+        var propTableTitle = {color: "white", round: 4}
+        var propTableName = {color: "white", round: 4}
+        
+        // ÖZEL FONKSİYONLAR
+            
+        // İlk çalışan fonksiyon.
+        var start = function() {
+
+            // Nesne: Tablo
+            tblPeople = createTable(table1Titles)
+            that.left = 10
+            that.top = 50
+            // Nesnenin yüksekliğini yeniden düzenle.
+            that.setHeight(450)
+
+            // NOT: bu fonksiyonu yazmamın sebebi; nesne yüksekliği
+            // İki farklı parçayı ilgilendiriyor.
+
+            // Tablo oluşturuldab sonra, manuel olarak özelliklerini değiştirelim.
+            that.title0.color = "lightblue"
+
+            // Bilgileri tabloya aktaralım.
+            that.fill(table1Contents)
+
+            // Yeniden yazdığımız fonksiyon ile, her bir satıra basılmasını sağlayalım.
+            that.onClick(itemClicked)
+
+            // Tablonun genişliğine göre ekrana sığdır. Toplam boşluk 20px
+            page.fit(tblPeople.width + 20, 650)            
+            
+        }
+        
+        // DİĞER FONKSİYONLAR
+        
+        var itemClicked = function(self) {
+            
+            print(self.content.name)
+            
+        }
+
+        // NESNEYİ OLUŞTURAN FONKSİYON: 
+        // Ortak kullanım için başka bir .js dosyasına taşınabilir.
+
+        // Dinamik tablo oluşturma fonksiyonu.
+        var createTable = function(titles) {
+
+            // NESNE: Liste ana taşıyıcı
+            tableObject = createBox(0, 0, 0, 190)
+            that.border = 0
+            that.round = 4
+
+            // Başlıkların genişliğine göre, toplam genişlik hesaplanacak.
+            var tableWidth = 0
+
+            // Başlıkları oluştur.
+            for (var i = 0; i < titles.length; i++) {
+
+                // NESNE: Başlık
+                tableObject["title" + i] = createButton(0, 0, titles[i].width, 40)
+                that.text = titles[i].name
+                that.prop(propTableTitle)
+
+                // Başlıkları yan yana diz.
+                if (i > 0) {
+                    that.aline(tableObject["title" + (i - 1)], "right")
+                }
+
+                // Başlıkların toplam genişliğini hesapla.
+                tableWidth += titles[i].width
+
+            }
+
+            // Taşıyıcı kutunun genişliğini, başlıklara göre ayarla.
+            tableObject.width = tableWidth
+
+            // NESNE: İçeriği taşıyan kaydırılabilir kutu
+            tableObject.b1 = createBox(0, 40, tableObject.width, tableObject.height - 40)
+            that.color = "transparent"
+            that.border = 0
+            that.scrollY = 1
+
+            tableObject.itemCount = 0
+
+            // Nesneye temizleme fonksiyonu ekle.
+            tableObject.clean = function() {
+
+                tableObject.b1.text = ""
+
+                tableObject.itemCount = 0
+
+            }
+
+            // Nesneye satır oluşturma fonksiyonu ekle.
+            tableObject.createItem = function(item, count) {
+
+                // NESNE: Satırın taşıyıcı kutusu.
+                tableObject.b1["b" + count] = createBox(0, (count * 30), tableObject.width, 30)
+                that.border = 0
+                that.content = item
+                //that.onClick(itemClicked)
+
+                // Eklenen satır sayısını arttır.
+                tableObject.itemCount++
+
+                // İkiye bölünebilenler satırlar beyaz boyansın
+                if (count % 2) {
+                    that.color = "white"
+                }
+
+                // Satırın taşıyıcı kutusunun ismi.
+                var itemObject = tableObject.b1["b" + count]
+
+                // Bir satırdaki yan yana içerikleri oluştur.
+                for( var j = 0; j < titles.length; j++) {
+
+                    // NESNE: Bir satırdaki içerik taşıyan kare.
+                    itemObject["lbl" + j] = createLabel(tableObject["title" + j].left, 0, tableObject["title" + j].width, itemObject.height)
+                    that.textAlign = titles[j].textAlign
+
+                    // Sola dayalı olanların başına 10px boşluk koy.
+                    if (titles[j].textAlign == "left") {
+                        itemObject["lbl" + j].left += 15
+                        itemObject["lbl" + j].width -= 15
+                    }
+
+                    // Nesnenin metnini diziden al.
+                    that.text = item[titles[j].contentID]
+
+                }
+
+            }
+
+            // Nesneyi içerik ile doldur.
+            tableObject.fill = function(contents) {
+
+                // Önce eski eklenmiş tüm içerikleri temizle.
+                tableObject.clean()
+
+                // İçerikleri tek tek ekle.
+                for( var i = 0; i < contents.length; i++) {
+
+                    tableObject.createItem(contents[i], i)
+
+                }
+
+                // İçeriği oluşturma, that değişkenini değiştirecektir.
+                // Kullanmak istiyorsak, tekrar düzenleyebiliriz.
+                setAsThat(tableObject)
+
+            }
+
+            // Nesnenin orjinal onClick fonksiyonunu değiştirelim.
+            tableObject.onClick = function(func) {
+
+                // Oluşturulan satır sayısınca tekrar et.
+                for ( var i = 0; i < tableObject.itemCount; i++) {
+
+                    // Parametredeki fonksiyonu her bir satırın nesnesine bağla.
+                    tableObject.b1["b" + i].onClick(func)
+
+                }
+
+                // NOT: Taşıyıcı kutu nesnesine basıldığında yerine,
+                // Her bir satırın, taşıyıcı nesnesine basıldığında yaptık.
+
+            }
+
+            // Tablonun yüksekliğini yeniden düzenle.
+            tableObject.setHeight = function(height) {
+
+                tableObject.height = height
+                // Nesnenin alt nesnesinin de yüksekliğini yeniden düzenle.
+                tableObject.b1.height = height - 40
+
+            }
+            
+            // Cevap verildikten sonra that olarak kullanılabilsin.
+            setAsThat(tableObject)
+
+            // Oluşturulan nesneyi cevap ver.
+            return tableObject
+
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML içeriği -->
+        
+    </body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Özel Button ve Menü</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
+        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+
+
+        <style>
+
+            /* Web sayfası gibi seçilebilmesini engelle. */
+
+            * {
+                -webkit-tap-highlight-color: rgba(0,0,0,0);
+            }
+
+            body {
+                -webkit-touch-callout: none;
+                -webkit-text-size-adjust: none;
+                -webkit-user-select: none;   
+            }
+
+            /* Butonun üzerinde gelince animasyon olsun. */
+
+            .btn-type1 {
+                background-color: white;
+                transition: left 0.5s, top 0.5s, width 0.5s, height 0.5s, background-color 0.5s;
+            }
+
+            .btn-type1:hover {
+                background-color: whitesmoke !important;
+            }
+
+        </style>
+
+        <script>
+
+        /*
+
+        Bir dizi değişkeni ile dinamik oluşturulan menü.
+
+        */
+            
+        // DEĞİŞKENLER
+
+        var menuData = [
+            {id: 1, type: "button", text: "İlk Sayfa", width: 140, icon: "home.png" },
+            {id: 2, type: "button", text: "Ürünler", width: 140, icon: "fruits.png" },
+            {id: 3, type: "button", text: "Sepet", width: 125, icon: "basket.png" },
+            {id: 4, type: "button", text: "Ödeme", width: 135, icon: "payment.png" },
+            {id: 5, type: "line" },
+            {id: 6, type: "button", text: "Çıkış", width: 120, icon: "signout.png" }
+        ]
+
+        // Tum butonların taşıyıcısı
+        var menu
+        // Sayfanın genişliği, menü genişliğine göre belirlenir.
+        var pageWidth
+        
+        // BAŞLANGIÇ FONKSİYONLARI
+            
+        // İlk çalışan fonksiyon.
+        var start = function() {
+
+            page.color = "whitesmoke"
+
+            // NESNE: Butonların taşıyıcısı
+            menu = createBox(0, 40, 400, 60)
+            that.color = "white"
+            that.border = 0
+            that.round = 8
+            // Dışa taşan nesneleri göster.
+            menu.contElement.style.overflow = "visible"
+
+            // Buton oluşturuldukça, genişliği bu değişkene eklenecek.
+            var totalMenuWidth = 5
+
+            // Butonları oluştur.
+            for (var i = 0; i < menuData.length; i++) {
+
+                if (menuData[i].type == "button") {
+
+                    // NESNE: Buttonlardan biri
+                    menu["item" + i] = createButtonWithIcon(menuData[i].text, menuData[i].width, "resimler/22/" + menuData[i].icon)
+                    // CSS ile butonun üzerine geldiğinde renginin değişmesini sağla.
+                    that.contElement.classList.add("btn-type1")
+                    // CSS bağlantısını kaldırmak için
+                    // that.contElement.classList.remove("btn-type1")
+                    // Basılan butonu tanımak için anahtarı kaydet.
+                    that.id = menuData[i].id
+                    that.onClick(itemClicked)
+
+                } else if (menuData[i].type == "line") {
+
+                    // NESNE: Ayıraçlardan biri
+                    menu["item" + i] = createBox()
+                    that.color = "whitesmoke"
+                    that.width = 4
+                    that.height = 50
+                    that.round = 8
+                    that.border = 0
+
+                }
+
+                // İlk nesne, left 5px, top 5px olacak.
+                if (i == 0) {
+                    that.top = 5
+                    that.left = 5
+                } else {
+                    // Nesneyi, bir önceki nesneye göre hizala.
+                    that.aline(menu["item" + (i - 1)], "right", 5)
+                }
+
+                // Nesne genişliği ve boşluğu ekle.
+                totalMenuWidth += that.width + 5   
+
+            }
+
+            // Taşıyıcının genişliğini, butonlara göre yeniden düzenle.
+            menu.width = totalMenuWidth
+
+            pageWidth = totalMenuWidth + 100
+
+            // NESNE: Seçilen butonu belirten nokta.
+            menu.selectedDot = createBox(0, 0, 10, 3)
+            that.color = "tomato"
+            that.round = 10
+            that.border = 0
+            that.opacity = 0.8
+            // CSS hareketi ekle.
+            that.contElement.style.transition = "left 0.5s, width 0.5s, background-color 0.5s";
+
+            // Son basılan buton nesnesini saklamak için eleman.
+            menu.clickedButton = undefined
+
+            // İlk butona basılmış gibi çalıştır.
+            itemClicked(menu.item0)
+            // Nesneyi ortala.
+            pageResized()
+
+            // Sayfa boyutu değiştiğinde, yeniden ortala.
+            page.onResize(pageResized)
+            
+        }
+
+        // DİĞER FONKSİYONLAR
+
+        var pageResized = function() {
+
+            // Menuyu ekrana tam sığsın.
+            page.fit(pageWidth, pageWidth)
+            // Menuyu yatay olarak ortala.
+            menu.center("left")
+
+        }
+
+        // Bir butona basıldığında, o butonu seçen fonksiyon.
+        var itemClicked = function(self) {
+
+            print("Basılan butonun anahtarı: " + self.id)
+            // Bir önceki basılan butonu eski haline getir.
+            if (menu.clickedButton != undefined) {
+                menu.clickedButton.color = "white"
+            }
+            // Daireyi, basılan butonun altına getir.
+            menu.selectedDot.top = self.top + self.height + 5
+            menu.selectedDot.left = self.left
+            menu.selectedDot.width = self.width
+            // Basılan butonun rengini belirle.
+            self.color = "whitesmoke"
+            // Basılan butonu sonra kullanmak üzere sakla.
+            menu.clickedButton = self
+
+        }
+        
+        // Resimli buton oluşturan fonksiyon.
+        var createButtonWithIcon = function(text, width, iconPath) {
+            
+            // NESNE: Taşıyıcı kutu
+            var object = createBox(0, 0, width, 50)
+            that.border = 0
+            that.round = 8
+
+            // NESNE: Resim
+            object.imgLogo = createImage(15, 12, 25, 25)
+            that.load(iconPath)
+
+            // NESNE: Yazı
+            object.lblText = createLabel(55, 13)
+            that.text = text
+            that.textColor = "rgba(0, 0, 0, 0.6)"
+            that.fontSize = 18
+
+            // that değişkenini güncelle.
+            setAsThat(object)
+
+            // Nesneyi geri gönder.
+            return object
+            
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML içeriği -->
+        
+    </body>
+</html>

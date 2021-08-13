@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Arttırma/Azaltma Butonları</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
+        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+
+        /*
+
+        - Belli bir aralıkta, sayı seçmeyi sağlayan algoritma.
+
+        */
+
+        // Taşıyıcı kutu.
+        var b1
+
+        // ilk çalışan fonksiyon.
+        var start = function() {
+
+            page.color = "lightgray"
+
+            // NESNE: Taşıyıcı
+            b1 = createBox(50, 50, 240, 60)
+            that.border = 0
+            that.round = 12
+            that.color = "white"
+            that.center("left")
+            that.bottom = 40
+
+            // NESNE: Eksiltme butonu.
+            b1.btnEksilt = createButton(5, 5)
+            that.text = "Eksilt"
+            that.textColor = "rgba(255, 255, 255, 0.9)"
+            that.color = "tomato"
+            that.width = 90
+            that.round = 12
+            that.minimal = 1
+            that.onClick(sayiEksilt)
+            
+            // NESNE: Sayı.
+            b1.lblSayi = createLabel()
+            // Başlangıç sayısı.
+            that.text = "0"
+            that.textAlign = "center"
+            that.width = 50
+            that.color = "transparent"
+            that.aline(b1.btnEksilt, "right")
+            // Hizaladıktan sonra, yukarıdan 10px daha aşağıya indir.
+            that.top += 10
+
+            // NESNE: Arttırma butonu.
+            b1.btnArttir = createButton()
+            that.text = "Arttır"
+            that.textColor = "rgba(255, 255, 255, 0.9)"
+            that.color = "cadetblue"
+            that.width = 90
+            that.round = 12
+            that.minimal = 1
+            that.aline(b1.btnEksilt, "right", 50)
+            that.onClick(sayiArttir)
+
+            // İlk oluşturulduğunda kontrol et ve güncelle.
+            butonlarınDurumunuGuncelle()
+            
+
+        }
+
+        //tuşa basıldığında sayinın 1 arttırılmasını sağlayan fonksiyon.
+        var sayiArttir = function() {
+            
+            //etiket (Label) nesnesindeki sayıyı 1 ile topla ve etikete geri yaz.
+            b1.lblSayi.text = num(b1.lblSayi.text) + 1
+
+            // Sayı değiştiğinde, kontrol et ve güncelle.
+            butonlarınDurumunuGuncelle()
+            
+        }
+
+        //tuşa basıldığında sayinın 1 arttırılmasını sağlayan fonksiyon.
+        var sayiEksilt = function() {
+            
+            // Etiket (Label) nesnesindeki sayıyı 1 ile topla ve etikete geri yaz.
+            b1.lblSayi.text = num(b1.lblSayi.text) - 1
+
+            // Sayı değiştiğinde, kontrol et ve güncelle.
+            butonlarınDurumunuGuncelle()
+            
+        }
+
+        // Sayıya göre butonların durumunu ayarlayan fonksiyon.
+        var butonlarınDurumunuGuncelle = function() {
+
+            // Sayı 0 ile 10 arasında olabilir.
+            // Bu sınırların dışına çıkılamayacak şekilde butonları pasif yap.
+            if (b1.lblSayi.text == "10") {
+                b1.btnArttir.enabled = 0
+
+            } else if (b1.lblSayi.text == "0") {
+                b1.btnEksilt.enabled = 0
+
+            } else {
+                b1.btnArttir.enabled = 1
+                b1.btnEksilt.enabled = 1
+
+            }
+
+        }
+        
+        </script>
+
+    </head>
+    <body>
+        
+    </body>
+</html>

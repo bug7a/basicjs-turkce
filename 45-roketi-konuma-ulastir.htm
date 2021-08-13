@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>rocketi Konuma Ulaştır</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
+        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+
+        /*
+
+            NESNENİN BASİT HAREKETİ
+
+            Bir cismin, hareket etmesinin temel mantığı,
+            konumunun belli aralıklar ile değiştirilmesidir.
+
+            BU ÖRNEKTE:
+            Bir resim nesnesini (rocket) ve koordinat sistemini kullanarak;
+            belli zaman aralığında çalışan bir fonksiyon (loop) yardımı ile;
+            resmin, istenilen konuma hareket etmesini sağlıyoruz.
+
+            EK BİLGİ:
+            Gelişmiş algoritmalar, bu hareketleri; 
+            çok daha estetik, akıcı ve kolay kod arayüzü ile yapabilirler.
+
+            Bu örnek ile, öğretilmek istenen; 
+            temel ve en basit mantığın kavranmasını sağlamaktır.
+
+        */
+            
+        // DEĞİŞKENLER
+
+        var rocket
+        
+        var newX = 50
+        var newY = 50
+
+        var lblFinish
+        var lblInfo
+
+        // ÖZEL FONKSİYONLAR
+            
+        // İlk çalışan fonksiyon.
+        var start = function() {
+
+            page.color = "#141414"
+
+            // NESNE: Fare tıklandığında, konumu işaretleyen X
+            lblFinish = createLabel(0, 0, 30, 30)
+            that.text = "x"
+            that.color = "transparent"
+            that.textColor = "orangeRed"
+            that.textAlign = "center"
+            that.round = 15
+            that.opacity = 0.4
+            that.visible = 0
+
+            // NESNE: Ekranın ortasındaki bilgi yazısı.
+            lblInfo = createLabel(0, 0, 200, 20)
+            that.text = "Başlamak için hedef seçin."
+            that.textColor = "orangered"
+            that.fontSize = 14
+            that.opacity = 0.8
+            that.textAlign = "center"
+            // Ekranın ortasına hizala.
+            that.center()
+
+            // NESNE: rocket resmi
+            rocket = createImage(newX, newY, 50, 50)
+            that.load("resimler/roket.png")
+            // that.rotate = 0
+
+            // Fare basılı iken çalıştır.
+            window.addEventListener('mousedown', mouseDown);
+
+            // loop() fonksiyonunu 5ms aralık ile çalıştır.
+            setLoopTimer(8)
+            
+        }
+
+        var loop = function() {
+
+            // Önce yatay hareketi tamamla.
+            if (rocket.left > newX) {
+                // Sola hareket et.
+                rocket.left -= 1
+                rocket.rotate = 270
+
+            } else if (rocket.left < newX) {
+                // Sağa hareket et.
+                rocket.left += 1
+                rocket.rotate = 90
+
+            } else {
+
+                // Sonra dikey harekete devam et.
+                if (rocket.top > newY) {
+                    // Yukarı hareket et.
+                    rocket.top -= 1
+                    rocket.rotate = 0
+
+                } else if (rocket.top < newY) {
+                    // Aşağı hareket et.
+                    rocket.top += 1
+                    rocket.rotate = 180
+
+                } else {
+                    // Hedefe ulaşıldı, hedefi görünmez yap.
+                    lblFinish.visible = 0
+                }
+
+            }
+
+        }
+
+        
+        // DİĞER FONKSİYONLAR
+        
+        var mouseDown = function(event) {
+
+            // Uyarıyı gizle.
+            lblInfo.visible = 0
+            
+            // Farenin konumunu, yeni konum olarak sakla.
+            newX = event.offsetX;
+            newY = event.offsetY;
+
+            // Hedefi göster.
+            lblFinish.visible = 1
+            // Hedef nesnesinin boyutları 30x30
+            lblFinish.left = newX - 15
+            lblFinish.top = newY - 15
+
+            // rocketin merkezini hesapla.
+            newX = newX - (rocket.width / 2)
+            newY = newY - (rocket.height / 2)
+            
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML içeriği -->
+        
+    </body>
+</html>
