@@ -14,8 +14,6 @@ Ve proje geliştirmeyi kolaylaştıran JavaScript kütüphanesi.<br />
 
 ![alt tag](https://bug7a.github.io/basicjs-turkce/projeler.png)
 
-<br />
-
 ### İletişim Bilgileri
 
 Başlangıç: 25 Ekim 2020<br>
