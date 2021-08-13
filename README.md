@@ -14,9 +14,9 @@ Ve proje geliştirmeyi kolaylaştıran JavaScript kütüphanesi.<br />
 
 ![alt tag](https://bug7a.github.io/basicjs-turkce/projeler.png)
 
-<br /><br />
+<br />
 
-İletişim Bilgileri:<br />
+### İletişim Bilgileri
 
 Başlangıç: 25 Ekim 2020<br>
 Geliştirici: Buğra ÖZDEN<br>
@@ -25,6 +25,8 @@ Eposta: bugra.ozden@gmail.com<br>
 
 Hayrını görmenizi dilerim,<br />
 İyi çalışmalar.<br /><br />
+
+### Lisans
 
 You are free:<br />
 
