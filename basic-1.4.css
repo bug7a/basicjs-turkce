@@ -46,7 +46,8 @@ body {
     overflow-y: hidden;
     
     -webkit-touch-callout: none;
-    -webkit-user-select: none;
+    -webkit-text-size-adjust: none;
+    -webkit-user-select: none; 
 }
 
 */
@@ -117,7 +118,8 @@ body {
     background-position: left top;
     background-repeat: no-repeat;
     background-size:100% 100%;
-    pointer-events:none;
+    /* Button her zaman basılabilir olsun. */ 
+    pointer-events:auto;
     
 }
 
@@ -210,7 +212,7 @@ body {
     
 }
 
-.basic_textbox.title {
+.basic_textbox-title {
     
     position: absolute;
     background-color: transparent;
@@ -219,7 +221,6 @@ body {
     text-align: left;
     color: #4A4A4A;
     height: 28px;
-    /* width:; */
     top: -28px;
     left: 0px;
     padding: 2px;
@@ -236,19 +237,10 @@ body {
 .basic_image {
     
     position:absolute;
-    display:none;
-    /* NOT: Nesne tamamen gizlendiğinde, "auto" değerler hesaplanmaz. */
-    /* opacity: 0.01; */
+    display:block;
     overflow: hidden;
-    /* font-family: opensans;
-    font-size: 14px;
-    text-align: center; */
-    /* color:#4A4A4A; */
     background-color: transparent;
     border: 0px solid #000000;
-    /* border: none; */
-    /* width: 100px;
-    height: 100px; */  
     padding: 0px;
     margin: 0px;
     box-sizing: border-box;

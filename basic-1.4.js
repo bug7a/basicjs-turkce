@@ -3,14 +3,10 @@
 
 /*
 
-BasicJS KÜTÜPHANESİ NEDİR?
+BasicJS NEDİR?
 
-Programlamaya yeni başlayanlar için:
-Yazılım projeleri geliştirmeyi kolaylaştıran JavaScript kütüphanesi.
-
-- Web teknolojileri ile uygulama geliştirme deneyimi yaşatmak için
-tasarlanmış 5 temel nesne, bu nesneleri birlikte kullanarak daha karmaşık
-nesneler oluşturulabiliyor.
+Programlamaya yeni başlayanlar için: Nesne tabanlı yazılım projesi 
+geliştirmeyi kolaylaştıran JavaScript kütüphanesi.
 
 
 JAVASCRIPT PROGRAMLAMA DİLİ:
@@ -24,6 +20,7 @@ https://tr.javascript.info/
 İngilizce kaynak;
 https://www.w3schools.com/js/DEFAULT.asp
 
+
 İNGİLİZCE - TÜRKÇE SÖZLÜK:
 
 Anlamını bilmediğiniz ingilizce kelimeler için,
@@ -36,7 +33,8 @@ https://translate.google.com/ internet sitesini kullanabilirsiniz.
 Year: 25 October 2020
 Developer: Bugra OZDEN
 Email: bugra.ozden@gmail.com
-WebSite: http://bugraozden.com
+Personal Site: http://bugraozden.com
+Project Site: https://bug7a.github.io/basicjs-turkce/
 
 You are free:
 
@@ -47,14 +45,6 @@ to make commercial use of the work
 https://creativecommons.org/licenses/by/4.0/
 
 Have Fun.
-
-*/
-
-/*
-
-- Otomatik boyutlandırmanın hesaplanması zaman alır. 
-Böyle Label nesnelerinin, center() veya aline() fonksiyonlarında 
-kullanılması doğru sonuç vermeyebilir.
 
 */
 
@@ -166,7 +156,7 @@ basic_settings.auto_add_objects_into_boxes = 1;
 // Oluşturulan nesneler kaç ms sonra otomatik taşınsın.
 basic_settings.auto_add_object_into_boxes_xms_later = 5;
 // Oluşturulan nesneler kaç ms sonra görünsün.
-basic_settings.show_hidden_objects_xms_later = 10;
+basic_settings.show_hidden_objects_xms_later = 10; // 10
 
 
 // Nesnelerin, ortak metod ve özellikleri.
@@ -252,7 +242,12 @@ class UIComponent {
     get width() {
         var _width = parseInt(this.contElement.style.width);
         if (isNaN(_width)) {
-            _width = parseInt(this.contElement.offsetWidth);
+            if(this.contElement.style.visibility != "visible") {
+                _width = Math.round(parseInt(this.contElement.offsetWidth) * 1.1);
+                print("BASICJS: width: 'auto' hesaplaması zaman alır.");
+            } else {
+                _width = parseInt(this.contElement.offsetWidth);
+            }
             
         }
         return _width;
@@ -272,9 +267,15 @@ class UIComponent {
     get height() {
         var _height = parseInt(this.contElement.style.height);
         if (isNaN(_height)) {
-            _height = parseInt(this.contElement.offsetHeight);
-            
+            if(this.contElement.style.visibility != "visible") {
+                _height = Math.round(parseInt(this.contElement.offsetHeight) * 1.1);
+                // _height = parseInt(this.contElement.offsetHeight);
+                print("BASICJS: height: 'auto' hesaplaması zaman alır.");
+            } else {
+                _height = parseInt(this.contElement.offsetHeight);
+            }
         }
+
         return _height;
     }
 
@@ -331,9 +332,7 @@ class UIComponent {
     }
 
     set color($value) {
-
         this._backgroundColor = $value;
-
         this.contElement.style.backgroundColor = $value;
     }
 
@@ -778,7 +777,7 @@ class Box extends UIComponent {
         if ($obj.upperObject != this) {
             // Eklenen nesnenin, üst nesnesini değiştir.
             $obj.upperObject = this;
-            // içine başka bir nesne eklendiğinde, tıklanabilmeli.
+            // İçine başka bir nesne eklendiğinde, tıklanabilmeli.
             this.contElement.style.pointerEvents = "auto";
             this.element.appendChild($obj.contElement);
         }
@@ -954,7 +953,7 @@ class TextBox extends UIComponent {
         this._mainElement = mainElement;
 
         let titleElement = document.createElement("DIV");
-        titleElement.setAttribute("class", "basic_textbox title");
+        titleElement.setAttribute("class", "basic_textbox-title");
         titleElement.innerHTML = "";
         this._titleElement = titleElement;
 
@@ -1012,9 +1011,7 @@ class TextBox extends UIComponent {
     }
 
     set color($value) {
-
         this._backgroundColor = $value;
-
         this.inputElement.style.backgroundColor = $value;
     }
     // ÖZEL SONU
@@ -1172,7 +1169,11 @@ class Label extends UIComponent {
 
         }
     }
-
+/*
+    calcWidthNow() {
+        return Math.round(this.width * 1.173913043478261)
+    }
+*/
     get height() {
         return super.height;
     }
@@ -1186,7 +1187,11 @@ class Label extends UIComponent {
 
         }
     }
-
+/*
+    calcHeightNow() {
+        return Math.round(this.height * 1.173913043478261)
+    }
+*/
     get space() {
         return parseInt(this.contElement.style.padding) || 0;
     }
@@ -1200,7 +1205,7 @@ class Label extends UIComponent {
     }
 
     add($obj) {
-        alert("BASICJS: add(): Label nesnesinin içine ekleme yapılamaz.");
+        print("BASICJS: add(): Label nesnesinin içine ekleme yapılamaz.");
     }
 
 }
@@ -1225,14 +1230,14 @@ class Image extends UIComponent {
     // Not: CheckBox resim nesnesi ile yapılabilir.
     // TODO: Eğer resim nesnesi div içine eklenecek ise; resim: imageElement, ana nesne: element olmalı.
 
-    _mainElement;
+    //_mainElement;
     _autoSize;
 
     constructor($left = 0, $top = 0, $width = 0, $height = 0) {
 
         super("image");
 
-        this._mainElement = null;
+        //this._mainElement = null;
         this._autoSize = 1;
 
         // Renk
@@ -1249,29 +1254,32 @@ class Image extends UIComponent {
         this._textAlign = null;
 
 
-        let shapeElement = document.createElement("DIV");
-        shapeElement.setAttribute("class", "basic_image");
-
+        //let shapeElement = document.createElement("DIV");
+        //shapeElement.setAttribute("class", "basic_image");
         let imageElement = document.createElement("IMG");
-        imageElement.setAttribute("width", "100%");
-        imageElement.setAttribute("height", "100%");
+        imageElement.setAttribute("class", "basic_image");
 
-        shapeElement.appendChild(imageElement);
+        //let imageElement = document.createElement("IMG");
+        //imageElement.setAttribute("width", "100%");
+        //imageElement.setAttribute("height", "100%");
 
-        shapeElement.style.left = $left + "px";
-        shapeElement.style.top = $top + "px";
+        //shapeElement.appendChild(imageElement);
+
+        //shapeElement.style.left = $left + "px";
+        //shapeElement.style.top = $top + "px";
+        imageElement.style.left = $left + "px";
+        imageElement.style.top = $top + "px";
 
         if ($width || $height) {
             this.autoSize = 0;
         }
 
-        shapeElement.style.width = $width + "px";
-        shapeElement.style.height = $height + "px";
+        //shapeElement.style.width = $width + "px";
+        //shapeElement.style.height = $height + "px";
+        imageElement.style.width = $width + "px";
+        imageElement.style.height = $height + "px";
 
-        // TEST ET:
-        // shapeElement.style.opacity = 1;
 
-        //shapeElement.style.borderWidth = "1px";
         var _that = this;
 
         // Resim yüklendiğinde, Otomatik boyutlandır.
@@ -1279,20 +1287,21 @@ class Image extends UIComponent {
 
             //if auto size
             if (_that.autoSize > 0) {
-                shapeElement.style.width = parseInt(this.naturalWidth / _that.autoSize) + "px";
-                shapeElement.style.height = parseInt(this.naturalHeight / _that.autoSize) + "px";
+                //shapeElement.style.width = parseInt(this.naturalWidth / _that.autoSize) + "px";
+                //shapeElement.style.height = parseInt(this.naturalHeight / _that.autoSize) + "px";
+                imageElement.style.width = parseInt(this.naturalWidth / _that.autoSize) + "px";
+                imageElement.style.height = parseInt(this.naturalHeight / _that.autoSize) + "px";
                 // Her yüklemede, isteniyor ise auto size özelliğini tekrar aktif etmeli.
                 _that.autoSize = 0; 
             }
 
-            //shapeElement.style.borderWidth = "0px";
-
         });
 
         this._element = imageElement;
-        this._mainElement = shapeElement;
+        //this._mainElement = shapeElement;
         this._upperObject = basic_selectedBox;
-        basic_selectedBox.element.appendChild(this._mainElement);
+        //basic_selectedBox.element.appendChild(this._mainElement);
+        basic_selectedBox.element.appendChild(this._element);
 
         setAsThat(this);
         basic_visibiltyControl(this);
@@ -1308,13 +1317,15 @@ class Image extends UIComponent {
     }
 
     get contElement() {
-        return this._mainElement;
+        //return this._mainElement;
+        return this._element;
     }
 
     // Özel boyutlandırma komutları
     
     get width() {
-        return parseInt(this.contElement.style.width);
+        return super.width;
+        //return parseInt(this.contElement.style.width);
     }
     
 
@@ -1326,7 +1337,8 @@ class Image extends UIComponent {
 
     
     get height() {
-        return parseInt(this.contElement.style.height);
+        return super.height;
+        //return parseInt(this.contElement.style.height);
     }
     
 
@@ -1345,22 +1357,6 @@ class Image extends UIComponent {
         return this.imageElement.naturalHeight;
     }
 
-    get imageTop() {
-        return parseInt(this.imageElement.style.marginTop);
-    }
-
-    set imageTop($value) {
-        this.imageElement.style.marginTop = $value + "px";
-    }
-
-    get imageLeft() {
-        return parseInt(his.imageElement.style.marginLeft);
-    }
-
-    set imageLeft($value) {
-        this.imageElement.style.marginLeft = $value + "px";
-    }
-
     // Resmi orjinal boyutuna ölçekler. 1: orjinal, 2: 2 kat küçült, 3: 3 kat küçült.
     get autoSize() {
         return this._autoSize;
@@ -1374,11 +1370,12 @@ class Image extends UIComponent {
     // veya spaceX spaceY olabilir. Orantılı olarak kenarlara farklı boşluklar uygula.
     
     get space() {
-        return parseInt(this.contElement.style.padding) || 0;
+        // return parseInt(this.contElement.style.padding) || 0;
     }
 
     set space($value) {
-        this.contElement.style.padding = $value + "px";
+        print("BASICJS: add(): Image nesnesini, bir Box nesnesinin içine ekleyin.");
+        // this.contElement.style.padding = $value + "px";
     }
     
     onClick($func) {
@@ -1394,7 +1391,7 @@ class Image extends UIComponent {
     }
 
     add($obj) {
-        alert("BASICJS: add(): Image nesnesinin içine ekleme yapılamaz.");
+        print("BASICJS: add(): Image nesnesinin içine ekleme yapılamaz.");
     }
 
 }
@@ -1838,8 +1835,7 @@ let basic_autoAdder = function ($object) {
             }
         }
         if ($object != page) {
-            // Nesne, taşınmak için kontrol edildikten sonra görünür olabilir.
-            $object.contElement.style.display = ($object._visible == 1) ? "block" : "none";
+            // Nesne bir mainBox değil.
         }
     } catch (e) {
         //console.log("insert error.")
