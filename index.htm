@@ -151,6 +151,10 @@
             //page2.visible = 1
 
             page.onResize(pageResized)
+
+            setTimeout(function() {
+                pageResized();
+            }, 60)
             
         }
 
