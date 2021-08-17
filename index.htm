@@ -83,6 +83,8 @@
         var boxbackgroundColor
         var boxbackgroundColor3
         var boxMainBackground
+
+        var bodyElement
         
         // BAŞLANGIÇ FONKSİYONLARI
             
@@ -90,6 +92,9 @@
         var start = function() {
             
             setLoopTimer(10)
+
+            bodyElement = document.getElementsByTagName("BODY")[0];
+            bodyElement.style.opacity = 0.01
             
             page.color = "#141414" //#141414 , 2F4F4F, rgba(0, 0, 0, 0.9)
             //page.element.style.backgroundImage = "radial-gradient(yellow, white)";
@@ -154,7 +159,8 @@
 
             setTimeout(function() {
                 pageResized();
-            }, 120)
+                bodyElement.style.opacity = 1
+            }, 200)
             
         }
 
