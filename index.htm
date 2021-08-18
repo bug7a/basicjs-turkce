@@ -184,7 +184,13 @@
 
         var pageResized = function() {
 
-            //page.fit(DEFAULT_WIDTH, 700)
+            if (isMobile()) {
+                // for mobile web
+                page.zoom = 0.6
+            } else {
+                page.fit(DEFAULT_WIDTH, 700)
+            }
+            
 
             boxMainBackground.width = page.width
             boxMainBackground.height = page.height
