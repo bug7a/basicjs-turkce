@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Yüksekliği Otomatik Hesaplama</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
+        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+
+        /*
+
+            - Etiket (Label) nesnesinin yüksekliği "auto" olarak belirlendiği için,
+              hesaplanması bir zaman alıyor.
+
+            Bu örnekte, nesneye metin eklendikten kısa bir süre sonra 
+            nesnenin doğru yüksekliğine nasıl ulaşılabileceği gösterilmiştir.
+
+        */
+            
+        // DEĞİŞKENLER
+
+        var plantList = [
+            {title:"Brokoli", desc:"Sebze", logo:"brokoli.png"},
+            {title:"Çilek", desc:"Meyve", logo:"cilek.png"},
+            {title:"Domates", desc:"Sebze", logo:"domates.png"},
+            {title:"Elma", desc:"Meyve", logo:"elma.png"},
+            {title:"Havuç", desc:"Sebze", logo:"havuc.png"},
+            {title:"Karpuz", desc:"Meyve", logo:"karpuz.png"},
+            {title:"Limon", desc:"Meyve", logo:"limon.png"},
+            {title:"Muz", desc:"Meyve", logo:"muz.png"},
+            {title:"Nar", desc:"Meyve", logo:"nar.png"},
+            {title:"Patlıcan", desc:"Sebze", logo:"patlican.png"},
+            {title:"Yaban Mersini", desc:"Meyve", logo:"yabanmersini.png"},
+            {title:"Yeşil Biber", desc:"Sebze", logo:"yesilbiber.png"}
+        ]
+            
+        // Bir sonraki metnin yukarı ile mesafesi.
+        var nextLabelTop = 0
+            
+        // İlk çalışan fonksiyon.
+        var start = function() {
+
+            for (var i = 0; i < plantList.length; i++) {
+                
+                createLabel(0, 0, 150, "auto")
+                that.color = "lightgray"
+                that.fontSize = 20
+                that.text = ""
+
+                // Rasgele sayıda metin ekle.
+                for (var j = 0; j <= random(0, 5); j++) {
+                    that.text += plantList[i].title + " "
+                }
+
+                // Nesnelerin yüksekliği hesaplandığında yeniden konumlandır.
+                //repositionItems(that)
+                that.afterCalc(repositionItems)
+
+            }
+            
+        }
+
+        // Nesneleri yeniden konumlandır.
+        var repositionItems = function(self) {
+
+            // İki nesne arasındaki mesafe
+            var SPACE = 5
+            // Nesneyi yeniden konumlandır.
+            self.top = nextLabelTop
+            // Bir sonraki nesnenin konumunu hesapla.
+            nextLabelTop += self.height + SPACE
+
+
+        }
+        
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML içeriği -->
+        
+    </body>
+</html>

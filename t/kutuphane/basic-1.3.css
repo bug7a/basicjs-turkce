@@ -1,0 +1,269 @@
+/*
+
+Year: 25 October 2020
+Developer: Bugra OZDEN
+Email: bugra.ozden@gmail.com
+WebSite: http://bugraozden.com
+
+You are free:
+
+to Share — to copy, distribute and transmit the work
+to Remix — to adapt the work
+to make commercial use of the work
+
+https://creativecommons.org/licenses/by/4.0/
+
+Have Fun.
+
+*/
+
+@font-face {
+    
+    font-family: opensans;
+    src: url(font/open-sans/OpenSans-Regular.ttf);
+    
+}
+
+* {
+    
+ -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    
+}
+
+body {
+    
+    /* FOR MOBILE APP SETTING */
+
+    /*
+    
+    margin:0px;
+    padding:0px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    
+    */
+    
+    /* -webkit-text-size-adjust: none; */
+    
+}
+
+/* UI COMPONENTS */
+
+.box {
+    
+    position:absolute;
+    overflow: hidden;
+    width:100px;
+    height:100px;
+    background-color: whitesmoke;
+    border-radius: 0px;
+    border: 1px solid gray;
+    /* box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.4); */
+    font-family: opensans;
+    font-size: 16px;
+    text-align: left;
+    color:#4A4A4A;
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    /* pointer-events:none; */
+    
+}
+
+.label {
+    
+    position:absolute;
+    font-family: opensans;
+    font-size: 20px;
+    text-align: left;
+    color:#4A4A4A;
+    background-color: transparent;
+    border: 0px solid #4A4A4A;  
+    padding: 0px;
+    /* istenen genişlikten paddingi çıkartarak işlem yapıyor */
+    box-sizing: border-box; 
+    pointer-events:none;
+    
+}
+
+.button {
+    
+    position:absolute;
+    overflow: hidden;
+    font-family: opensans;
+    font-size: 20px;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.90);
+    border: 1px solid rgba(0, 0, 0, 0.40);
+    /* border-bottom: 2px solid rgba(0, 0, 0, 0.40); */
+    /* box-shadow: 0 4px 6px -6px black; */
+    box-shadow: inset 0px -2px 0px 0px rgba(0, 0, 0, 0.40);
+    margin: 0px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    background-color: steelblue;
+    background-image: url("img/button-background.png");
+    background-position: left top;
+    background-repeat: no-repeat;
+    background-size:100% 100%;
+    pointer-events:none;
+    
+}
+
+.button.minimal {
+    
+    /* border-bottom: 0px solid rgba(0, 0, 0, 0.40); */
+    border: 0px solid rgba(0, 0, 0, 0.40);
+    box-shadow: none;
+    background-image:none;
+    
+}
+
+.button:focus {
+    
+    /* border: none; */
+    outline: none;
+    /* background-color: transparent; */
+    /* background-color: #23BCC1; */
+    
+}
+
+.button:disabled {
+    
+    opacity: 0.6;
+    
+}
+
+.textbox {
+    
+    position:absolute;
+    font-family: opensans;
+    font-size: 20px;
+    text-align: left;
+    color:#4A4A4A;
+    background-color: #FFFFFF;
+    left:0px;
+    right:0px;
+    border: 1px solid #4A4A4A;
+    /* border: none; */
+    width: 270px;
+    height: 50px;    
+    padding: 12px 15px;
+    margin: 0px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    background-image: url("img/textbox-background.png");
+    background-position: left top;
+    background-repeat: no-repeat;
+    background-size:100% 100%;
+    
+}
+
+.textbox.minimal {
+    
+    /* border-bottom: 0px solid rgba(0, 0, 0, 0.40); */
+    border: 0px solid #4A4A4A;
+    /* box-shadow: none; */
+    background-image:none;
+    
+}
+
+.textbox:focus {
+    
+    /* border: none; */
+    outline: none;
+    padding: 12px 14px;
+    /* background-color: transparent; */
+    background-color: #FFFFFF;
+    border: 2px solid steelblue;
+    
+}
+
+.textbox.minimal:focus {
+    
+    outline: none;
+    padding: 12px 15px;
+    border: 0px solid steelblue;
+    
+}
+
+.textbox:disabled {
+    
+    opacity: 0.6;
+    
+}
+
+.textbox.title {
+    
+    position: absolute;
+    background-color: transparent;
+    font-family: opensans;
+    font-size: 16px;
+    text-align: left;
+    color: #4A4A4A;
+    height: 28px;
+    width:;
+    top: -28px;
+    left: 0px;
+    padding: 2px;
+    padding-left: 0px;
+    border:0px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    background-image:none;
+    
+}
+
+.image {
+    
+    position:absolute;
+    overflow: hidden;
+    /* font-family: opensans;
+    font-size: 14px;
+    text-align: center; */
+    /* color:#4A4A4A; */
+    background-color: transparent;
+    border: 0px solid #000000;
+    /* border: none; */
+    /* width: 100px;
+    height: 100px; */  
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    border-radius: 0px;
+    pointer-events:none;
+    
+}
+
+/* SCROLLBAR */
+
+.box::-webkit-scrollbar, .box::-webkit-scrollbar-corner {
+    
+    background: transparent;
+    height: 16px;
+    width: 16px;
+    
+}
+
+.box::-webkit-scrollbar-button {
+    
+    height: 0;
+    width: 0;
+    
+}
+
+.box::-webkit-scrollbar-thumb {
+    
+    background: content-box currentColor;
+    border: 6px solid transparent;
+    border-radius: 8px;
+    color: rgba(0, 0, 0, 0.4);
+    min-height: 60px;
+    min-width: 60px;
+    
+}

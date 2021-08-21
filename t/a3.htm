@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Yapılacaklar Listesi</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
+        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+
+        var a0
+
+        var tasks = []
+
+        // İlk çalışan fonksiyon.
+        var start = function() {
+
+            tasks = storage.load("todo-tasks") || []
+
+            page.fit(500, 500)
+
+            // NESNE: A0 sayfa taşıyıcısı.
+            a0 = cbox(0, 0, 500, page.height)
+            that.color = "white"
+            that.center()
+
+            // NESNE: Eklemek için taşıyıcı kutu.
+            a0.b1 = cbox(10, 10, 480, 80)
+            that.color = "transparent"
+            
+            // NESNE: Görevin yazılacağı metin kutusu.
+            a0.b1.txtNewTask = ctxt(20, 15, 350)
+            that.minimal = 1
+            that.color = "whitesmoke"
+
+            // NESNE: Görevi ekleyecek buton.
+            a0.b1.btnAdd = cbtn()
+            that.text = "Ekle"
+            that.color = "cadetblue"
+            that.textColor = "rgba(0, 0, 0, 0.7)"
+            that.width = 85
+            that.minimal = 1
+            that.aline(a0.b1.txtNewTask, "right", 5)
+            that.onClick(addBtnClicked)
+
+            // NESNE: Eklenene görevlerin taşıyıcısı.
+            a0.b2 = cbox(10, 100, 480, page.height - 110)
+            that.border = 0
+            that.color = "white"
+            that.round = 13
+            that.scrollY = 1
+
+            addTask("Bugun, parka gideceğim. Biraz oturacağım ve yapabileceğim projeler hakkında düşüneceğim.")
+            addTask("Kahvemi içeceğim. Çiçeklere su verdikten sonra, biraz oyun oynayacağım.")
+            addTask("Projenin, istatistiklerini inceleyeceğim.")
+
+            // b1 in üzerini kapatsın. ortasında kırmızı çöp tenekesi çıksın.
+            // a0.b3 = 
+
+        }
+
+        var addBtnClicked = function() {
+
+            if (a0.b1.txtNewTask.text != "") {
+
+                addTask(a0.b1.txtNewTask.text)
+                a0.b1.txtNewTask.text = ""
+
+            }
+
+        }
+
+        // Yeni görev ekle.
+        var addTask = function(taskText) {
+
+            var newItem = createTaskItem(taskText)
+            a0.b2.add(newItem)
+
+            tasks.unshift(newItem)
+            //storage.save("todo-tasks", tasks)
+
+            // Otomatik boyut hesaplaması tamamlandıktan sonra, nesneleri yeniden hizala.
+            afterCalc(repositionTasks)
+
+            // NOT: afterCalc() fonksiyonu, bir nesnenin altında çalıştırılmamıştır.
+            // Her seferinde, tüm nesneler yeniden konumlandırıldığı için.
+
+        }
+
+        var repositionTasks = function() {
+
+            var top = 0
+
+            for (var i = 0; i < tasks.length; i++) {
+                tasks[i].top = top
+                tasks[i].height = tasks[i].lblText.height + 20
+
+                top += tasks[i].height
+            }
+
+        }
+
+        // Yeni görev nesnesi oluştur.
+        var createTaskItem = function(taskText) {
+
+            // NESNE: Bir görevin taşıyıcısı
+            var object = cbox(0, 0, 480, 100)
+            that.color = "white"
+            that.border = 0
+
+            // NESNE: Bir görevin yazısı
+            object.lblText = clbl(50, 10, 410, "auto")
+            that.color = "transparent"
+            that.text = taskText
+
+            // NESNE: Görev yazısının başındaki, seçim alanı
+            object.boxTick = cbox(15, 15, 20, 20)
+            that.round = 10
+            that.border = 1
+            that.color = "whitesmoke"
+            that.borderColor = "lightgray"
+
+            return object
+
+        }
+        
+        </script>
+
+    </head>
+    <body>
+        
+    </body>
+</html>

@@ -1,0 +1,241 @@
+/*
+
+Bismillah
+
+Basic JavaScript: Programming for Kids
+
+Year: 25 Oktober 2020
+Autor: Buğra ÖZDEN
+Mail: bugra.ozden@gmail.com
+Site: http://bugraozden.com
+
+You are free:
+
+to Share — to copy, distribute and transmit the work
+to Remix — to adapt the work
+to make commercial use of the work
+
+http://creativecommons.org/licenses/by/3.0/
+
+Have Fun.
+
+*/
+
+/* 
+blue
+
+beige
+DarkCyan
+#008B8B 
+DarkOrange
+#FF8C00
+Gold
+#FFD700
+IndianRed
+#CD5C5C
+Khaki
+#F0E68C
+Orange
+#FFA500
+SeaGreen
+#2E8B57
+OrangeRed
+#FF4500
+Teal
+#008080
+Tomato
+#FF6347
+SteelBlue
+#4682B4
+WhiteSmoke
+#F5F5F5
+
+*/
+
+@font-face {
+    font-family: opensans;
+    src: url(../../font/open-sans/OpenSans-Regular.ttf);
+}
+
+@font-face {
+    font-family: opensans-bold;
+    src: url(../../font/open-sans/OpenSans-Bold.ttf);
+}
+
+body {
+    
+    margin:0px;
+    padding:0px;
+    overflow-x: auto;
+    overflow-y: auto;
+    zoom: 1;
+    /* darkcyan, cadetblue, chocolate, lightgray   */ 
+    
+}
+
+.box {
+    
+    position:absolute;
+    /* overflow: auto; */
+    overflow-x: hidden;
+    overflow-y: hidden;
+    top:0px;
+    left:0px;
+    width:100px;
+    height:100px;
+    background-color: beige;
+    /* background-color: #F6F6F6; */
+    border-radius: 0px;
+    border: 1px solid gray; /* #e6e6e6 */
+    /* box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.4); */
+    
+    font-family: opensans;
+    font-size: 16px;
+    text-align: left;
+    color:#4A4A4A;
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    
+}
+
+.label {
+    
+    position:absolute;
+    font-family: opensans;
+    font-size: 20px;
+    text-align: left;
+    color:#4A4A4A;
+    background-color: transparent;
+    border: 0px solid #4A4A4A;
+    width: 270px;
+    height: auto;   
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box; /* istenen genişlikten paddingi çıkartarak işlem yapıyor */
+    
+}
+
+.button {
+    
+    position:absolute;
+    overflow: hidden;
+    font-family: opensans;
+    font-size: 20px;
+    text-align: center;
+    /* background-color:cadetblue; /* cadetblue lightgray Tomato */
+    color: rgba(0, 0, 0, 0.90); /* rgba(0, 0, 0, 0.80);  #111111*/
+    border: 0px solid rgba(0, 0, 0, 0.40); /* rgba(0, 0, 0, 0.40); */
+    border-bottom: 2px solid rgba(0, 0, 0, 0.40);
+    /* width: 130px; */
+    /* height: 50px; */
+    margin: 0px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    background-image: url("img/button-background.png");
+    background-position: left top;
+    background-repeat: no-repeat;
+    background-size:100% 100%;
+    
+}
+
+.button:focus {
+    
+    /* border: none; */
+    outline: none;
+    /* background-color: transparent; */
+    /* background-color: #23BCC1; */
+    
+}
+
+.button:disabled {
+    
+    opacity: 0.6;
+    
+}
+
+.textbox {
+    
+    position:absolute;
+    font-family: opensans;
+    font-size: 20px;
+    text-align: left;
+    color:#4A4A4A;
+    background-color: #FFFFFF;
+    left:0px;
+    right:0px;
+    border: 1px solid #4A4A4A;
+    /* border: none; */
+    width: 270px;
+    height: 50px;    
+    padding: 12px 15px;
+    margin: 0px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    
+    
+    background-image: url("img/textbox-background.png");
+    background-position: left top; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size:100% 100%; /* Resize the background image to cover the entire */
+    
+}
+
+.textbox:focus {
+    
+    /* border: none; */
+    outline: none;
+    padding: 12px 14px;
+    /* background-color: transparent; */
+    background-color: #FFFFFF;
+    border: 2px solid steelblue;
+    
+}
+
+.textbox:disabled {
+    
+    opacity: 0.6;
+    
+}
+
+.textbox.title {
+    
+    position: absolute;
+    background-color: transparent;
+    font-family: opensans;
+    font-size: 16px;
+    text-align: left;
+    color: #4A4A4A;
+    height: 28px;
+    width:;
+    top: -28px;
+    left: 0px;
+    padding: 2px;
+    padding-left: 0px;
+    border:0px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    background-image:none;
+    
+}
+
+.image {
+    
+    position:absolute;
+    font-family: opensans;
+    font-size: 14px;
+    text-align: center;
+    color:#4A4A4A;
+    background-color: transparent;
+    border: 0px solid #000000;
+    /* border: none; */
+    width: 100px;
+    height: 100px;    
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    border-radius: 0px;
+    
+}
