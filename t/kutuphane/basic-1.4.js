@@ -158,9 +158,9 @@ basic_settings.auto_add_objects_into_boxes = 1;
 // Oluşturulan nesneler kaç ms sonra otomatik taşınsın.
 basic_settings.auto_add_object_into_boxes_xms_later = 5; // 5
 // Oluşturulan nesneler kaç ms sonra görünsün.
-basic_settings.show_hidden_objects_xms_later = 45; // 15
+basic_settings.show_hidden_objects_xms_later = 50; // 15
 // Oluşturulan nesneler kaç ms sonra görünsün.
-basic_settings.auto_size_calculated_xms_later = 45; // 30 - 30 olursa, daire app metinler titreme yapıyor. 17 titreme olmuyor.
+basic_settings.auto_size_calculated_xms_later = 50; // 30 - 30 olursa, daire app metinler titreme yapıyor. 17 titreme olmuyor.
 // Hareketi ayarlar
 basic_settings.set_motion_xms_later = 80; // 20
 // Hareket et
