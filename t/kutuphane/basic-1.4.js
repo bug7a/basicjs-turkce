@@ -166,7 +166,7 @@ basic_settings.set_motion_xms_later = 80; // 20
 // Hareket et
 basic_settings.with_motion_xms_later = 100; // 30
 // Hareket kabiliyetini duraklat
-basic_settings.break_motion_time = 10; // 10
+basic_settings.break_motion_time = 5; // 10
 
 
 // Nesnelerin, ortak metod ve özellikleri.

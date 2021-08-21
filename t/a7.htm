@@ -27,6 +27,19 @@
             // Sayfa taşıyıcısı
             a0 = cbox(0, 0, page.width, page.height)
 
+            // NESNE: Ortadaki daire
+            a0.circle = cbox(50, 150)
+            that.color = "#FE5D49"
+            // CSS hareketi ekle.
+            that.setMotion("left 1s, top 1s, width 1s, height 1s, border-radius 1s")
+
+            // NESNE: Dairenin altındaki bilgi yazısı
+            a0.lblInfo = clbl(0, 0, 300, "auto")
+            that.text = ""
+            that.fontSize = 13
+            that.textAlign = "center"
+            that.setMotion("top 1s")
+
             // NESNE: Dairenin yarı çapının yazıldığı, metin kutusu
             a0.txtR = ctxt(50, 50, 150)
             that.title = "Dairenin Yarıçapı:"
@@ -42,22 +55,7 @@
             that.aline(a0.txtR, "right", 10)
             that.top += 12
 
-            // NOT: txtR_desc nesnesinin, boyutu "auto" manuel verilmiştir.
-
-            // NESNE: Ortadaki daire
-            a0.circle = cbox(50, 150)
-            that.color = "#FE5D49"
-            // CSS hareketi ekle.
-            that.setMotion("left 1s, top 1s, width 1s, height 1s, border-radius 1s")
-
-            // NESNE: Dairenin altındaki bilgi yazısı
-            a0.lblInfo = clbl(0, 0, 300, "auto")
-            that.text = ""
-            that.fontSize = 13
-            that.textAlign = "center"
-            that.setMotion("top 1s")
-
-            updateCircle()
+            // NOT: txtR_desc nesnesinin, boyutu manuel verilmiştir.
 
             // NESNE: En alttaki, açıklama yazısı
             a0.lblBottomInfo = clbl(0, 0, "auto", "auto")
@@ -78,6 +76,9 @@
 
             // NOT: lblBottomInfo nesnesinin, boyutu "auto" yapılmaz ise,
             // afterCalc() fonksiyonunu kullanmaya gerek olmaz.
+
+            // Daireyi güncelle.
+            updateCircle()
 
             // Sayfa boyutu, her değiştiğinde
             page.onResize(pageResized)
@@ -109,9 +110,9 @@
 
             var r = num(a0.txtR.text)
 
-            // r sadece, 0 - 300 arası olabilir.
-            if (r > 300) {
-                r = 300
+            // r sadece, 0 - 400 arası olabilir.
+            if (r > 400) {
+                r = 400
                 a0.txtR.text = str(r)
             } else if (r < 0) {
                 r = 0
