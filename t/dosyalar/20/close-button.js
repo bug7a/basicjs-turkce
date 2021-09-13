@@ -9,8 +9,8 @@ var createCloseButton = function() {
     that.fontSize = 35
     that.right = 30
     that.top = 30
-    that.width = DEFAULT.BUTTON_HEIGHT
-    that.height = DEFAULT.BUTTON_HEIGHT
+    that.width = basic.BUTTON_HEIGHT
+    that.height = basic.BUTTON_HEIGHT
     // %40 görünen beyaz renk ile boya.
     that.color = "rgba(255, 255, 255, 0.4)"
     that.round = 30
@@ -19,7 +19,7 @@ var createCloseButton = function() {
     that.textColor = "tomato"
 
     // that olarak ayarla.
-    setAsThat(object)
+    makeBasicObject(object)
     
     return object
     

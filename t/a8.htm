@@ -2,106 +2,163 @@
 <html>
     <head>
         
-        <title>Aranabilen Liste</title>
+        <title>Mesajlaşma Uygulaması Arayüzü</title>
         
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
-        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
-        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
-
-        <!-- SEARCHABLE LIST NESNESİNİN KODU -->
-        <script src="dosyalar/37/searchable-list.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
 
         <script>
 
         /*
 
-        Temel nesneler (TextBox, Label, Image, Box), kullanılarak geliştirilmiş; 
-        içinde arama yapılabilen bir liste nesnesi.
+            MESAJLASMA UYGULAMASI ARAYÜZÜ
+            POSITION: RELATIVE TEKNİĞİ,
 
-        Bu Örneğin Amacı:
+            - CSS'teki position özelliği, relative olarak değiştirilen nesneler,
+            birbirlerini iterek konumlanırlar. Koordinat sistemi devre dışı kalır.
+            - Kutu içindeki yazılar, kutunun yüksekliğini genişletir.
+            - Kutu içindeki kutular ise, alt alta dizilir. Üst üste gelemez.
 
-        - Hazır bir liste nesnesinin, çalışma mantığı hakkında fikir verir.
-        - Bu teknikler kullanılarak, özel ve benzersiz nesneler oluşturulabilir.
-        
-        NOT: Nesnenin çalışmasını incelemek ve geliştirmek için, 
-        "dosyalar/37/searchable-list.js" dosyasına bakınız.
+            - Bu teknikte, eğer nesnelerden birinin içeriği değiştirilirse,
+            tarayıcı hesaplamayı yapar ve diğer nesneleri otomatik kaydırır.
+
+            padding: iç boşluktur.
+            margin: dış boşluktur.
+
+            - .space özelliği, padding kullanır.
+            - NOT: basic.js varsayılan position değeri, absolute olarak ayarlanmıştır.
 
         */
             
         // DEĞİŞKENLER
 
-        // Meyve, sebze listesi
-        var plantList = [
-            {title:"Brokoli", desc:"Sebze", logo:"brokoli.png"},
-            {title:"Çilek", desc:"Meyve", logo:"cilek.png"},
-            {title:"Domates", desc:"Sebze", logo:"domates.png"},
-            {title:"Elma", desc:"Meyve", logo:"elma.png"},
-            {title:"Havuç", desc:"Sebze", logo:"havuc.png"},
-            {title:"Karpuz", desc:"Meyve", logo:"karpuz.png"},
-            {title:"Limon", desc:"Meyve", logo:"limon.png"},
-            {title:"Muz", desc:"Meyve", logo:"muz.png"},
-            {title:"Nar", desc:"Meyve", logo:"nar.png"},
-            {title:"Patlıcan", desc:"Sebze", logo:"patlican.png"},
-            {title:"Yaban Mersini", desc:"Meyve", logo:"yabanmersini.png"},
-            {title:"Yeşil Biber", desc:"Sebze", logo:"yesilbiber.png"}
+        var articles = [
+            "Integer at risus in ligula pharetra finibus. Suspendisse et magna convallis, aliquam ex sed, facilisis turpis. Ut commodo urna purus, vitae scelerisque nibh volutpat nec.",
+            "Vestibulum tempus ornare tellus, lobortis laoreet augue. Suspendisse malesuada ullamcorper sapien, a lacinia eros ornare vel. Praesent lacinia nisl sed lorem sollicitudin, vel rutrum est sagittis.",
+            "Nulla accumsan ex urna, id rutrum libero finibus sit amet.",
+            "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras molestie dui nisi, ac rutrum leo venenatis ac. Maecenas cursus tincidunt nisi quis pellentesque. Vivamus id massa metus. Etiam semper erat quis dolor tristique, non molestie ante mollis.",
+            "Fusce dignissim.",
+            "Merhaba,",
+            "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
+            "Maecenas commodo varius metus a fermentum."
         ]
 
-        // Satranç taşları
-        var pieceList = [
-            {title:"Şah", desc:"Tek Taş", logo:"sah-beyaz.png"},
-            {title:"Vezir", desc:"Tek Taş", logo:"vezir-beyaz.png"},
-            {title:"At", desc:"İki Taş", logo:"at-beyaz.png"},
-            {title:"Fil", desc:"İki Taş", logo:"fil-beyaz.png"},
-            {title:"Kale", desc:"İki Taş", logo:"kale-beyaz.png"},
-            {title:"Piyon", desc:"Sekiz Taş", logo:"piyon-beyaz.png"}
-        ]
+        // NOT: metinler, lorem ipsum ile üretilmiştir. Bir anlamı yoktur.
 
-        // NOT: Tüm bilgiler bir dizi değişkeninde tutuluyor.
-        // - Algoritmamız dinamik bir yapıya sahip oluyor.
-        // - İstediğimizde, ajax ile veri tabandan çektiğimiz bilgileride gösterebiliriz.
-        // - php ve mysql
-            
-        // Listeler
-        var objPlantList
-        //var objPieceList
+        // Başlangıç sayfası
+        var a0
+
+        var messageId = 0
             
         // İlk çalışan fonksiyon.
         var start = function() {
 
-            page.color = "lightblue"
+            // NESNE: Sayfanın taşıyıcısı
+            a0 = createBox(0, 0, 450, page.height)
+            that.scrollY = 1
+            that.center("left")
 
-            // page.fit(480, 480)
 
-            // Birinci liste nesnesi (Parametreler: width, height)
-            objPlantList = createSearcableList(400, 450)
-            that.top = 20
-            that.left = 40
-            that.fill(plantList)
-            that.onClick(listItemClicked)
+            // 10 tane rasgele mesaj ekle.
+            for (var i = 0; i < 10; i++) {
+                createRandomMessage()
+            }
+                  
+            
+        }
 
-            // İkinci liste nesnesi
-            //objPieceList = createSearcableList(300, 270)
-            //that.top = 480
-            //that.left = 40
-            //that.fill(pieceList)
+        var loop = function() {
+
+            // Her saniye, rasgele bir mesaj gönder.
+            createRandomMessage()
+            // Her tekrarda, çalıştırılma zamanını değiştir.
+            setLoopTimer(random(500, 2500))
 
         }
 
-        // Basılan parçanın bilgilerini consola yazdır.
-        var listItemClicked = function(self, item, itemIndex, itemData) {
+        var createRandomMessage = function() {
 
-            print(itemIndex + "-" + itemData.title)
+            // Rasgele bir mesaj oluştur.
+            var randomMessage = articles[random(0, articles.length - 1)]
 
-            // - self, üzerine basılan liste nesnesi.
-            // - item, üzerine basılan parça.
-            // - itemIndex, basılan parçanın dizideki sıra numarası.
-            // - itemData, basılan parçanın dizideki elemanı.
+            // Rasgele, 2 kişiden biri yazsın.
+            if (random(1, 2) == 1) {
+                addNewMessage(randomMessage, "right", "avatar1.png", "pink")
+            } else {
+                addNewMessage(randomMessage, "left", "avatar2.png", "lightblue")
+            }
 
         }
 
+        var addNewMessage = function(message, position, icon, color) {
+
+            // Mesajın anahtar numarası
+            messageId++
+
+            var messageItem
+
+            // NESNE: Her bir parçanın taşıyıcı kutusu
+            a0["b" + messageId] = createBox(0, 0, 450, "auto")
+            that.color = "whitesmoke"
+            // Diğer kutular ile etkileşime girer.
+            that.element.style.position = "relative"
+            messageItem = a0["b" + messageId]
+            
+            // NESNE: Yazılardan biri
+            messageItem.lblContent = createLabel(0, 0, 350, "auto")
+            that.color = color
+            that.fontSize = 20
+            that.spaceY = 20
+            that.spaceX = 10
+            that.round = 8
+            // Rasgele metni, nesne içinde göster.
+            that.text = message
+            // İçinde bulunduğu kutunun yüksekliğini değiştirir.
+            that.element.style.position = "relative"
+            // Nesneye, dışarıdan boşluk bırak.
+            that.element.style.marginBottom = "10px"
+
+            // NESNE: Kullanıcının küçük resmi.
+            messageItem.imgAvatar = createImage(30, 20, 30, 30)
+            that.load("resimler/31/" + icon)
+            that.round = 15
+            // Resme iç boşluk ekle
+            that.space = 3
+            that.color = "lightgray"
+
+            // Pozisyona göre, farklılıkları uygula.
+            if (position == "right") {
+                // Mesaj sağda
+                messageItem.lblContent.element.style.marginLeft = "85px"
+                messageItem.imgAvatar.left = 30
+            } else {
+                // Mesaj solda
+                messageItem.lblContent.element.style.marginLeft = "15px"
+                messageItem.imgAvatar.left = 390
+            }
+
+            // İlk mesaj için, üstten biraz boşluk bırak.
+            if (messageId == 1)  {
+                messageItem.element.style.marginTop = "50px"
+            }
+
+            messageItem.lblContent.onResize(function(self) {
+
+                // Kaydırma çubuğunu altta tut.
+                a0.element.scrollTo({
+                    left: 0,
+                    top: a0.element.scrollHeight,
+                    behavior: 'smooth'
+                }); 
+
+            })            
+
+        }
+        
         </script>
 
     </head>

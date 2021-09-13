@@ -2,283 +2,201 @@
 <html>
     <head>
         
-        <title>Açılır İçerik</title>
+        <title>Sayfayı Parçalara Bölme</title>
         
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
-        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
-        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
+
+        <style>
+
+            body {
+                overflow: hidden;
+            }
+
+        </style>
 
         <script>
 
         /*
 
-            AÇILIR İÇERİKLER (AKORDİYON MENÜ)
+        - Her uygulama, bir veya daha fazla sayfadan oluşur. Ve bu sayfaları da, 
+        tasarımına göre kutulara bölerek, nesneleri daha kolay yerleştirebiliriz.
 
-            - accordion, tüm nesneyi taşıyan kutu.
+        Siz istediğiniz isimleri verebilirsiniz,
 
-            - Bu nesnede, butonlar ve içerikler iki farklı çeşit olarak oluşturulmuş.
-            - Kapalı olan içeriklerin yüksekliği 0px olarak belirlenmiş. Böylece görünmüyorlar.
-            - Tüm buton ve içeriklerin taşıyıcı nesneleri bir dizi değişkeninde tutuluyor. Gerektiğinde, nesnelere tekar ulaşılabilmesi için kullanılıyor.
-            - Bir butona basıldığında, o buton ile ilişkili içeriğin yüksekliği normal boyutuna ayarlanıyor.
-            - Bir önceki seçili buton, eski rengine getiriliyor ve içeriğin boyutu 0px olarak belirleniyor.
-            - Boyutlardaki bu değişiklikten sonra, tüm nesnelerin konumu tekrar ayarlanıyor.
-            - Buton ve içerikleri yeniden konumlamak için tüm nesnelere, dizi değişkeninden ulaşılıyor.
-            - Buton isimleri ve genişlikleri accordionButtons isimli diziden alınıyor.
-            
-            - Her bir içeriği oluşturmak için bir fonksiyon oluşturdum.
-            Böylece; her bir içerik, birbirinden bağımsız ve özel olarak oluşturulabilir.
+        Ben, kısa olması ve baktığımda katmanları hızlı bir şekilde anlamak için,
+        şu şekilde isimlendiriyorum.
+
+        - Başlangıç sayfası; a0 ve diğer sayfalar; a1, a2, a3 ...
+        - Bir sayfanın içindeki bölümler; b1, b2, b3 ...
+        - Eğer bölümlerin de bölünmesi gerekirse; c1, c2, c3 ...
+
+        a0: Başlangıç sayfası
+        a1: Kullanıcı listesi
+        a2: Mesajlaşma sayfası
+        a3: Ayarlar sayfası
+
+        Böylece, örneğin; a1.b2.c1.lblContent diye bir nesne var ise,
+        bu etiket nesnesinin; birinci sayfanın, ikinci bölümünün, 
+        ilk parçasında olduğunu isminden görebilirim.
 
         */
+
+        var APP_ORIGINAL_WIDTH = 450
+        var APP_MAX_WIDTH = 450
+        var APP_B1_HEIGHT = 100
+        var APP_B3_HEIGHT = 150
             
-        // DEĞİŞKENLER
-            
-        // Akordiyon menü
-        var accordion
+        // a0: Başlangıç sayfası
+        // a1: Sayfa 1
+        var a0, a1
 
-        // Akordiyon menü, içerik boyutları
-        var accordionContentWidth = 450
-        var accordionContentHeight = 300
-
-        // Akordiyon menü, butonlar
-        var accordionButtons = [
-            {id: 1, name: "Bilim", width: 90},
-            {id: 2, name: "Teknoloji", width: 120},
-            {id: 3, name: "Sanat", width: 100}
-        ]
-
-        // Oluşturulan nesnelerin listesi.
-        tapBarItems = []
-
+        // Sık kullanılan nesnelere verilen kısa isimler.
+        var title
+        var content
+        
         // ÖZEL FONKSİYONLAR
             
         // İlk çalışan fonksiyon.
         var start = function() {
 
-            page.color = "white"
+            page.fit(APP_ORIGINAL_WIDTH, APP_MAX_WIDTH)
 
-            // NESNE: Akordeon taşıyıcı
-            accordion = createBox(10, 10, accordionContentWidth, accordionContentHeight + 60)
-            that.border = 0
-            that.color = "transparent"
-            // Taşıyıcınını konum değişikliği, hareketli olsun.
-            that.setMotion("top 0.5s, left 0.5s")
+            // NESNE: BAŞLANGIÇ SAYFASI ***
 
-            // Nesnelerin toplam yüksekliği hesaplanacak.
-            var totalHeight = 0
-            // Açık olan içeriğin, sıra numarası.
-            accordion.selectedButtonIndex = 0
+            // NESNE: Başlangıç sayfası
+            a0 = cbox(0, 0, APP_ORIGINAL_WIDTH, page.height)
+            that.color = basic.ACTION2_COLOR
+            that.center("left")
 
-            // Butonları oluştur
-            for (var i = 0; i < accordionButtons.length; i++) {
-                
-                // NESNE: Buton taşıyıcı
-                accordion["btn" + i] = createBox(0, 0, accordionContentWidth, 80)
-                that.top = totalHeight
-                that.round = 8
-                that.border = 0
-                that.color = "white"
-                that.indexNumber = i
-                that.setMotion("top 0.5s, background-color 0.5s")
-                that.onClick(accordionBtnClicked)
-
-                // NESNE: Buton yazısı
-                accordion["btn" + i].lblTitle = createLabel(40, 22, "auto", "auto")
-                that.text = accordionButtons[i].name
-                that.textColor = "rgba(0, 0, 0, 0.6"
-                that.fontSize = 25
-
-                // NESNE: Buton ok resmi
-                accordion["btn" + i].lblIcon = createImage(0, 0, 25, 25)
-                that.load("resimler/52/ok.png")
-                that.right = 30
-                that.top = 30
-                that.opacity = 0.1
-                that.setMotion("opacity 0.5s")
-
-                // NESNE: Buton arkaplan rengi biraz koyulaştıran katman
-                accordion["btn" + i].boxBlack = createBox(0, 0, accordionContentWidth, 80)
-                that.round = 8
-                that.border = 0
-                that.color = "rgba(0, 0, 0, 0.07)"
-                
-                // NESNE: İçerik kutusu
-                accordion["box" + i] = createBox(0, 0, accordionContentWidth, 0)
-                that.border = 0
-                that.round = 8
-                that.setMotion("top 0.5s, height 0.5s, background-color 0.5s")
-
-                // Nesneleri bir diziye ekle.
-                tapBarItems.push(accordion["btn" + i])
-                tapBarItems.push(accordion["box" + i])
-
-            }
-
-            // İçerik taşıyıcıların , içlerini dolduran fonksiyonlar.
-            createBox0Content()
-            createBox1Content()
-            createBox2Content()
-
-            // Tüm buton ve içeriklerin konumunu yeniden hesapla ve ayarla.
-            refreshAccordion()
-
-            // Nesneyi ortala.
-            accordion.center()
-
-            // Sayfa boyutu değiştiğinde, nesneyi ortala.
-            page.onResize(centerAll)
-
-            // ilk butona basılmış gibi hareket ettir.
-            accordion.withMotion(function(self){
-                accordionBtnClicked(accordion.btn0)
+            a0.btnStart = cbtn()
+            that.text = "Sayfa'yı Göster"
+            that.width = 200
+            that.minimal = 1
+            that.color = "white"
+            that.center()
+            that.onClick(function(self) {
+                a0.visible = 0
+                a1.visible = 1
             })
+
+
+            // NESNE: SAYFA 1 ***
+
+            // NESNE: Sayfa 1
+            a1 = cbox(0, 0, APP_ORIGINAL_WIDTH, page.height)
+            that.color = "black"
+            that.center()
+            a1.visible = 0
+
+            // NESNE: Üst bölüm
+            a1.b1 = cbox(0, 0, a1.width, APP_B1_HEIGHT)
+            that.color = "lightgray"
+
+            // NESNE: Üst bölümde bir geri butonu
+            a1.b1.imgBack = cimg(20, 0, 30, 30)
+            that.load("resimler/63/back.png")
+            that.center("top")
+            that.opacity = 0.65
+            that.onClick(function(self) {
+                a0.visible = 1
+                a1.visible = 0
+            })
+
+            // NESNE: Üst bölüm içinde bir nesne
+            a1.b1.lblTitle = clbl(0, 0, "auto", "auto")
+            that.text = "a1.b1.lblTitle"
+            that.onResize(function(self){
+                self.center()
+            })
+            // İsmi, kısa olarak kullanacağım.
+            title = a1.b1.lblTitle
             
-            // 100ms olması sayesinde, çok kısa bir süre, tüm içeriklerin kapalı olma durumu görünüyor.
-            // Ve ardından ilk içerik açılıyor.
+            // NESNE: Orta bölüm
+            a1.b2 = cbox()
+            that.width = a1.width
+            that.height = a1.height - APP_B1_HEIGHT - APP_B3_HEIGHT
+            that.top = APP_B1_HEIGHT
+            that.color = basic.ACTION2_COLOR
+            that.scrollY = 1
+
+            // NESNE: Orta bölümde bir nesne
+            a1.b2.lblContent = clbl(20, 20, 250, 30)
+            that.text = "a1.b2.lblContent"
+            that.textColor = "white"
+
+            // NESNE: Orta bölüm içinde bir alt bölüm
+            a1.b2.c1 = cbox(0, 0, APP_ORIGINAL_WIDTH - 40, 150)
+            that.color = "white"
+            that.left = 20
+            that.top = 300
+
+            // NESNE: Alt bölüm içinde bir nesne
+            a1.b2.c1.lblContent = clbl(0, 0, "auto", "auto")
+            that.text = "a1.b2.c1.lblContent"
+            that.textColor = "black"
+            that.onResize(function(self) {
+                self.center()
+            })
+            // İsmi, kısa olarak kullanacağım.
+            content = a1.b2.c1.lblContent
+
+            // NESNE: Orta bölüm içinde başka bir alt bölüm
+            a1.b2.c2 = cbox(0, 0, APP_ORIGINAL_WIDTH - 40, 150)
+            that.color = "white"
+            that.left = 20
+            that.top = page.height + 100
+
+            // NESNE: Alt bölüm içinde bir nesne
+            a1.b2.c2.lblContent = clbl(0, 0, "auto", "auto")
+            that.text = "a1.b2.c2.lblContent"
+            that.textColor = "black"
+            that.onResize(function(self) {
+                self.center()
+            })
+
+            // NESNE: Alt bölüm
+            a1.b3 = cbox()
+            that.width = a1.width
+            that.height = 150
+            that.color = "lightgray"
+            that.bottom = 0
+
+            // NESNE: Alt bölüm içinde bir nesne
+            a1.b3.lblTitle = clbl()
+            that.text = "a1.b3.lblTitle"
+            that.width = "auto"
+            that.onResize(function(self){
+                self.center()
+            })
+
+            page.onResize(pageResized)
             
         }
         
         // DİĞER FONKSİYONLAR
-
-        var centerAll = function() {
-
-            // CSS animasyonunu devre dışı bırak.
-            accordion.breakMotion()
-
-            // Böylece, sayfa boyutu değiştiğinde; nesne, animasyonsuz olarak ortalanacaktır.
-
-            // Nesneyi animasyonsuz olarak ortala.
-            accordion.center()
-            
-            // Böylece, bir içerik açılarak, nesnenin yüksekliği değiştiğinde,
-            // accordion.center() ile ortalanan nesne, hareket ile ortalanacaktır.
-
-        }
-
-        // Bir içerik açıldığında, boyut değişir ve yeniden konumlandırmak gerekir.
-        var refreshAccordion = function() {
-
-            var objectHeight = 0
-
-            // Tüm button ve içerikler için,
-            for (var i = 0; i < tapBarItems.length; i++) {
-
-                // Nesnenin yukarıya olan mesafesini belirle.
-                tapBarItems[i].top = objectHeight
-
-                // Sadece yüksekliği 0px olmayan nesneleri, hesaba dahil et.
-                if (tapBarItems[i].height != 0) {
-                    objectHeight += tapBarItems[i].height + 5
-                }
-
-            }
-
-            accordion.height = objectHeight
-
-        }
         
-        // Butona basıldığında, gereken işlemleri yap.
-        var accordionBtnClicked = function(self) {
-
-            // Eski seçimi temizle.
-            accordion["box" + accordion.selectedButtonIndex].height = 0
-            accordion["btn" + accordion.selectedButtonIndex].lblIcon.opacity = 0.1
-            accordion["btn" + accordion.selectedButtonIndex].color = "white"
-            // Basılan içeriği seç.
-            accordion["box" + self.indexNumber].height = accordion["box" + self.indexNumber].normalHeight
-            accordion["btn" + self.indexNumber].lblIcon.opacity = 0
-            accordion["btn" + self.indexNumber].color = accordion["box" + self.indexNumber].color
-            // Yeniden konumlandır.
-            refreshAccordion()
-            // Seçilen içeriğin sıra numarasını sakla.
-            accordion.selectedButtonIndex = self.indexNumber
-            // Nesneyi ortala.
-            accordion.center()
-
-        }
-        
-        var createBox0Content = function() {
-
-            var box = accordion.box0
-
-            box.normalHeight = 296
-            box.height = box.normalHeight
-
-            box.color = "Lavender"
-
-            box.imgBackground = createImage()
-            that.load("resimler/52/scie3.png")
-            that.autoSize = 2
-            // Kapanırken, hareket etmemesi için bottom kullanılmamıştır.
-            that.top = 70
-            that.right = -50
-            that.opacity = 0.1
-
-            box.lblContent = createLabel(0, 00, box.width, "auto")
-            that.text = "Türk Dil Kurumu'na göre bilim, evrenin ya da olayların bir bölümünü konu olarak seçen, deneysel yöntemlere ve gerçekliğe dayanarak yasalar çıkarmaya çalışan düzenli bilgidir. Daha basit bir anlatımla içinde bulunduğumuz hayatı açıklama çabaları olarak tanımlayabiliriz."
-            that.textAlign = "left"
-            that.textColor = "rgba(0, 0, 0, 0.4"
-            that.space = 40
-
-
-            box.height = 0
-
-            // Bu kutunun içini burada doldur.
-
-        }
-
-        var createBox1Content = function() {
-
-            var box = accordion.box1
-
-            box.normalHeight = 404
-            box.height = box.normalHeight
-
-            box.color = "PaleTurquoise"
-
-            box.imgBackground = createImage()
-            that.load("resimler/52/tech2.png")
-            that.right = 40
-            that.width = 120
-            that.height = 120
-            that.center("top")
-            that.opacity = 0.7
-
-            box.lblContent = createLabel(0, 0, box.width - 140, "auto")
-            that.text = "Teknoloji, insanoğlunun gereklerine uygun yardımcı alet ve araçların yapılması ya da üretilmesi için gerekli bilgi ve yetenektir. Teknoloji ayrıca, bir sanayi dalıyla ilgili üretim yöntemlerini, kullanılan araç, gereç ve aletleri kapsayan bilgidir."
-            that.textAlign = "left"
-            that.textColor = "rgba(0, 0, 0, 0.4"
-            that.space = 40
-
-            box.height = 0
-
-            // Bu kutunun içini burada doldur.
+        var pageResized = function() {
             
+            page.fit(APP_ORIGINAL_WIDTH, APP_MAX_WIDTH)
+
+            // Başlangıç sayfası
+            a0.height = page.height
+            a0.center("left")
+            // Sayfa yüksekliği değiştiği için, butonu yeniden ortala.
+            a0.btnStart.center()
+
+            // Sayfa 1
+            a1.height = page.height
+            a1.center("left")
+            // Orta bölümün yüksekliği değişir.
+            a1.b2.height = a1.height - APP_B1_HEIGHT - APP_B3_HEIGHT
+
         }
-
-        var createBox2Content = function() {
-
-            var box = accordion.box2
-
-            box.normalHeight = 269
-            box.height = box.normalHeight
-
-            box.color = "Bisque"
-
-            box.lblContent = createLabel(0, 0, box.width, "auto")
-            that.text = "Sanat, insanın duygu, düşünce ve hayallerini, somut ve soyut malzemelerle yaratıcı gücünü kullanarak kişiyi etkileyecek biçimde anlatmasıdır. Sanat, en genel anlamıyla yaratıcılığın ve hayal gücünün ifadesi olarak anlaşılır."
-            that.textAlign = "left"
-            that.textColor = "rgba(0, 0, 0, 0.4"
-            that.space = 40
-
-            box.height = 0
-
-            // Bu kutunun içini burada doldur.
-            
-        }
-
 
         </script>
 

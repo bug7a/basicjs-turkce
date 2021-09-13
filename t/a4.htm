@@ -2,83 +2,122 @@
 <html>
     <head>
         
-        <title>Yüksekliği Otomatik Hesaplama</title>
+        <title>Temel CSS Hareketlendirmesi</title>
         
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
-        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
-        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
 
         <script>
 
         /*
 
-            - Etiket (Label) nesnesinin yüksekliği "auto" olarak belirlendiği için,
-              hesaplanması bir zaman alıyor.
-
-            Bu örnekte, nesneye metin eklendikten kısa bir süre sonra 
-            nesnenin doğru yüksekliğine nasıl ulaşılabileceği gösterilmiştir.
+        - Bu örnekte, nesne başlangıçta, büyüyerek geliyor. Ve daha sonra,
+        tıklanan gri alana doğru hareket ediyor.
 
         */
-            
+    
         // DEĞİŞKENLER
 
-        var plantList = [
-            {title:"Brokoli", desc:"Sebze", logo:"brokoli.png"},
-            {title:"Çilek", desc:"Meyve", logo:"cilek.png"},
-            {title:"Domates", desc:"Sebze", logo:"domates.png"},
-            {title:"Elma", desc:"Meyve", logo:"elma.png"},
-            {title:"Havuç", desc:"Sebze", logo:"havuc.png"},
-            {title:"Karpuz", desc:"Meyve", logo:"karpuz.png"},
-            {title:"Limon", desc:"Meyve", logo:"limon.png"},
-            {title:"Muz", desc:"Meyve", logo:"muz.png"},
-            {title:"Nar", desc:"Meyve", logo:"nar.png"},
-            {title:"Patlıcan", desc:"Sebze", logo:"patlican.png"},
-            {title:"Yaban Mersini", desc:"Meyve", logo:"yabanmersini.png"},
-            {title:"Yeşil Biber", desc:"Sebze", logo:"yesilbiber.png"}
-        ]
-            
-        // Bir sonraki metnin yukarı ile mesafesi.
-        var nextLabelTop = 0
+        // İlk sayfa taşıyıcısı
+        var a0
+        
+        // ÖZEL FONKSİYONLAR
             
         // İlk çalışan fonksiyon.
         var start = function() {
 
-            for (var i = 0; i < plantList.length; i++) {
-                
-                createLabel(0, 0, 150, "auto")
-                that.color = "lightgray"
-                that.fontSize = 20
-                that.text = ""
+            // NESNE: İlk sayfa taşıyıcısı
+            a0 = cbox(0, 0, page.width, page.height)
 
-                // Rasgele sayıda metin ekle.
-                for (var j = 0; j <= random(0, 5); j++) {
-                    that.text += plantList[i].title + " "
-                }
+            // NESNE: Buton 1 üst
+            a0.btn1 = cbox(0, 0, 40, 40)
+            that.color = "lightgray"
+            that.round = 20
+            that.center()
+            that.top -= 150
+            that.onClick(refreshCircle)
 
-                // Nesnelerin yüksekliği hesaplandığında yeniden konumlandır.
-                //repositionItems(that)
-                that.afterCalc(repositionItems)
+            // NESNE: Buton 2 alt
+            a0.btn2 = cbox(0, 0, 40, 40)
+            that.color = "lightgray"
+            that.round = 20
+            that.center()
+            that.top += 150
+            that.onClick(refreshCircle)
 
-            }
+            // NESNE: Hareket özelliği olan daire
+            a0.circle = cbox(0, 0, 20, 20)
+            that.color = "#FE5D49"
+            that.round = 100
+
+            // Belirlenen özellikleri, CSS ile hareketlendir.
+            that.setMotion("left 1s, top 1s, width 1s, height 1s, border-radius 1s, background-color 1s, opacity 1s")
+
+            // NOT: Bu hareket özelliği, iptal edilene kadar korunur.
+            // Hareket özelliğini, iptal etmek için,
+            // that.setMotion("none")
+            
+            // İlk oluşturulma konumuna hareketsiz gider.
+            that.center()
+            that.opacity = 0
+
+            // İlk oluşturulma konumundan, aşağıdaki özelliklere yumuşak geçiş (hareket) yap.
+            that.withMotion(function(self) {
+                self.width = 150
+                self.height = 150
+                self.opacity = 1
+                self.center()
+
+                // NOT: self, a0.circle nesnesinin kendisidir.
+
+            })
+
+            // Sayfa boyutu, her değiştiğinde
+            page.onResize(pageResized)
             
         }
+        
+        // DİĞER FONKSİYONLAR
 
-        // Nesneleri yeniden konumlandır.
-        var repositionItems = function(self) {
+        var pageResized = function() {
 
-            // İki nesne arasındaki mesafe
-            var SPACE = 5
-            // Nesneyi yeniden konumlandır.
-            self.top = nextLabelTop
-            // Bir sonraki nesnenin konumunu hesapla.
-            nextLabelTop += self.height + SPACE
+            // Sayfayı, yeniden boyutlandır.
+            a0.width = page.width
+            a0.height = page.height
 
+            // Bu nesne için; hareketi, geçici olarak devre dışı bırak.
+            a0.circle.dontMotion()
+            a0.circle.center()
+
+            // NOT: Sayfa boyutu değiştirildiğinde,
+            // nesnenin hareketsiz olarak gitmesini için dontMotion() kullanılmıştır.
+
+            a0.btn1.center()
+            a0.btn1.top -= 150
+
+            a0.btn2.center()
+            a0.btn2.top += 150
 
         }
         
+        var refreshCircle = function(self) {
+
+            a0.circle.top = self.top - 55
+            a0.circle.left = self.left - 55
+
+            // NOT: CSS hareketi eklendiği için,
+            // nesnenin, özellik değişiklikleri hareket ile olacaktır.
+
+            // NOT: 55 sayısnın hesabı: num((a0.circle.width / 2) - (self.width / 2))
+
+            // NOT: Burada; self, üzerine basılan nesnedir.
+
+        }
+
         </script>
 
     </head>

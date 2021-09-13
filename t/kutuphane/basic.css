@@ -1,9 +1,12 @@
 /*
 
-Year: 25 October 2020
-Developer: Bugra OZDEN
+Started Date: 25 October 2020
+Developer: Bugra Ozden
 Email: bugra.ozden@gmail.com
 WebSite: http://bugraozden.com
+
+
+LICENSE:
 
 You are free:
 
@@ -31,29 +34,21 @@ Have Fun.
     
 }
 
-/* FOR MOBILE APP SETTING */
+.basic_box, .basic_label, .basic_button, .basic_textbox-main, .basic_image  {
 
-/*
-
-* {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
 
-body {
-    margin:0px;
-    padding:0px;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale; 
+
     -webkit-touch-callout: none;
-    -webkit-text-size-adjust: none;
-    -webkit-user-select: none; 
-}
+    -webkit-text-size-adjust: auto;
+    user-select: none;
+    -webkit-user-select: none;
 
-*/
+}
 
 /* UI COMPONENTS */
-
 .basic_box {
     
     position:absolute;
@@ -64,8 +59,7 @@ body {
     height:100px;
     background-color: whitesmoke;
     border-radius: 0px;
-    border: 1px solid gray;
-    /* box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.4); */
+    border: 0px solid gray;
     font-family: opensans;
     font-size: 16px;
     text-align: left;
@@ -105,27 +99,24 @@ body {
     font-family: opensans;
     font-size: 20px;
     text-align: center;
-    color: rgba(0, 0, 0, 0.90);
+    color: rgba(0, 0, 0, 0.65);
     border: 1px solid rgba(0, 0, 0, 0.40);
-    /* border-bottom: 2px solid rgba(0, 0, 0, 0.40); */
-    /* box-shadow: 0 4px 6px -6px black; */
     box-shadow: inset 0px -2px 0px 0px rgba(0, 0, 0, 0.40);
     margin: 0px;
     box-sizing: border-box;
     border-radius: 4px;
-    background-color: steelblue;
+    background-color: #689BD2;
     background-image: url("img/button-background.png");
     background-position: left top;
     background-repeat: no-repeat;
     background-size:100% 100%;
-    /* Button her zaman basılabilir olsun. */ 
     pointer-events:auto;
+    cursor: pointer;
     
 }
 
 .basic_button.minimal {
     
-    /* border-bottom: 0px solid rgba(0, 0, 0, 0.40); */
     border: 0px solid rgba(0, 0, 0, 0.40);
     box-shadow: none;
     background-image:none;
@@ -134,16 +125,14 @@ body {
 
 .basic_button:focus {
     
-    /* border: none; */
     outline: none;
-    /* background-color: transparent; */
-    /* background-color: #23BCC1; */
     
 }
 
 .basic_button:disabled {
     
     opacity: 0.6 !important;
+    cursor: default;
     
 }
 
@@ -164,7 +153,6 @@ body {
     left:0px;
     right:0px;
     border: 1px solid #4A4A4A;
-    /* border: none; */
     width: 270px;
     height: 50px;    
     padding: 12px 15px;
@@ -180,21 +168,17 @@ body {
 
 .basic_textbox.minimal {
     
-    /* border-bottom: 0px solid rgba(0, 0, 0, 0.40); */
     border: 0px solid #4A4A4A;
-    /* box-shadow: none; */
     background-image:none;
     
 }
 
 .basic_textbox:focus {
     
-    /* border: none; */
     outline: none;
     padding: 12px 14px;
-    /* background-color: transparent; */
     background-color: #FFFFFF;
-    border: 2px solid steelblue;
+    border: 2px solid #689BD2;
     
 }
 
@@ -238,6 +222,7 @@ body {
     
     position:absolute;
     display:block;
+    visibility: hidden;
     overflow: hidden;
     background-color: transparent;
     border: 0px solid #000000;
@@ -246,33 +231,5 @@ body {
     box-sizing: border-box;
     border-radius: 0px;
     pointer-events:none;
-    
-}
-
-/* SCROLLBAR */
-
-.basic_box::-webkit-scrollbar, .box::-webkit-scrollbar-corner {
-    
-    background: transparent;
-    height: 16px;
-    width: 16px;
-    
-}
-
-.basic_box::-webkit-scrollbar-button {
-    
-    height: 0;
-    width: 0;
-    
-}
-
-.basic_box::-webkit-scrollbar-thumb {
-    
-    background: content-box currentColor;
-    border: 6px solid transparent;
-    border-radius: 8px;
-    color: rgba(0, 0, 0, 0.4);
-    min-height: 60px;
-    min-width: 60px;
     
 }

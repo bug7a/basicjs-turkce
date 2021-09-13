@@ -21,7 +21,7 @@ var startSubMenu = function() {
     that.border = 0
     that.borderColor = "lightgray"
     that.round = 20
-    that.contElement.style.boxShadow = "0px 6px 8px rgba(0, 0, 0, 0.2)"
+    that.element.style.boxShadow = "0px 6px 8px rgba(0, 0, 0, 0.2)"
 
 
     // Başlangıç ikonu
@@ -94,7 +94,7 @@ var createSubMenuIcon = function($imagePath, $name) {
     // NOT: _object değişkeninin başındaki _ (alt çizgi) işareti,
     // değişkenin gizli veya geçici olduğunu belirten bir karakterdir.
 
-    setAsThat(_object)
+    makeBasicObject(_object)
 
     // NOT: Özel nesneniz için, oluşturulması tamamlandıktan sonra,
     // that değişkenine eşitlerseniz, that kısaltmasını da kullanabilirsiniz.

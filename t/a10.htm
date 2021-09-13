@@ -2,17 +2,14 @@
 <html>
     <head>
         
-        <title>Aranabilen Liste</title>
+        <title>Anahtar Kelime Kutusu</title>
         
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
-        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
-        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
-
-        <!-- SEARCHABLE LIST NESNESİNİN KODU -->
-        <script src="dosyalar/37/searchable-list.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
 
         <style>
 
@@ -26,88 +23,243 @@
 
         /*
 
-        Temel nesneler (TextBox, Label, Image, Box), kullanılarak geliştirilmiş; 
-        içinde arama yapılabilen bir liste nesnesi.
+        ANAHTAR KELİME KUTUSU
 
-        Bu Örneğin Amacı:
+        - Koordinat sistemi, kelimeler için devre dışı bırakılmıştır.
+        - Her kelime kendi alanını korur ve üst üste gelemezler.
 
-        - Hazır bir liste nesnesinin, çalışma mantığı hakkında fikir verir.
-        - Bu teknikler kullanılarak, özel ve benzersiz nesneler oluşturulabilir.
-        
-        NOT: Nesnenin çalışmasını incelemek ve geliştirmek için, 
-        "dosyalar/37/searchable-list.js" dosyasına bakınız.
+        position = "relative"
+        display = "inline-block"
+
+        - Bu örnekte, fonksiyonların çalışmalarını takip edebilmeniz için,
+        önemli işlem ve bilgiler, konsola yazdırılmıştır.
+
+        - Düzenlenen kelimeler, storage'a kaydedilir.
 
         */
             
         // DEĞİŞKENLER
 
-        // Meyve, sebze listesi
-        var plantList = [
-            {title:"Brokoli", desc:"Sebze", logo:"brokoli.png"},
-            {title:"Çilek", desc:"Meyve", logo:"cilek.png"},
-            {title:"Domates", desc:"Sebze", logo:"domates.png"},
-            {title:"Elma", desc:"Meyve", logo:"elma.png"},
-            {title:"Havuç", desc:"Sebze", logo:"havuc.png"},
-            {title:"Karpuz", desc:"Meyve", logo:"karpuz.png"},
-            {title:"Limon", desc:"Meyve", logo:"limon.png"},
-            {title:"Muz", desc:"Meyve", logo:"muz.png"},
-            {title:"Nar", desc:"Meyve", logo:"nar.png"},
-            {title:"Patlıcan", desc:"Sebze", logo:"patlican.png"},
-            {title:"Yaban Mersini", desc:"Meyve", logo:"yabanmersini.png"},
-            {title:"Yeşil Biber", desc:"Sebze", logo:"yesilbiber.png"}
+        var keywordId = 0
+        var keywords = [
+            { id: "1", name: "C" },
+            { id: "2", name: "C++" },
+            { id: "3", name: "Java" },
+            { id: "4", name: "C#" },
+            { id: "5", name: "Python" },
+            { id: "6", name: "Swift" }
         ]
 
-        // Satranç taşları
-        var pieceList = [
-            {title:"Şah", desc:"Tek Taş", logo:"sah-beyaz.png"},
-            {title:"Vezir", desc:"Tek Taş", logo:"vezir-beyaz.png"},
-            {title:"At", desc:"İki Taş", logo:"at-beyaz.png"},
-            {title:"Fil", desc:"İki Taş", logo:"fil-beyaz.png"},
-            {title:"Kale", desc:"İki Taş", logo:"kale-beyaz.png"},
-            {title:"Piyon", desc:"Sekiz Taş", logo:"piyon-beyaz.png"}
-        ]
+        // Taşıyıcı kutu
+        var b1
+   
+        // Kısaltılmış isimler
+        var boxKeywordArea
+        var txtNewKeyword
+        var btnAddNewKeyword
 
-        // NOT: Tüm bilgiler bir dizi değişkeninde tutuluyor.
-        // - Algoritmamız dinamik bir yapıya sahip oluyor.
-        // - İstediğimizde, ajax ile veri tabandan çektiğimiz bilgileride gösterebiliriz.
-        // - php ve mysql
-            
-        // Listeler
-        var objPlantList
-        //var objPieceList
+        var APP_COLOR = "#8FBC8F"
+        
+        // ÖZEL FONKSİYONLAR
             
         // İlk çalışan fonksiyon.
         var start = function() {
 
-            page.color = "lightblue"
+            page.color = APP_COLOR + "30"
 
-            page.fit(480, 480)
+            // NESNE: Taşıyıcı kutu.
+            b1 = cbox(20, 20, 340)
+            that.color = "white"
+            that.element.style.boxShadow = "2px 3px 6px rgba(0, 0, 0, 0.05)"
+            that.borderColor = "lightgray"
+            that.round = 13
 
-            // Birinci liste nesnesi (Parametreler: width, height)
-            objPlantList = createSearcableList(400, 450)
-            that.top = 20
-            that.left = 40
-            that.fill(plantList)
-            that.onClick(listItemClicked)
+            // NESNE: Anahtar kelimeleri taşıyan kutu.
+            b1.boxKeywordArea = cbox(20, 20, 300, "auto")
+            that.round = 13
+            that.color = "whitesmoke"
+            that.element.style.padding = "10px"
+            // Nesnenin yüksekliği, içine doldurulan nesnelere göre otomatik olarak ayarlanıyor.
+            // Hiç nesne doldurulmadığında, 84px olsun.
+            that.element.style.minHeight = "84px"
+            that.onResize(refresh_b1)
+            boxKeywordArea = b1.boxKeywordArea
 
-            // İkinci liste nesnesi
-            //objPieceList = createSearcableList(300, 270)
-            //that.top = 480
-            //that.left = 40
-            //that.fill(pieceList)
+            // NESNE: Yeni anahtar kelime ekleme alanı.
+            b1.c1 = cbox(0, 0, b1.width, 120)
+            that.bottom = 0
+            that.color = "transparent"
+
+            // NESNE: Yeni anahtar kelime metin kutusu.
+            b1.c1.txtNewKeyword = ctxt(20, 50, boxKeywordArea.width - 60)
+            that.title = "Yeni Kelime:"
+            that.minimal = 1
+            that.round = 13
+            that.color = "whitesmoke"
+            txtNewKeyword = b1.c1.txtNewKeyword
+            
+            // NESNE: Yeni anahtar kelime ekleme butonu.
+            b1.c1.btnAddNewKeyword = cbtn(0, 0, 50)
+            that.text = "+"
+            that.fontSize = 35
+            that.minimal = 1
+            that.color = APP_COLOR + "15"
+            that.border = 1
+            that.round = 25
+            that.borderColor = APP_COLOR
+            that.textColor = APP_COLOR
+            that.onClick(addNewKeyword)
+            that.aline(txtNewKeyword, "right", 10)
+            btnAddNewKeyword = b1.c1.btnAddNewKeyword
+
+            // Kaydedilmiş diziyi sıfırlamak için çalıştır:
+            // storage.save("app66-keywords", keywords)
+
+            loadSavedKeywords()
+
+            // Sayfa boyutu değiştiğinde, b1 kutusunu ortala.
+            page.onResize(function() {
+                b1.center()
+            })
+            
+        }
+        
+        var loadSavedKeywords = function() {
+
+            // Eğer daha önce kaydedilmiş anahtar kelimeler varsa, onları kullan.
+            keywords = storage.load("app66-keywords") || keywords
+
+            print("loadSavedKeywords: ")
+            print(keywords)
+
+            // Yüklenen, en son id değerini al.
+            if (keywords.length == 0) {
+                keywordId = 0
+            } else {
+                keywordId = num(keywords[keywords.length - 1].id)
+            }
+
+            print("current keywordId: " + keywordId)
+            
+            // Yüklenen anahtar kelimeleri ekle.
+            for (var i = 0; i < keywords.length; i++) {
+                createKeywordInArea(keywords[i].name, keywords[i].id)
+            }
 
         }
 
-        // Basılan parçanın bilgilerini consola yazdır.
-        var listItemClicked = function(self, item, itemIndex, itemData) {
+        var addNewKeyword = function() {
 
-            print(itemIndex + "-" + itemData.title)
+            if (txtNewKeyword.text.length > 0) {
 
-            // - self, üzerine basılan liste nesnesi.
-            // - item, üzerine basılan parça.
-            // - itemIndex, basılan parçanın dizideki sıra numarası.
-            // - itemData, basılan parçanın dizideki elemanı.
+                var object = createKeywordInArea(txtNewKeyword.text)
 
+                keywords.push({ id: object.id, name: txtNewKeyword.text })
+                storage.save("app66-keywords", keywords)
+
+                txtNewKeyword.text = ""
+
+            }
+
+        }
+
+        var refresh_b1 = function() {
+
+            b1.height = boxKeywordArea.height + 160
+            b1.center()
+            print("refresh height: " + b1.height)
+
+        }
+
+        // Alanın içinde, bir kelime nesnesi oluştur.
+        var createKeywordInArea = function(keywordText, id) {
+
+            // Parametre ile id gönderilmemiş ise, yenisi oluştur. (|| veya)
+            id = id || generateNewKeywordId()
+            boxKeywordArea["lbl" + id] = createKeyword(keywordText)
+            that.id = id
+
+            print("createKeywordInArea: id: " + id + ", text: " + keywordText)
+
+            return that
+
+        }
+
+        // Yeni bir id üret.
+        var generateNewKeywordId = function() {
+
+            keywordId++
+            print("generateNewKeywordId: " + keywordId)
+
+            return keywordId
+
+        }
+        
+        var createKeyword = function(keywordText) {
+            
+            // NESNE: Anahtar kelimenin yazısı
+            var lblKeyword = clbl(0, 0, "auto", "auto")
+            that.text = keywordText
+            that.spaceX = 10
+            that.spaceY = 3
+            that.element.style.margin = "3px"
+            that.element.style.marginBottom = "-4px"
+            that.element.style.boxShadow = "1px 1px 1px rgba(0, 0, 0, 0.1)"
+            that.color = "white"
+            that.textColor = "gray"
+            that.border = 0
+            that.round = 8
+            that.fontSize = 16
+            that.element.style.fontFamily = "opensans-bold"
+            that.onClick(removeKeyword)
+
+            // Koordinat sistemini devre dışı bırak:
+            that.element.style.position = "relative"
+            // Nesneler, satır dolana kadar; yan yana dizilir:
+            that.element.style.display = "inline-block"
+
+            print("createKeyword: text: " + keywordText)
+
+            makeBasicObject(lblKeyword)
+
+            return lblKeyword
+            
+        }
+
+        // keyword nesnesini ve dizideki karşılığını sil.
+        var removeKeyword = function(self) {
+
+            var index = getKeywordIndexById(self.id)
+
+            if (index >= 0) {
+
+                print("removeKeyword: id: " + self.id + ", index: " + index)
+
+                keywords.splice(index, 1)
+                storage.save("app66-keywords", keywords)
+                self.remove()
+
+            } else {
+                // kelime bulunamadı.
+            }
+
+        }
+
+        // keywords dizisindeki, sıra numarasını verir.
+        var getKeywordIndexById = function(id) {
+
+            for (var i = 0; i < keywords.length; i++) {
+                if (keywords[i].id == id) {
+
+                    print("getKeywordIndexById: " + i)
+                    return i
+
+                }
+            }
+
+            // Kelime bulunamad.
+            return -1
+            
         }
 
         </script>
@@ -116,6 +268,6 @@
     <body>
         
         <!-- HTML içeriği -->
-        
+
     </body>
 </html>

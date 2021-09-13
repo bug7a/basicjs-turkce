@@ -2,308 +2,115 @@
 <html>
     <head>
         
-        <title>Diyalog Penceresi</title>
+        <title>Aranabilen Liste</title>
+        
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
-        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
-        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- SEARCHABLE LIST NESNESİNİN KODU -->
+        <script src="dosyalar/37/searchable-list.js" type="text/javascript" charset="utf-8"></script>
+
+        <style>
+
+            body {
+                overflow: hidden;
+            }
+
+        </style>
 
         <script>
 
         /*
 
-        Kullanıcıdan bir işlem için onay almak veya bir durum hakkında bilgilendirmek için
-        özel bir diyalog nesnesi geliştirdik. 
+        Temel nesneler (TextBox, Label, Image, Box), kullanılarak geliştirilmiş; 
+        içinde arama yapılabilen bir liste nesnesi.
+
+        Bu Örneğin Amacı:
+
+        - Hazır bir liste nesnesinin, çalışma mantığı hakkında fikir verir.
+        - Bu teknikler kullanılarak, özel ve benzersiz nesneler oluşturulabilir.
         
-        Kendi ihtiyaçlarınıza göre daha da özelleştirebilirsiniz.
+        NOT: Nesnenin çalışmasını incelemek ve geliştirmek için, 
+        "dosyalar/37/searchable-list.js" dosyasına bakınız.
 
         */
             
         // DEĞİŞKENLER
 
-        // Diyalog açmak için kullanılan butonlar. 
-        var btnDialog1
-        var btnDialog2
-        
-        // Diyalog nesnesi.
-        var dialog
-        
-        // BAŞLANGIÇ FONKSİYONLARI
+        var APP_ORIGINAL_WIDTH = 480;
+        var APP_MAX_WIDTH = 480;
+
+        // Meyve, sebze listesi
+        var plantList = [
+            {title:"Brokoli", desc:"Sebze", logo:"brokoli.png"},
+            {title:"Çilek", desc:"Meyve", logo:"cilek.png"},
+            {title:"Domates", desc:"Sebze", logo:"domates.png"},
+            {title:"Elma", desc:"Meyve", logo:"elma.png"},
+            {title:"Havuç", desc:"Sebze", logo:"havuc.png"},
+            {title:"Karpuz", desc:"Meyve", logo:"karpuz.png"},
+            {title:"Limon", desc:"Meyve", logo:"limon.png"},
+            {title:"Muz", desc:"Meyve", logo:"muz.png"},
+            {title:"Nar", desc:"Meyve", logo:"nar.png"},
+            {title:"Patlıcan", desc:"Sebze", logo:"patlican.png"},
+            {title:"Yaban Mersini", desc:"Meyve", logo:"yabanmersini.png"},
+            {title:"Yeşil Biber", desc:"Sebze", logo:"yesilbiber.png"}
+        ]
+
+        // Satranç taşları
+        var pieceList = [
+            {title:"Şah", desc:"Tek Taş", logo:"sah-beyaz.png"},
+            {title:"Vezir", desc:"Tek Taş", logo:"vezir-beyaz.png"},
+            {title:"At", desc:"İki Taş", logo:"at-beyaz.png"},
+            {title:"Fil", desc:"İki Taş", logo:"fil-beyaz.png"},
+            {title:"Kale", desc:"İki Taş", logo:"kale-beyaz.png"},
+            {title:"Piyon", desc:"Sekiz Taş", logo:"piyon-beyaz.png"}
+        ]
+
+        // NOT: Tüm bilgiler bir dizi değişkeninde tutuluyor.
+        // - Algoritmamız dinamik bir yapıya sahip oluyor.
+        // - İstediğimizde, ajax ile veri tabandan çektiğimiz bilgileride gösterebiliriz.
+        // - php ve mysql
+            
+        // Listeler
+        var objPlantList
+        // var objPieceList
             
         // İlk çalışan fonksiyon.
         var start = function() {
 
-            // NESNE: Birinci diyaloğu açar.
-            btnDialog1 = createButton(40, 40)
-            that.text = "Uyarı 1"
-            that.color = "#3C3135"
-            that.textColor = "rgba(255, 255, 255, 0.8)"
-            that.onClick(showDialog1)
+            page.fit(APP_ORIGINAL_WIDTH, APP_MAX_WIDTH)
+            page.color = "lightblue"
 
-            // NESNE: İkinci diyaloğu açar.
-            btnDialog2 = createButton()
-            that.text = "Uyarı 2"
-            that.color = "#3C3135"
-            that.textColor = "rgba(255, 255, 255, 0.8)"
-            that.aline(btnDialog1, "right", 10)
-            that.onClick(showDialog2)
+            // Birinci liste nesnesi (Parametreler: width, height)
+            objPlantList = createSearcableList(400, 450)
+            that.top = 20
+            that.left = 40
 
-            // NESNE: diyalog penceresi.
-            dialog = createDialog()
+            that.fill(plantList)
+            that.onClick(listItemClicked)
 
-            // Sayfa boyutu değiştiğinde,
-            page.onResize(pageResized)
-            
-        }
-
-        // DİĞER FONKSİYONLAR
-
-        // 1 numaralı diyalog kutusunu göster.
-        var showDialog1 = function() {
-
-            // Nesne kullanılmadan önce, özel değişiklik yapılabilir.
-            dialog.window.btnOkay.color = "#63C9CF"
-            // İptal butonunu göster.
-            dialog.window.btnCancel.visible = 1
-
-            // Nesneyi kullan. Parametreler: Başlık, açıklama, onay butonu yazısı
-            dialog.show("Uyarı Penceresi", 
-                "Dikkat! Bu işlemi yapmak istediğinizden emin misiniz?", 
-                "Onayla")
-
-            dialog.onOkay(dialog1OkayClicked)
-            dialog.onCancel(dialog1CancelClicked)
+            // İkinci liste nesnesi
+            // objPieceList = createSearcableList(300, 270)
+            // that.top = 480
+            // that.left = 40
+            // that.fill(pieceList)
 
         }
 
-        // 1 numaralı diyalog kutusunun, onay butonuna basıldığında;
-        var dialog1OkayClicked = function() {
-            print("Diyalog1, onayla butonuna basıldı.")
+        // Basılan parçanın bilgilerini consola yazdır.
+        var listItemClicked = function(self, item, itemIndex, itemData) {
 
-            // Yapılması istenen görevleri buraya yaz.
+            print(itemIndex + "-" + itemData.title)
 
-        }
+            // - self, üzerine basılan liste nesnesi.
+            // - item, üzerine basılan parça.
+            // - itemIndex, basılan parçanın dizideki sıra numarası.
+            // - itemData, basılan parçanın dizideki elemanı.
 
-        // 1 numaralı diyalog kutusunun, iptal butonuna basıldığında;
-        var dialog1CancelClicked = function() {
-            print("Diyalog1, iptal butonuna basıldı.")
-
-            // Yapılması istenen görevleri buraya yaz.
-            
-        }
-
-        // 2 numaralı diyalog kutusunu göster.
-        var showDialog2 = function() {
-
-            // Nesne kullanılmadan önce, özel değişiklik yapılabilir.
-            dialog.window.btnOkay.color = "#D8D8D8"
-            // İptal butonunu gizle.
-            dialog.window.btnCancel.visible = 0
-
-            // Nesneyi kullan. Parametreler: Başlık, açıklama, onay butonu yazısı
-            dialog.show("Hata Oluştu", 
-                "İşlem gerçekleştirilirken beklenmedik bir hata oluştu. Lütfen daha sonra tekrar deneyin.", 
-                "Tamam")
-
-            dialog.onOkay(dialog2OkayClicked)
-
-        }
-
-        // 2 numaralı diyalog kutusunun, onay butonuna basıldığında;
-        var dialog2OkayClicked = function() {
-            print("Diyalog2, tamam butonuna basıldı.")
-
-            // Yapılması istenen görevleri buraya yaz.
-
-        }
-
-        // Sayfa boyutu değiştiğinde;
-        var pageResized = function() {
-            dialog.centerAgain()
-
-            // NOT: Böylece, diyalog açıkken de
-            // ekran boyutu değiştirebilecek.
-
-        }
-        
-        // NESNE FONKSİYONU
-
-        // Diyalog nesnesini oluşturan fonksiyon.
-        var createDialog = function() {
-
-            // NESNE: Diyalog nesnesinin taşıyıcı kutusu.
-            var object = createBox(0, 0, page.width, page.height)
-            that.color = "transparent"
-            that.border = 0
-            // CSS animasyonu ekle, şeffaflık.
-            that.setMotion("opacity 0.3s")
-
-            // NESNE: Arkaplanı siyah kaplayan kutu.
-            object.boxBlack = createBox(0, 0, page.width, page.height)
-            that.border = 0
-            that.color = "rgba(0, 0, 0, 0.85)"
-            
-            // NESNE: Beyaz taşıyıcı.
-            object.window = createBox()
-            that.width = 450
-            that.height = 240
-            that.color = "white"
-            that.border = 0
-            that.round = 6
-            // Biraz gölge ekle. Kenraları çok keskin renk geçişi olmasın.
-            that.element.style.boxShadow = "2px 3px 6px rgba(0, 0, 0, 0.6)"
-            that.center()
-            
-            // NESNE: Başlık.
-            object.window.lblTitle = createLabel(0, 0)
-            that.textSize = 20
-            that.text = ""
-            that.width = object.window.width
-            that.color = "whitesmoke"
-            that.textColor = "#141414"
-            that.border = 0
-            that.round = 6
-            that.textAlign = "center"
-            that.space = 12
-            that.rotate = 0
-            that.element.style.fontFamily = "opensans-bold"
-            
-            // NESNE: Açıklama.
-            object.window.lblDesc = createLabel()
-            that.text = ""
-            that.top = 50
-            that.space = 25
-            that.width = object.window.width
-            
-            // NESNE: Onay butonu.
-            object.window.btnOkay = createButton()
-            that.text = ""
-            that.color = "lightgray"
-            that.minimal = 0
-            that.bottom = 10
-            that.right = 10
-            
-            // NESNE: İptal butonu.
-            object.window.btnCancel = createButton()
-            that.text = "İptal"
-            that.textColor = "#4A4A4A"
-            that.color = "transparent"
-            that.minimal = 1
-            that.border = 0
-            that.aline(object.window.btnOkay, "left", 6)
-
-            // ALT DEĞİŞKENLER
-
-            object.okFunction = function() {}
-            object.cancelFunction = function() {}
-
-            // ALT FONKSİYONLAR
-
-            // Diyalog kutusunu göster.
-            object.show = function(title, description, buttonText) {
-                object.centerAgain()
-                object.window.lblTitle.text = title
-                object.window.lblDesc.text = description
-                object.window.btnOkay.text = buttonText
-
-                // Nesneyi görünür yap.
-                object.visible = 1
-
-                // Nesnenin şeffaflığını 25sn sonra kaldır.
-                setTimeout(function() {
-                    object.opacity = 1
-                }, 25)
-
-            }
-
-            // Diyalog kutusunu gizle.
-            object.hide = function() {
-
-                // Nesneyi şeffaf yap.
-                object.opacity = 0
-
-                // Nesneyi 300ms sonra görünmez yap.
-                setTimeout(function() {
-                    object.visible = 0
-                }, 300)
-
-                // NOT: CSS animasyonunun görünmesi için,
-                // Nesnenin şeffaflığı 0 olana kadar bekleniyor.
-
-            }
-
-            // Onay butonuna basıldığında,
-            object.okClicked = function() {
-                // Nesne dışındaki belirlenmiş fonksiyonu çalıştır.
-                object.okFunction()
-                // kutuyu gizle.
-                object.hide()
-
-            }
-
-            // İptal butonuna basıldığında.
-            object.cancelClicked = function() {
-                // Nesne dışındaki belirlenmiş fonksiyonu çalıştır.
-                object.cancelFunction()
-                // Kutuyu gizle.
-                object.hide()
-                
-            }
-
-            // Onay butonu için fonksiyon belirleme,
-            object.onOkay = function(func) {
-                object.okFunction = func
-
-            }
-
-            // İptal butonu için fonksiyon belirleme,
-            object.onCancel = function(func) {
-                object.cancelFunction = func
-
-            }
-
-            // Sayfa boyutuna göre yeniden düzenleme yap.
-            object.centerAgain = function() {
-
-                // Sayfa boyutu değişmiş olabilir. 
-                // dialog her açıldığında, yeniden hesapla ve ortala.
-                object.top = 0
-                object.left = 0
-                object.width = page.width
-                object.height = page.height
-
-                object.boxBlack.top = 0
-                object.boxBlack.left = 0
-                object.boxBlack.width = page.width
-                object.boxBlack.height = page.height
-
-                object.window.center()
-
-            }
-
-            // Butonları, nesne içindeki fonksiyonlara bağla.
-            object.window.btnOkay.onClick(object.okClicked)
-            object.window.btnCancel.onClick(object.cancelClicked)
-
-            // NOT: Butona basıldığında yapılması istenilen görevler,
-            // Nesne dışındaki fonksiyona yazılmalıdır.
-
-            // Nesneyi görünmez olarak oluştur.
-            object.visible = 0
-            // Nesneyi şeffaf olarak olarak ayarla.
-            object.opacity = 0
-
-            // NOT: Şeffaflık, kapatma/açma animasyonu için kullanılacak.
-            // NOT: Görünmezlik ise, nesnenin altında kalanlara basılabilmesi için.
-
-            // Nesneyi, that olarak belirle.
-            setAsThat(object)
-
-            // Nesneyi cevap ver.
-            return object
-            
         }
 
         </script>

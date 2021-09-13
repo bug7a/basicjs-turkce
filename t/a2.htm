@@ -2,125 +2,133 @@
 <html>
     <head>
         
-        <title>Zarlar v2</title>
+        <title>Mobil Yatay Kartlar</title>
+        
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
-        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
-        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
-        
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
+
+
         <style>
 
-            /* Web sayfası gibi seçilebilmesini engelle. */
-
-            * {
-                -webkit-tap-highlight-color: rgba(0,0,0,0);
-            }
-            
             body {
-                -webkit-touch-callout: none;
-                -webkit-text-size-adjust: none;
-                -webkit-user-select: none;   
+                overflow: hidden;
             }
 
         </style>
 
         <script>
+            
+        // DEĞİŞKENLER
 
-        /*
+        var CARD_AREA_WIDTH = 560
+        var CARD_AREA_HEIGHT = 350
+        var CARD_TOP_SPACE = 10
+        var CARD_LEFT_SPACE = 10
+        var CARD_WIDTH = 200
+        var CARD_HEIGHT = CARD_AREA_HEIGHT - (CARD_TOP_SPACE * 2) - 10
+            
+        var boxContent
 
-        Zar atma uygulaması.
+        var rooms = [
+            {name: "Oturma Odası", image: "room1.jpeg"},
+            {name: "Mutfak", image: "room2.jpeg"},
+            {name: "Banyo", image: "room3.jpeg"},
+            {name: "Yatak Odası", image: "room4.jpeg"},
+            {name: "Çocuk Odası", image: "room5.jpeg"}
+        ]
 
-        */
-
-        var b1
-        var lblBilgi
-
-        //ilk çalışan fonksiyon.
+        // ÖZEL FONKSİYONLAR
+            
+        // İlk çalışan fonksiyon.
         var start = function() {
 
-            page.color = "lightgray"
-            
-            b1 = createBox(0, 0, 300, 150)
-            // Kutunun arkaplan rengi şeffaf olsun.
-            that.color = "transparent"
+            // Otomatik ekrana sığdır. En geniş 650px
+            page.fit(600, 650)
+
+            // NESNE: En Dış Taşıyıcı Kutu.
+            boxContent = createBox(20, 60, CARD_AREA_WIDTH, CARD_AREA_HEIGHT)
+            that.borderColor = "lightgray"
+            that.round = 13
+            that.scrollX = 1
+            // that.element.style.scrollBehavior = "smooth"
             that.border = 0
-            that.round = 10
-            // Kutuyu sayfanın ortasına koy.
-            that.center()
-            // İlk ortalamadan sonra, CSS animasyonu ekle.
-            that.contElement.style.transition = "left 0.5s, top 0.5s";
+            that.color = "whitesmoke"
 
-            // NESNE: Birinci zar.
-            b1.imgZar1 = createImage(20, 20, 100, 100)
-            that.load("resimler/zar1.png")
-            // Zarların dönüşüne, CSS animasyonu ekle.
-            that.contElement.style.transition = "transform 1s";
-            
-            // NESNE: İkinci zar.
-            b1.imgZar2 = createImage(20, 20, 100, 100)
-            that.right = 20
-            that.load("resimler/zar6.png")
-            that.contElement.style.transition = "transform 1s";
-
-            // NESNE: Kullanım bilgisi veren yazı.
-            lblBilgi = createLabel()
-            that.text = "Zar atmak için dokunun."
-            that.textAlign = "center"
-            that.fontSize = 16
-            that.textColor = "gray"
+            // NESNE: Kartları Taşıyan Kutu.
+            boxContent.b1 = createBox(0, 0, CARD_AREA_WIDTH, CARD_AREA_HEIGHT)
+            that.border = 0
             that.color = "transparent"
-            // Yazının genişliği, kutu ile aynı olsun.
-            that.width = b1.width
-            // Yazıyı, kutunun altına hizala.
-            that.aline(b1, "bottom", 10)
-            // CSS animasyonu ekle.
-            lblBilgi.contElement.style.transition = "opacity 0.5s, left 0.5s, top 0.5s";
 
-            // Sayfaya basıldığında zar at.
-            page.onClick(zarAt)
+            // Aralarında 10px boşluk bırakarak kutuları oluştur.
+            var left = CARD_LEFT_SPACE
 
-            // Sayfanın boyutu değiştirildiğinde çalıştır.
-            page.onResize(yenidenOrtala)
+            for (var i = 0; i < rooms.length; i++) {
 
+                // NESNE: Kutu içindeki kartlar.
+                boxContent.b1["btn" + i] = createCard(left, rooms[i].name, random(0, 2) + " cihaz aktif", rooms[i].image)
+                left += CARD_WIDTH + CARD_LEFT_SPACE
 
-        }
-
-        // Zar resimlerini rasgele değiştiren fonksiyon.
-        var zarAt = function() {
-            
-            // 1 ile 6 arasında rasgele 2 sayı belirle.
-            var sayi1 = random(1, 6)
-            var sayi2 = random(1, 6)
-            
-            // Resim dosyalarını yükle.
-            b1.imgZar1.load("resimler/zar" + sayi1 + ".png")
-            b1.imgZar2.load("resimler/zar" + sayi2 + ".png")
-            
-            // Nesneleri, 0 ile 90 arasında rasgele açılarda döndür.
-            b1.imgZar1.rotate = random(0, 90)
-            b1.imgZar2.rotate = random(0, 90)
-
-            // İlk zar atıldığında, bilgi nesnesini gizle.
-            if (lblBilgi.opacity == 1) {
-                lblBilgi.opacity = 0
             }
 
+            // Taşıyıcı kutunun genişliğini, kart sayısına göre düzenle.
+            boxContent.b1.width = left
+            
         }
 
-        // Sayfa boyutu değiştiğinde çalıştır.
-        var yenidenOrtala = function() {
-
-            // Kutuyu ortala.
-            b1.center()
-            // Bilgiyi kutuya göre hizala.
-            lblBilgi.aline(b1, "bottom", 10)
-
-        }
         
+        // DİĞER FONKSİYONLAR
+
+        // Rasgele renk ve boyutta bir daire oluştur.
+        var createCard = function(left, name, desc, image) {
+
+            // NESNE: Kartın taşıyıcı kutusu.
+            var cardObject = createBox(left, CARD_TOP_SPACE, CARD_WIDTH, CARD_HEIGHT)
+            that.round = 13
+            that.border = 0
+            that.color = "lightgray"
+
+            // NESNE: Arka resim
+            cardObject.imgBack = createImage(0, 0)
+            that.load("resimler/44/" + image)
+
+            // NESNE: Kartın başlığı.
+            cardObject.lblTitle = createLabel(10, 20, "auto")
+            that.text = name
+            that.fontSize = 22
+            that.color = "rgba(255, 255, 255, 0.7)"
+            that.round = 13
+            that.space = 3
+            that.element.style.paddingLeft = "8px"
+            that.element.style.paddingRight = "8px"
+
+            // NESNE: Kartın açıklaması.
+            cardObject.lblDesc = createLabel(10, 60, "auto")
+            that.text = desc
+            that.textColor = "white"
+            that.color = "rgba(0, 0, 0, 0.3)"
+            that.fontSize = 16
+            that.round = 13
+            that.space = 3
+            that.element.style.paddingLeft = "8px"
+            that.element.style.paddingRight = "8px"
+            //that.element.style.textShadow = "2px 1px rgba(0, 0, 0, 0.40)"
+            // that değişkenini bu nesne ile değiştir.
+            makeBasicObject(cardObject)
+
+            return cardObject
+
+        }
+
         </script>
 
     </head>
-    <body></body>
+    <body>
+        
+        <!-- HTML içeriği -->
+        
+    </body>
 </html>

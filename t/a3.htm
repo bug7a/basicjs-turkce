@@ -1,135 +1,157 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Yapılacaklar Listesi</title>
+        
+        <title>Dairenin Yarıçapı Uygulaması</title>
+        
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
-        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
+
+        <style>
+
+            body {
+                overflow: hidden;
+            }
+
+        </style>
 
         <script>
+    
+        // DEĞİŞKENLER
 
+        var PI = 3.14
+
+        // Başlangıç sayfası 
         var a0
-
-        var tasks = []
-
+        
+        // ÖZEL FONKSİYONLAR
+            
         // İlk çalışan fonksiyon.
         var start = function() {
 
-            tasks = storage.load("todo-tasks") || []
+            // NESNE: Başlangıç sayfası
+            a0 = cbox(0, 0, page.width, page.height)
 
-            page.fit(500, 500)
+            // NESNE: Ortadaki daire
+            a0.circle = cbox(50, 150)
+            that.color = "#FE5D49"
+            // CSS hareketi ekle.
+            that.setMotion("left 1s, top 1s, width 1s, height 1s, border-radius 1s")
 
-            // NESNE: A0 sayfa taşıyıcısı.
-            a0 = cbox(0, 0, 500, page.height)
+            // NESNE: Dairenin altındaki bilgi yazısı
+            a0.lblInfo = clbl(0, 0, 300, 40)
+            that.text = ""
+            that.fontSize = 13
+            that.textAlign = "center"
+            that.setMotion("top 1s")
+
+            // NESNE: Dairenin yarı çapının yazıldığı, metin kutusu
+            a0.txtR = ctxt(50, 50, 150)
+            that.title = "Dairenin Yarıçapı:"
+            that.text = "100"
+            that.textAlign = "center"
+            that.onChange(updateCircle)
+
+            // NESNE: Metin kutusunun yanındaki, milimetre bilgisi
+            a0.txtRDesc = clbl(0, 0, 170, 30)
+            that.text = "milimetre (mm)"
+            that.fontSize = 17
+            that.textColor = "#00000080"
+            that.aline(a0.txtR, "right", 10)
+            that.top += 12
+
+            // NOT: txtRDesc nesnesinin, boyutu manuel verilmiştir.
+
+            // NESNE: En alttaki, açıklama yazısı
+            a0.lblBottomInfo = clbl(0, 0, "auto", "auto")
+            that.text = "Dairenin boyutu PIksel (px) cinsindendir. Milimetre temsilidir."
+            // %60 görünür, siyah renk. Arkaplan ile daha uyumlu görünür.
+            that.textColor = "rgba(0, 0, 0, 0.6"
+            that.fontSize = 12
             that.color = "white"
-            that.center()
+            // Yazının kenarlarında, sınıra boşluk bırak.
+            that.spaceY = 4
+            that.spaceX = 10
+            that.round = 8
+            that.onResize(function(self) {
+                self.bottom = 30
+                self.center("left")
 
-            // NESNE: Eklemek için taşıyıcı kutu.
-            a0.b1 = cbox(10, 10, 480, 80)
-            that.color = "transparent"
+                // NOT: Konumlandırma, nesnenin boyutu ile ilgili olduğu için,
+                // Nesne boyutu hesaplandıktan sonra, hizalanıyor.
+
+            })
+
+            // NOT: lblBottomInfo nesnesinin, boyutu "auto" yapılmaz ise,
+            // onResize() fonksiyonunu kullanmaya gerek olmaz.
+
+            // Daireyi güncelle.
+            updateCircle()
+
+            // Sayfa boyutu, her değiştiğinde
+            page.onResize(pageResized)
             
-            // NESNE: Görevin yazılacağı metin kutusu.
-            a0.b1.txtNewTask = ctxt(20, 15, 350)
-            that.minimal = 1
-            that.color = "whitesmoke"
-
-            // NESNE: Görevi ekleyecek buton.
-            a0.b1.btnAdd = cbtn()
-            that.text = "Ekle"
-            that.color = "cadetblue"
-            that.textColor = "rgba(0, 0, 0, 0.7)"
-            that.width = 85
-            that.minimal = 1
-            that.aline(a0.b1.txtNewTask, "right", 5)
-            that.onClick(addBtnClicked)
-
-            // NESNE: Eklenene görevlerin taşıyıcısı.
-            a0.b2 = cbox(10, 100, 480, page.height - 110)
-            that.border = 0
-            that.color = "white"
-            that.round = 13
-            that.scrollY = 1
-
-            addTask("Bugun, parka gideceğim. Biraz oturacağım ve yapabileceğim projeler hakkında düşüneceğim.")
-            addTask("Kahvemi içeceğim. Çiçeklere su verdikten sonra, biraz oyun oynayacağım.")
-            addTask("Projenin, istatistiklerini inceleyeceğim.")
-
-            // b1 in üzerini kapatsın. ortasında kırmızı çöp tenekesi çıksın.
-            // a0.b3 = 
-
         }
+        
+        // DİĞER FONKSİYONLAR
 
-        var addBtnClicked = function() {
+        var pageResized = function() {
 
-            if (a0.b1.txtNewTask.text != "") {
+            a0.width = page.width
+            a0.height = page.height
 
-                addTask(a0.b1.txtNewTask.text)
-                a0.b1.txtNewTask.text = ""
+            // Hareketi, geçici olarak devre dışı bırak.
+            a0.circle.dontMotion()
+            a0.circle.center()
+            // Hareketi, geçici olarak devre dışı bırak.
+            a0.lblInfo.dontMotion()
+            a0.lblInfo.aline(a0.circle, "bottom", 10)
+            a0.lblInfo.center("left")
+            a0.lblBottomInfo.center("left")
 
-            }
-
-        }
-
-        // Yeni görev ekle.
-        var addTask = function(taskText) {
-
-            var newItem = createTaskItem(taskText)
-            a0.b2.add(newItem)
-
-            tasks.unshift(newItem)
-            //storage.save("todo-tasks", tasks)
-
-            // Otomatik boyut hesaplaması tamamlandıktan sonra, nesneleri yeniden hizala.
-            afterCalc(repositionTasks)
-
-            // NOT: afterCalc() fonksiyonu, bir nesnenin altında çalıştırılmamıştır.
-            // Her seferinde, tüm nesneler yeniden konumlandırıldığı için.
-
-        }
-
-        var repositionTasks = function() {
-
-            var top = 0
-
-            for (var i = 0; i < tasks.length; i++) {
-                tasks[i].top = top
-                tasks[i].height = tasks[i].lblText.height + 20
-
-                top += tasks[i].height
-            }
-
-        }
-
-        // Yeni görev nesnesi oluştur.
-        var createTaskItem = function(taskText) {
-
-            // NESNE: Bir görevin taşıyıcısı
-            var object = cbox(0, 0, 480, 100)
-            that.color = "white"
-            that.border = 0
-
-            // NESNE: Bir görevin yazısı
-            object.lblText = clbl(50, 10, 410, "auto")
-            that.color = "transparent"
-            that.text = taskText
-
-            // NESNE: Görev yazısının başındaki, seçim alanı
-            object.boxTick = cbox(15, 15, 20, 20)
-            that.round = 10
-            that.border = 1
-            that.color = "whitesmoke"
-            that.borderColor = "lightgray"
-
-            return object
+            // NOT: Hareket, geçici olarak devre dışı bırakıldığında;
+            // sayfa boyutu değiştirildiğinde, nesneler hareketsiz olarak ortalanacak.
 
         }
         
+        var updateCircle = function() {
+
+            var r = num(a0.txtR.text)
+
+            // r sadece, 0 - 400 arası olabilir.
+            if (r > 400) {
+                r = 400
+                a0.txtR.text = str(r)
+            } else if (r < 0) {
+                r = 0
+                a0.txtR.text = str(r)
+            }
+
+            a0.circle.width = num(r * 2)
+            a0.circle.height = a0.circle.width
+            a0.circle.round = r
+            a0.circle.center()
+
+            var circumference = num(2 * PI * r)
+            var area = num(PI * r * r)
+
+            a0.lblInfo.text = "<span style='font-family: opensans-bold'>Çevresi:</span> " + circumference + " mm<br>"
+            a0.lblInfo.text += "<span style='font-family: opensans-bold'>Alanı:</span> " + area + " mm<sup>2</sup>"
+            a0.lblInfo.top = a0.circle.top + a0.circle.height + 10
+            a0.lblInfo.center("left")
+
+        }
+
         </script>
 
     </head>
     <body>
+        
+        <!-- HTML içeriği -->
         
     </body>
 </html>

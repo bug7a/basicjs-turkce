@@ -75,7 +75,6 @@ var createSearcableList = function(objectWidth = 400, objectHeight = 450) {
     that.borderColor = "lightgray"
     // Bu alanda dikey kaydırmaya izin ver.
     that.scrollY = 1
-    that.scrollX = 1
     
     // PAKET İÇİNDEKİ FONKSİYONLAR
     // Yeni bir parça oluşturma fonksiyonu.
@@ -108,7 +107,7 @@ var createSearcableList = function(objectWidth = 400, objectHeight = 450) {
         that.fontSize = 14
 
         // that değişkeni ile itemObject nesnesine ulaşılabilsin.
-        setAsThat(itemObject)
+        makeBasicObject(itemObject)
 
         return itemObject
 
@@ -198,7 +197,7 @@ var createSearcableList = function(objectWidth = 400, objectHeight = 450) {
                 object.boxItemsArea["item" + object.selectedIndex].color = object.selectedColor
             }
 
-            setAsThat(object)
+            makeBasicObject(object)
 
             // Ekleme alanı olarak page nesnesini seç.
             //selectBox(page)
@@ -260,7 +259,7 @@ var createSearcableList = function(objectWidth = 400, objectHeight = 450) {
     }
 
     // that değişkeni ile object nesnesine ulaşılabilsin.
-    setAsThat(object)
+    makeBasicObject(object)
 
     // Oluşturulan nesneyi cevap olarak gönder.
     return object
