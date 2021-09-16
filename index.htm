@@ -11,14 +11,31 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
-        <link rel="stylesheet" type="text/css" href="basic-1.4.css">
-        <script src="basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="basic-1.6.2.css">
+        <script src="basic-1.6.2.js" type="text/javascript" charset="utf-8"></script>
         
+        <script src="site-turkish.js" type="text/javascript" charset="utf-8"></script>
+        <script src="site-color1.js" type="text/javascript" charset="utf-8"></script>
+        
+
         <style>
         
             body {
+
+                margin: 0px;
+
+                background-color: #141414;
+
                 overflow-x:hidden;
                 overflow-y:hidden;
+
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+
+                /* filter: hue-rotate(90deg); */
+                /* filter: invert(50%); */
+                /* filter: saturate(200%) */
+                /* filter: sepia(100%) */
             }
             
             a {
@@ -122,7 +139,12 @@
             that.color = "transparent"
             //that.element.style.backgroundImage = "radial-gradient(rgba(0,0,0,0.1), #141414)";
             that.border = 0
+            that.opacity = 0.1
             that.scrollY = 1
+            that.setMotion("opacity 1.3s")
+            that.withMotion(function(self) {
+                self.opacity = 1
+            })
             
             // PAGE1
             page1 = createBox()
@@ -132,6 +154,7 @@
             that.color = "transparent"
             //that.element.style.backgroundImage = "radial-gradient(yellow, white)";
             that.border = 0
+            that.element.style.position = "relative"
             that.center("left")
             //that.scrollY = 1
 
@@ -151,7 +174,17 @@
             that.border = 0
             that.center("left")
             */
-            createPage2()
+            createPage2();
+
+            /*
+            page3 = createBox()
+            that.element.style.position = "relative";
+            that.width = page.width;
+            that.height = 450
+            that.center("left")
+            mainPage.add(page3)
+            createPage3();
+            */
             
             //page2.visible = 1
 
@@ -221,10 +254,11 @@
             page1.desc1 = createLabel(0, 0)
             //that.text = "Sadeleştirilmiş ve nesne-tabanlı JavaScript Kütüphanesi"
             //that.color = "yellow"
-            that.text = "Programlamaya yeni başlayanlar için"
+            that.text = content.title1
+            that.element.style.fontFamily = "opensans-bold"
             //that.textColor = "#141414" // white
             that.textColor = "white" // white
-            that.width = 350
+            that.width = 400
             that.height = 60
             that.textAlign = "center"
             that.aline(page1.logo, "bottom", 20)
@@ -233,14 +267,15 @@
             // sub desc1
             page1.sub_desc1 = createLabel()
             //that.text = "Bir yazılım projesinin, nasıl yapılacağını, en sade ve basit şekilde öğretmek için tasarlanmış algoritma örnekleri ve anlatım videoları içerir."
-            that.text = "JavaScript ile nesne tabanlı yazılım projeleri geliştirin:"
+            that.text = content.title2
             that.color = "transparent"
             // #33A5D3
             //that.textColor = "tomato"
             that.textColor = "#33A5D3"
+            that.element.style.fontFamily = "opensans-bold"
             that.width = DEFAULT_WIDTH
             that.height = 30
-            that.opacity = 0.9 // 0.5
+            that.opacity = 1; // 0.5
             that.fontSize = 16
             that.textAlign = "center"
             that.aline(page1.desc1, "bottom", 100)
@@ -249,15 +284,16 @@
             
             // sub desc 2
             page1.sub_desc2 = createLabel()
-            that.text = "- Temel konuları, <a href='https://play.google.com/store/apps/details?id=com.bugraozden.cik' style='color:#33A5D3;text-decoration: underline;pointer-events:auto;' target='_blank'>android uygulaması</a> üzerinden öğrenin."
+            that.text = content.subTitle1
             // APPSTORE için
             //that.text = "- Temel konuları, <a href='https://play.google.com/store/apps/details?id=com.bugraozden.cik' style='color:#33A5D3;text-decoration: underline;pointer-events:auto;' target='_blank'>Android</a> veya <a href='https://play.google.com/store/apps/details?id=com.bugraozden.cik' style='color:#33A5D3;text-decoration: underline;pointer-events:auto;' target='_blank'>iOS</a> uygulaması üzerinden öğrenin."
-            that.text += "<br>- Örnekleri bilgisayarınıza indirin ve anlatım videolarını izleyin."
+            that.text += content.subTitle2
+            // that.element.style.fontFamily = "opensans-bold"
             that.color = "transparent"
             that.textColor = "#33A5D3"
             that.width = 550
             that.height = 60
-            that.opacity = 0.5 // 0.4
+            that.opacity = 0.8 // 0.4
             that.fontSize = 14
             that.aline(page1.sub_desc1, "bottom", 0)
             that.left = 105
@@ -265,12 +301,13 @@
             // TRAILER BUTTON
             page1.trailer_button = createButton()
             //that.text = "GitHub’dan İndir"
-            that.text = "Tanıtım Videosu"
+            that.text = content.button1
+            //that.element.style.fontFamily = "opensans-bold"
             //that.color = "tomato"
             that.color = "rgba(255, 255, 255, 0.02)" //transparent
             that.minimal = 1
             that.border = 1
-            that.borderColor = "white" // white
+            that.borderColor = "#FFFFFF50" // white
             that.textColor = "white" // whtie
             that.round = 12
             that.width = 220
@@ -280,18 +317,19 @@
             that.left -= 115
             that.contElement.classList.add("btn-type1")
             that.onClick(function() {
-                window.open("https://www.youtube.com/watch?v=CemAvscdzQg", "_blank");
+                window.open(content.button1Link, "_blank");
             });
             
             // DOWNLOAD BUTTON
             page1.download_button = createButton()
             //that.text = "GitHub’dan İndir"
-            that.text = "Örnekleri İndir"
+            that.text = content.button2
+            //that.element.style.fontFamily = "opensans-bold"
             //that.color = "tomato"
             that.color = "rgba(255, 255, 255, 0.02)" // transparent
             that.minimal = 1
             that.border = 1
-            that.borderColor = "white" // white
+            that.borderColor = "#FFFFFF50" // white
             that.textColor = "white" // white
             that.round = 12
             that.width = 220
@@ -301,12 +339,12 @@
             that.left += 115
             that.contElement.classList.add("btn-type1")
             that.onClick(function() {
-                window.open("https://github.com/bug7a/basicjs-turkce", "_blank");
+                window.open(content.button2Link, "_blank");
             });
             
             // DOWNLOAD BUTTON DESC
             page1.download_button_desc = createLabel()
-            that.text = "Yeşil Düğme, Download ZIP"
+            that.text = content.button2Desc
             that.textColor = "#33A5D3"
             that.fontSize = 14
             that.opacity = 0.5 // 0.3
@@ -343,7 +381,7 @@
             that.left = 0
             
             page1.sub_desc1 = createLabel()
-            that.text = "Kaynak kodunu görüntülemek için bir örnek seçin."
+            that.text = content.title3
             that.width = DEFAULT_WIDTH
             that.textAlign = "center"
             that.fontSize = 16
@@ -352,7 +390,7 @@
             that.aline(page1.desc1, "bottom", 0)
             
             var topSpace = 120 + 700
-            var itemTitles = ["Merhaba<br>Dünya", "Çarpım Tablosu", "Hesap Makinesi", "Zarlar", "Tic-tac-toe", "Sayaç"]
+            var itemTitles = [content.sample1, content.sample2, content.sample3, content.sample4, content.sample5, content.sample6]
             var itemURLs = [
                 "https://codepen.io/bug7a/pen/yLgbEQR", 
                 "https://codepen.io/bug7a/pen/QWpQQzp", 
@@ -372,6 +410,7 @@
                 that.opacity = 0.7
                 that.round = 6
                 that.value = itemURLs[i - 1];
+                that.element.style.cursor = "pointer";
                 //var savedURL = itemURLs[i - 1];
                 that.onClick(function(self){
                     window.open(self.value, "_blank");
@@ -390,7 +429,7 @@
             }
             
             topSpace = 270 + 700
-            itemTitles = ["Duvar<br>Saati", "Kronometre", "Matematik<br>Oyunu", "Renk<br>Sözlüğü", "Yılan<br>Oyunu", "Satranç"]
+            itemTitles = [content.sample7, content.sample8, content.sample9, content.sample10, content.sample11, content.sample12]
             itemURLs = [
                 "https://codepen.io/bug7a/pen/jOBZgxj", 
                 "https://codepen.io/bug7a/pen/dyvdxjV", 
@@ -409,6 +448,7 @@
                 that.load("images/pro" + (6 + i) + ".png")
                 that.opacity = 0.7
                 that.round = 6
+                that.element.style.cursor = "pointer";
                 that.value = itemURLs[i - 1];
                 that.onClick(function(self){
                     window.open(self.value, "_blank");
