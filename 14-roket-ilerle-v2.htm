@@ -5,8 +5,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
-        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
 
         <script>
 
@@ -30,6 +30,8 @@
         var imgIleri
         var imgSag
         var imgSol
+
+        var lblMesafe
         
         // Yönlerin sırası. 0: yukarı, 1: sağ, 2: aşağı, 3: sol
         var yonListe = ["yukarı", "sağ", "aşağı", "sol"]
@@ -85,6 +87,14 @@
             // nesneyi, sola doğru 45px kaydır.
             that.left -= 45
             that.onClick(roketiCevir)
+
+            // NESNE: İlerlenecek mesafe bilgisi
+            lblMesafe = createLabel()
+            that.width = imgIleri.width + 100
+            that.textAlign = "center"
+            that.text = "0"
+            that.aline(imgIleri, "top", 10)
+            that.left -= 50
             
             // loop() fonksiyonunu, 5ms de bir çalıştır.
             setLoopTimer(5)
@@ -136,6 +146,8 @@
                 // Ekrana bazı bilgileri yazdır.
                 print("Roketin hareket edeceği mesafe: " + hareketMesafe)
                 print("Roketin yönü: " + yonListe[hareketYon])
+
+                lblMesafe.text = hareketMesafe
                 
             } else {
                 // Hiçbir şey yapma.

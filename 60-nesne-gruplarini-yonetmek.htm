@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Nesne Gruplarını Yönetmek</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+
+        /*
+
+        - Bir çok uygulamada, kendini tekrar eden parçaları, her zaman görürüz.
+
+        - Bu parçalar, örnekteki gibi basit kutular veya
+        içlerinde bir çok başka bilgiyi de barındıran karmaşık kutular olabilir.
+
+        - Mesela, bir mesajlaşma uygulamasındaki, kişi listesi sayfasını ele alalım:
+        Her bir kutuda; kişi resmi, adı, soyadı ve son mesajlara ait başka bilgiler olabilir.
+
+        - Bu örnek, böyle parçalar tasarladığımızda, 
+        onları nasıl kontrol edebileceğimizi gösteriyor.
+
+        Diğer bir örnek proje: 37-aranabilen-liste.htm
+        
+        */
+
+        var SPACE_BETWEEN_BOXES = 2
+        var colors = ["#689BD2", "tomato", "gold", "seagreen"]
+
+        // Başlangıç sayfası
+        var a0
+
+        // Son oluşturulan kutunun id'si
+        var lastBoxId = 0
+        // Kutu nesneleri
+        var boxes = []
+
+        var start = function() {
+
+            // NESNE: ilk sayfa taşıyıcısı
+            a0 = cbox(0, 0, page.width, page.height)
+
+            // NESNE: kutuların taşıyıcısı
+            a0.b1 = cbox()
+            that.height = 44
+            that.round = 3
+            that.color = "black"
+            that.setMotion("left 0.3s, width 0.3s")
+
+            // NOT: Kutuları toplu olarak, hareket ettirebilmemizi sağlayacak.
+
+            // 8 tane kutu oluştur.
+            for (var i = 0; i < 8; i++) {
+                addBox()
+            }
+
+            // NESNE: Yeni kutu ekleme butonu
+            a0.btnAddNewBox = cbtn()
+            that.text = "Kutu Ekle"
+            that.color = "lightgray"
+            that.minimal = 1
+            that.center("left")
+            that.bottom = 60
+            that.onClick(addBox)
+
+            page.onResize(pageResized)
+            
+        }
+
+        // Sayfa boyutu değiştiğinde,
+        var pageResized = function() {
+
+            // Başlangıç sayfasını, ekranı kaplayacak şekilde yeniden ayarla.
+            a0.width = page.width
+            a0.height = page.height
+
+            // Taşıyıcı kutuyu, hareketsiz olarak ortala.
+            a0.b1.dontMotion()
+            a0.b1.center()
+
+            // Butonu yeniden konumlandır.
+            a0.btnAddNewBox.center("left")
+            a0.btnAddNewBox.bottom = 60
+
+        }
+
+        // Yeni bir kutu ekle
+        var addBox = function() {
+
+            // Yeni nesnenin ID'si
+            lastBoxId++
+
+            var newBoxName = "box" + lastBoxId
+
+            // NESNE: Kutu
+            a0.b1[newBoxName] = cbox(0, SPACE_BETWEEN_BOXES, 40, 40)
+            // id, ismini bizim belirlediğimi bir değişkendir.
+            that.id = lastBoxId
+            // Üzerine gelince, basılabilir imleci çıksın.
+            that.element.style.cursor = "pointer"
+            that.color = colors[random(0, colors.length - 1)]
+            that.round = 3
+            that.onClick(removeBox)
+            // Kutulara hareket özelliği ekle.
+            that.setMotion("left 0.3s")
+            // Kutuların genişliğini rasgele belirle.
+            // that.width = random(40, 100)
+
+            // NESNE: Kutu içideki sayı
+            a0.b1[newBoxName].lblNumber = clbl(0, 0, 40, 25)
+            that.text = str(lastBoxId)
+            that.textAlign = "center"
+            that.textColor = "rgba(0, 0, 0, 0.6)"
+            that.element.style.fontFamily = "opensans-bold"
+            that.center()
+
+            // kutu nesnelerini, diziye ekle.
+            boxes.push(a0.b1[newBoxName])
+
+            refreshBoxes()
+
+        }
+
+        // Basılan kutuyu sil
+        var removeBox = function(self) {
+
+            removeBoxById(self.id)
+
+        }
+
+        // id'si verilen kutuyu sil
+        var removeBoxById = function(id) {
+
+            var newBoxes = []
+
+            for (var i = 0; i < boxes.length; i++) {
+
+                // Basılmayan kutuları yeni bir diziye ekle.
+                if (boxes[i].id != id) {
+                    newBoxes.push(boxes[i])
+                } else {
+                    // Basılan kutunun nesnesini sil.
+                    boxes[i].remove()
+                }
+
+            }
+
+            // Kutuların tutulduğu diziyi, yenisi ile değiştir.
+            boxes = newBoxes
+
+            refreshBoxes()
+
+            print(id + " id'li kutu nesnesi silindi.")
+
+        }
+        
+        // Dizideki kutuları, yan yana diz
+        var refreshBoxes = function() {
+
+            var boxLeft = SPACE_BETWEEN_BOXES
+
+            for (var i = 0; i < boxes.length; i++) {
+                // Kutunun sola olan mesafesini belirle.
+                boxes[i].left = boxLeft
+                // Sonraki kutunun sola olacak mesafesini hesapla.
+                boxLeft += boxes[i].width + SPACE_BETWEEN_BOXES
+
+            }
+
+            // Taşıyıcının genişliğini ayarla ve ortala.
+            a0.b1.width = boxLeft
+            a0.b1.center()
+            
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML içeriği -->
+        
+    </body>
+</html>

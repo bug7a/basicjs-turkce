@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Temel Nesne Gruplarını Yönetmek</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+
+        /*
+
+        - Döngü ile parçalar oluşturuluyor.
+        - Parçalar, daha sonra ulaşabilmemiz için, bir dizi değişkenine ekleniyor.
+        - Bir parçanın üzerine basıldığında, o parça siliniyor.
+          Ve kalan tüm diğer parçalar, yeniden konumlandırılarak, boşluğu dolduruyor.
+
+        */
+        
+        // kutu nesneleri
+        var boxes = []
+
+        var start = function() {
+
+            // 8 tane kutu oluştur.
+            for (var i = 0; i < 8; i++) {
+
+                // NESNE: Her bir parça.
+                var box = cbox(0, 0, 80, 80)
+                that.color = "orangered"
+                that.round = 4
+                that.onClick(removeBox)
+                // Kutulara hareket özelliği ekle.
+                that.setMotion("top 0.3s")
+                // Kutuların yüksekliğini rasgele belirle.
+                // that.height = random(50, 100)
+
+                // NESNE: Parça içindeki sayı.
+                box.lblNumber = clbl(0, 0, 50, 25)
+                that.text = str(i + 1)
+                that.textAlign = "center"
+                that.textColor = "rgba(255, 255, 255, 0.9)"
+                that.element.style.fontFamily = "opensans-bold"
+                that.center()
+
+                // kutu nesnelerini, diziye ekle.
+                boxes.push(box)
+
+            }
+
+            refreshBoxes()
+            
+        }
+
+        // Basılan kutuyu sil
+        var removeBox = function(self) {
+
+            var newBoxes = []
+
+            for (var i = 0; i < boxes.length; i++) {
+
+                // Basılmayan kutuları yeni bir diziye ekle.
+                if (boxes[i] != self) {
+                    newBoxes.push(boxes[i])
+                }
+
+            }
+
+            // Kutuların tutulduğu diziyi, yenisi ile değiştir.
+            boxes = newBoxes
+            // Basılan kutunun nesnesini sil.
+            self.remove()
+
+            refreshBoxes()
+
+        }
+        
+        // Dizideki kutuları, alt alta diz
+        var refreshBoxes = function() {
+
+            var SPACE = 2
+            var boxTop = 0
+
+            for (var i = 0; i < boxes.length; i++) {
+                // Kutunun yukarıya olan mesafesini belirle.
+                boxes[i].top = boxTop
+                // Sonraki kutunun yukarıya olan mesafesini hesapla.
+                boxTop += boxes[i].height + SPACE
+
+            }
+            
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML içeriği -->
+        
+    </body>
+</html>

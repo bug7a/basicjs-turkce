@@ -7,23 +7,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
-        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
-        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
 
 
         <style>
-
-            /* Web sayfası gibi seçilebilmesini engelle. */
-
-            * {
-                -webkit-tap-highlight-color: rgba(0,0,0,0);
-            }
-
-            body {
-                -webkit-touch-callout: none;
-                -webkit-text-size-adjust: none;
-                -webkit-user-select: none;   
-            }
 
             /* Butonun üzerinde gelince animasyon olsun. */
 
@@ -75,7 +63,7 @@
             that.border = 0
             that.round = 8
             // Dışa taşan nesneleri göster.
-            menu.contElement.style.overflow = "visible"
+            menu.element.style.overflow = "visible"
 
             // Buton oluşturuldukça, genişliği bu değişkene eklenecek.
             var totalMenuWidth = 5
@@ -88,9 +76,9 @@
                     // NESNE: Buttonlardan biri
                     menu["item" + i] = createButtonWithIcon(menuData[i].text, menuData[i].width, "resimler/22/" + menuData[i].icon)
                     // CSS ile butonun üzerine geldiğinde renginin değişmesini sağla.
-                    that.contElement.classList.add("btn-type1")
+                    that.element.classList.add("btn-type1")
                     // CSS bağlantısını kaldırmak için
-                    // that.contElement.classList.remove("btn-type1")
+                    // that.element.classList.remove("btn-type1")
                     // Basılan butonu tanımak için anahtarı kaydet.
                     that.id = menuData[i].id
                     that.onClick(itemClicked)
@@ -133,7 +121,7 @@
             that.border = 0
             that.opacity = 0.8
             // CSS hareketi ekle.
-            that.contElement.style.transition = "left 0.5s, background-color 0.5s";
+            that.setMotion("left 0.5s, background-color 0.5s");
 
             // Son basılan buton nesnesini saklamak için eleman.
             menu.clickedButton = undefined
@@ -196,7 +184,7 @@
             that.fontSize = 18
 
             // that değişkenini güncelle.
-            setAsThat(object)
+            makeBasicObject(object)
 
             // Nesneyi geri gönder.
             return object

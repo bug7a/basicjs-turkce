@@ -7,8 +7,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
-        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
 
         <script>
 
@@ -55,6 +55,9 @@
                     // Yeni düğme (Button) nesnesi oluştur.
                     var btnDugme = createButton()
                     // Düğmnin metnini belirle 1 den 12 ye kadar.
+                    // Font boyutu.
+                    btnDugme.fontSize = 50
+                    // Metin
                     btnDugme.text = (i * 3) + (k + 1)
                     // genişlik: 100px, yükseklik: 100px olarak belirle.
                     btnDugme.width = 100
@@ -104,6 +107,8 @@
 
                 // Yeni düğme (Button) nesnesi oluştur
                 var btnDugme = createButton()
+                // Font boyutu.
+                btnDugme.fontSize = 50
                  // Genişlik: 150px, yükseklik: 100px olarak belirle
                 btnDugme.width = 150
                 btnDugme.height = 100

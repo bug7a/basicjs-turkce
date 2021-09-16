@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Uzunluk Ölçüsü Çevirme Uygulaması</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
+
+        <style>
+
+            body {
+                overflow: hidden;
+            }
+
+            /* enable 0 yapılan nesne, silik görünmesin. */
+            .basic_textbox:disabled {
+                opacity: 1 !important;
+            }
+
+            /* Birim seçme diyalogundaki butonlar, üzerlerine geldiğinde farklı renk olsun. */
+            .unit-selection-dialog-buttons-type:hover {
+                background-color: whitesmoke !important;
+            }
+
+            .unit-selection-dialog-buttons-type:active {
+                background-color: lightgray !important;
+            }
+
+        </style>
+
+        <script>
+
+        /*
+
+            UZUNLUK ÖLÇÜSÜ ÇEVİRME UYGULAMASI
+
+            - Bu projeyi; mobil (android, ios), web ve masaüstü uygulaması olarak paketlemeyi deneyebilirsiniz:
+
+            https://cordova.apache.org/
+
+        */
+
+        var APP_ORIGINAL_WIDTH = 410
+        var APP_MAX_WIDTH = 410
+        // Varsayılan, verilen uzunluk birim sıra numarası. m
+        var DEFAULT_GIVEN_LENGTH_UNIT_INDEX = 3
+        // Varsayılan, hesaplanmış uzunluk birim sıra numarası. cm
+        var DEFAULT_CALCULATED_LENGTH_UNIT_INDEX = 5
+
+        // Uzunluk ölçü birimlerinin listesi
+        var lengthMeasurementUnits = [
+            {name: "Kilometre", short:"km"},
+            {name: "Hektometre", short:"hm"},
+            {name: "Dekametre", short:"dam"},
+            {name: "Metre", short:"m"},
+            {name: "Desimetre", short:"dm"},
+            {name: "Santimetre", short:"cm"},
+            {name: "Milimetre", short:"mm"},
+        ]
+        // NOT: index değeri, dizinin sıra numarasıdır. 0: km, 1:hm, 2:dam, 3:m, 4:dm, 5:cm, 6:mm
+
+        // Başlangıç sayfası
+        var a0
+
+        // Verilen uzunluk metin kutusu
+        var txtGivenLength
+        // Hesaplanan uzunluk metin kutusu
+        var txtCalculatedLength
+
+        // Metin kutularının üzerindeki, küçük birim butonları (Selected Unit Button)
+        var subGivenUnit
+        var subCalculatedUnit
+
+        // İlk çalışan fonksiyon.
+        var start = function() {
+
+            // İçeriği, ekrana sığdır.
+            page.fit(APP_ORIGINAL_WIDTH, APP_MAX_WIDTH)
+
+            // NESNE: Başlangıç sayfası
+            a0 = cbox(0, 0, page.width, page.height)
+            that.color = "#FEC108"
+
+            // NESNE: Duman beyazı taşıyıcı kutu
+            a0.b1 = cbox(0, 0, 370, 470)
+            that.color = "whitesmoke"
+            that.round = 13
+            that.element.style.boxShadow = "2px 3px 6px rgba(0, 0, 0, 0.2)"
+            that.center()
+
+            // NESNE: Küçük logo resimi
+            a0.b1.imgLogo = cimg(0, 40, 80, 80)
+            that.load("resimler/65/logo.png")
+            that.center("left")
+
+            // NESNE: Başlık
+            a0.b1.lblTitle = clbl(0, 140, a0.b1.width, 40)
+            that.text = "Uzunluk Ölçüsü Çevirme"
+            that.element.style.fontFamily = "opensans-bold"
+            that.textColor = "#141414"
+            that.textAlign = "center"
+
+            // NESNE: Metin kutularının arkasındaki beyaz taşıyıcı kutu
+            a0.b1.c1 = cbox(20, 210, 330, 240)
+            that.color = "white"
+            that.element.style.boxShadow = "2px 3px 6px rgba(0, 0, 0, 0.05)"
+            that.round = 13
+
+            // NESNE: Verilen uzunluk metin kutusu
+            a0.b1.c1.txtGivenLength = ctxt(0, 50)
+            that.title = "Verilen Uzunluk:"
+            that.minimal = 1
+            that.color = "#D8D8D8"
+            that.center("left")
+            // Her karakter eklendiğinde, hesapla fonksiyonunu çağır.
+            that.inputElement.addEventListener("keyup", calculateLength)
+            // Sadece sayı girilebilsin.
+            that.inputElement.setAttribute("type", "number")
+            txtGivenLength = that
+
+            // NESNE: Hesaplanan uzunluk metin kutusu
+            a0.b1.c1.txtCalculatedLength = ctxt()
+            that.title = "Hesaplanan Uzunluk:"
+            that.minimal = 1
+            that.color = "#D8D8D8"
+            that.aline(a0.b1.c1.txtGivenLength, "bottom", 60)
+            that.enabled = 0
+            that.opacity = 1
+            txtCalculatedLength = that
+
+            // NESNE: Verilen uzunluk metin kutusunun üstündeki, küçük birim butonu
+            a0.b1.c1.subGivenUnit = createSelectedUnitButton(txtGivenLength)
+            that.setSelectedIndex(DEFAULT_GIVEN_LENGTH_UNIT_INDEX)
+            subGivenUnit = that
+
+            // NESNE: Hesaplanan uzunluk metin kutusunun üstündeki, küçük birim butonu
+            a0.b1.c1.subCalculatedUnit = createSelectedUnitButton(txtCalculatedLength)
+            that.setSelectedIndex(DEFAULT_CALCULATED_LENGTH_UNIT_INDEX)
+            subCalculatedUnit = that
+
+            // NESNE: Birimleri birbirleri ile değiştirme butonu
+            a0.b1.c1.imgSwitchUnitsButton = cimg(0, 0, 40, 40)
+            that.load("resimler/65/change.png")
+            that.space = 12
+            that.round = 13
+            that.rotate = 90
+            that.color = "whitesmoke"
+            // Üzerine gelindiğinde, basılabilir işareti görünsün.
+            that.element.style.cursor = "pointer"
+            that.left = txtGivenLength.left + txtGivenLength.width - that.width
+            that.top = txtGivenLength.top + txtGivenLength.height + 10
+            that.onClick(function(self) {
+                var temp = subGivenUnit.getSelectedIndex()
+                subGivenUnit.setSelectedIndex(subCalculatedUnit.getSelectedIndex())
+                subCalculatedUnit.setSelectedIndex(temp)
+                calculateLength()
+            })
+
+            // Sayfa boyutu her değiştiğinde,
+            page.onResize(function() {
+
+                page.fit(APP_ORIGINAL_WIDTH, APP_MAX_WIDTH)
+
+                a0.width = page.width
+                a0.height = page.height
+                a0.b1.center()
+                
+            })
+             
+        }
+
+        // Metin kutusunun üstünde, küçük bir birim butonu oluşturur.
+        var createSelectedUnitButton = function(txtObject) {
+            
+            var object = clbl(0, 0, "auto", 28)
+            that.color = "white"
+            that.textColor = "#4A4A4A"
+            that.fontSize = 16
+            that.round = 13
+            that.spaceX = 10
+            that.spaceY = 3
+            that.element.style.fontFamily = "opensans-bold"
+            that.element.style.cursor = "pointer"
+
+            // Konumu, sağa yaslanmış olarak hesapla:
+            // Böylece, metin değiştiğinde, sola doğru uzar.
+            that.right = txtObject.upperObject.width - txtObject.left - txtObject.width + 10
+            that.top = txtObject.top
+            that.top += (txtObject.height / 2) - (that.height / 2)
+            // NOT: Yükseklik manuel olarak ayarlanmıştır.
+            // NOT: Genişlik "auto" ama sağa dayalı olduğu için,
+            // boyutu değiştiğinde, yeniden konumlandırmaya gerek yok.
+            // Böylece, object.onResize() kullanmaya gerek kalmamıştır.
+
+            object.setSelectedIndex = function(index) {
+
+                // En az
+                if (index < 0) {
+                    index = 0
+                }
+
+                // En fazla
+                if (index > lengthMeasurementUnits.length - 1) {
+                    index = lengthMeasurementUnits.length - 1
+                }
+
+                object.text = lengthMeasurementUnits[index].short
+                object.selectedIndex = index
+
+            }
+
+            object.getSelectedIndex = function() {
+                return object.selectedIndex
+            }
+
+            object.openUnitSelectionDialog = function(self) {
+                createUnitSelectionDialog(object, object.getSelectedIndex())
+            }
+
+            object.onClick(object.openUnitSelectionDialog)
+            // İlk birim seçilsin,
+            object.setSelectedIndex(0)
+            // kütüphane sistemine dahil et.
+            makeBasicObject(object)
+
+            return object
+            
+        }
+        
+        // Birim seçme diyalog penceresi oluştur.
+        var createUnitSelectionDialog = function(connectedObject, selectedIndex) {
+
+            // NOT: Bu diyalog nesnesi, her seferinde yeniden oluşturulur. 
+            // Ve seçim yapıldığında, diyalog nesnesi silinir.
+            
+            // NESNE: Diyalog penceresinin arkasındaki karartma kutusu.
+            var object = cbox(0, 0, page.width, page.height)
+            that.color = "rgba(0, 0, 0, 0.8)"
+
+            // NESNE: Karartma kutusu boyutlarındaki, pencereyi kapatma butonu (görünmez).
+            object.boxbtnClose = cbox(0, 0, page.width, page.height)
+            that.color = "transparent"
+
+            // NESNE: Birim butonlarının arkasındaki beyaz kutu.
+            object.b1 = cbox(0, 0, 250, 300)
+            that.color = "white"
+            that.round = 13
+
+            // Bu fonksiyon, onClick() ile ayarlanmadan önce tanımlanmış olmalı.
+            object.selectUnit = function(self) {
+                connectedObject.setSelectedIndex(self.index)
+                calculateLength()
+                object.remove()
+            }
+
+            object.boxbtnClose.index = selectedIndex
+            object.boxbtnClose.onClick(object.selectUnit)
+
+            var TOP_BOTTOM_SPACE = 10
+
+            // Birim seçme butonlarını oluştur.
+            for (var i = 0; i < lengthMeasurementUnits.length; i++) {
+
+                object.b1["btn" + i] = cbtn()
+                that.color = "white"
+                that.fontSize = 20
+                that.round = 0
+                that.text = lengthMeasurementUnits[i].name
+                that.width = object.b1.width
+                that.top = i * 50 + TOP_BOTTOM_SPACE
+                that.minimal = 1
+                // Nesnenin taşıdığı index değeri.
+                that.index = i
+
+                // Önceden seçilmiş olanı farklı göster.
+                if (i == selectedIndex) {
+                    that.color = "#FEC108"
+                } else {
+                    that.setMotion("background-color 0.3s")
+                    that.element.classList.add("unit-selection-dialog-buttons-type")
+                }
+
+                that.onClick(object.selectUnit)
+                // Oluşturulan butonlara göre, taşıyıcı nesnenin yüksekliğini ayarla.
+                object.b1.height = that.top + that.height + TOP_BOTTOM_SPACE
+
+            }
+            // Taşıyıcı kutuyu ortala.
+            object.b1.center()
+
+            // Sayfa boyutu her değiştiğinde, bu nesne için bu ayarları yeniden düzenle.
+            page.onResize(function() {
+                object.width = page.width
+                object.height = page.height
+                object.b1.center()
+            })
+
+            // NOT: basic.js sistemine dahil edilmesine gerek yoktur. makeBasicObject(object)
+            // - Dışarıdan, that ile ulaşılmayacak.
+            // - Bir kutu nesnesinin içinde, otomatik taşınmasına gerek yok.
+            
+        }
+
+        // Verilen bilgilere göre hesaplama yap.
+        var calculateLength = function() {
+
+            // NOT: Birimler arasındaki değişimi hesaplamak için sıra numarasından (index) faydalanıyor.
+
+            // Verilen bilgi boş ise,
+            if (txtGivenLength.text == "") {
+                // Hesaplanan bilgi boş olarak ayarlansın.
+                txtCalculatedLength.text = ""
+
+            } else {
+                // Verilen bilgiyi sayısal olarak al.
+                var givenLength = parseFloat(txtGivenLength.text)
+                // Verilen bilginin, birim dizi sırasını al.
+                var givenUnitIndex = subGivenUnit.getSelectedIndex()
+                // Hesaplanan bilginin, birim dizi sırasını al.
+                var calculatedUnitIndex = subCalculatedUnit.getSelectedIndex()
+
+                var generateNumber = function(count) {
+                    var number = "1"
+                    for (var i = 0; i < count; i++) {
+                        number += "0"
+                    }
+                    return num(number, "integer")
+                }
+
+                var answer = 0
+                var zeroCount = 0
+
+                // Ölçü birimleri arasındaki çevirme işlemi.
+                if (givenUnitIndex > calculatedUnitIndex) {
+                    zeroCount = givenUnitIndex - calculatedUnitIndex
+                    answer = givenLength / generateNumber(zeroCount)
+
+                } else if (givenUnitIndex < calculatedUnitIndex) { 
+                    zeroCount = calculatedUnitIndex - givenUnitIndex
+                    answer = givenLength * generateNumber(zeroCount)
+
+                } else {
+                    answer = givenLength
+                    
+                }
+
+                // Sonucu göster.
+                txtCalculatedLength.text = answer   
+
+            }
+
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML içeriği -->
+        
+    </body>
+</html>

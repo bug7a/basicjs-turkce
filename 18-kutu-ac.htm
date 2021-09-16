@@ -5,23 +5,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
-        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
-
-        <style>
-            
-            /* İçeriğin, web sayfası gibi seçilmesini engelle */
-            
-            * {
-                -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-            }
-    
-            body {
-                -webkit-touch-callout: none;
-                -webkit-user-select: none;
-            }
-            
-        </style>
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
 
         <script>
 
@@ -41,7 +26,7 @@
         // İlk çalışan fonksiyon.
         var start = function() {
 
-            // NESNE: Kutu aç
+            // NESNE: Kutu aç butonu
             btnKutuAc = createButton()
             that.text = "Kutu Aç"
             that.textColor = "rgba(255, 255, 255, 0.85)"
@@ -54,7 +39,6 @@
             that.center()
             that.round = 10
             that.color = "lightgray"
-            that.border = 0
             
             // NESNE: Kutunun kapatma tuşu
             b1.btnKutuKapat = createLabel(0, 0, 30, 30)

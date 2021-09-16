@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Mesajlaşma Uygulaması Arayüzü</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+
+        /*
+
+            MESAJLASMA UYGULAMASI ARAYÜZÜ
+
+            - Nesnelerin konumlandırılmasında, koordinat sistemi kullanılmıştır.
+            
+        */
+            
+        // DEĞİŞKENLER
+
+        var articles = [
+            "Integer at risus in ligula pharetra finibus. Suspendisse et magna convallis, aliquam ex sed, facilisis turpis. Ut commodo urna purus, vitae scelerisque nibh volutpat nec.",
+            "Vestibulum tempus ornare tellus, lobortis laoreet augue. Suspendisse malesuada ullamcorper sapien, a lacinia eros ornare vel. Praesent lacinia nisl sed lorem sollicitudin, vel rutrum est sagittis.",
+            "Nulla accumsan ex urna, id rutrum libero finibus sit amet.",
+            "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras molestie dui nisi, ac rutrum leo venenatis ac. Maecenas cursus tincidunt nisi quis pellentesque. Vivamus id massa metus. Etiam semper erat quis dolor tristique, non molestie ante mollis.",
+            "Fusce dignissim.",
+            "Aenean",
+            "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
+            "Maecenas commodo varius metus a fermentum."
+        ]
+
+        // Başlangıç sayfası
+        var a0
+
+        var messageId = 0
+        var objMessageList = []
+            
+        // İlk çalışan fonksiyon.
+        var start = function() {
+
+            // NESNE: Sayfanın taşıyıcısı
+            a0 = createBox(0, 0, 450, page.height)
+            that.scrollY = 1
+            that.center("left")
+
+            // 10 tane rasgele mesaj ekle.
+            for (var i = 0; i < 10; i++) {
+                createRandomMessage()
+            }
+            
+        }
+
+        var loop = function() {
+
+            // Rasgele bir mesaj gönder.
+            createRandomMessage()
+            // Her tekrarda, çalıştırılma zamanını değiştir.
+            setLoopTimer(random(500, 4000))
+
+        }
+
+        var createRandomMessage = function() {
+
+            // Rasgele bir mesaj oluştur.
+            var randomMessage = articles[random(0, articles.length - 1)]
+
+            // Rasgele, 2 kişiden biri yazsın.
+            if (random(1, 2) == 1) {
+                addNewMessage(randomMessage, "right", "avatar1.png", "pink")
+            } else {
+                addNewMessage(randomMessage, "left", "avatar2.png", "lightblue")
+            }
+
+        }
+
+        var addNewMessage = function(message, position, icon, color) {
+
+            // Mesajın anahtar numarası
+            messageId++
+
+            var messageItem
+
+            // NESNE: Her bir parçanın taşıyıcı kutusu
+            a0["b" + messageId] = createBox(0, 0, 450, 0)
+            that.color = "whitesmoke"
+            messageItem = a0["b" + messageId]
+            
+            // NESNE: Yazılardan biri
+            messageItem.lblContent = createLabel(0, 0, 350, "auto")
+            that.color = color
+            that.fontSize = 20
+            that.spaceY = 20
+            that.spaceX = 10
+            that.round = 8
+            // Rasgele metni, nesne içinde göster.
+            that.text = message
+
+            // NESNE: Kullanıcının küçük resmi.
+            messageItem.imgAvatar = createImage(30, 20, 30, 30)
+            that.load("resimler/31/" + icon)
+            that.round = 15
+            that.space = 3
+            that.color = "lightgray"
+
+            // Pozisyona göre, farklılıkları uygula.
+            if (position == "right") {
+                messageItem.lblContent.left = 85
+                messageItem.imgAvatar.left = 30
+            } else {
+                messageItem.lblContent.left = 15
+                messageItem.imgAvatar.left = 390
+            }
+
+            objMessageList.push(messageItem)
+            // Nesne boyutu değiştiğinde, mesaj nesnelerinin konumunu güncelle.
+            messageItem.lblContent.onResize(refreshPositionOfMessages)
+
+        }
+
+        var refreshPositionOfMessages = function(self) {
+
+            var totalMessagesHeight = 50
+
+            for (var i = 0; i < objMessageList.length; i++) {
+
+                var messageItem = objMessageList[i]
+
+                // Mesaj parçasını, konumlandır.
+                messageItem.top = totalMessagesHeight
+                // Mesaj parçasının yüksekliğini, mesaj yüksekliğine göre ayarla.
+                messageItem.height = messageItem.lblContent.height + 10
+                // Bir sonraki, mesaj parçasının konumunu hesapla.
+                totalMessagesHeight += messageItem.height
+
+            }
+
+            // Kaydırma çubuğunu altta tut.
+            a0.element.scrollTo({
+                left: 0,
+                top: a0.element.scrollHeight,
+                behavior: 'smooth'
+            });  
+
+        }
+        
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML içeriği -->
+        
+    </body>
+</html>

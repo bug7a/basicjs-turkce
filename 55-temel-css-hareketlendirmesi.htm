@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Temel CSS Hareketlendirmesi</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+
+        /*
+
+        - Bu örnekte, nesne başlangıçta, büyüyerek geliyor. Ve daha sonra,
+        tıklanan gri alana doğru hareket ediyor.
+
+        */
+    
+        // DEĞİŞKENLER
+
+        // İlk sayfa taşıyıcısı
+        var a0
+        
+        // ÖZEL FONKSİYONLAR
+            
+        // İlk çalışan fonksiyon.
+        var start = function() {
+
+            // NESNE: İlk sayfa taşıyıcısı
+            a0 = cbox(0, 0, page.width, page.height)
+
+            // NESNE: Buton 1 üst
+            a0.btn1 = cbox(0, 0, 40, 40)
+            that.color = "lightgray"
+            that.round = 20
+            that.center()
+            that.top -= 150
+            that.onClick(refreshCircle)
+
+            // NESNE: Buton 2 alt
+            a0.btn2 = cbox(0, 0, 40, 40)
+            that.color = "lightgray"
+            that.round = 20
+            that.center()
+            that.top += 150
+            that.onClick(refreshCircle)
+
+            // NESNE: Hareket özelliği olan daire
+            a0.circle = cbox(0, 0, 20, 20)
+            that.color = "#FE5D49"
+            that.round = 100
+
+            // Belirlenen özellikleri, CSS ile hareketlendir.
+            that.setMotion("left 1s, top 1s, width 1s, height 1s, border-radius 1s, background-color 1s, opacity 1s")
+
+            // NOT: Bu hareket özelliği, iptal edilene kadar korunur.
+            // Hareket özelliğini, iptal etmek için,
+            // that.setMotion("none")
+            
+            // İlk oluşturulma konumuna hareketsiz gider.
+            that.center()
+            that.opacity = 0
+
+            // İlk oluşturulma konumundan, aşağıdaki özelliklere yumuşak geçiş (hareket) yap.
+            that.withMotion(function(self) {
+                self.width = 150
+                self.height = 150
+                self.opacity = 1
+                self.center()
+
+                // NOT: self, a0.circle nesnesinin kendisidir.
+
+            })
+
+            // Sayfa boyutu, her değiştiğinde
+            page.onResize(pageResized)
+            
+        }
+        
+        // DİĞER FONKSİYONLAR
+
+        var pageResized = function() {
+
+            // Sayfayı, yeniden boyutlandır.
+            a0.width = page.width
+            a0.height = page.height
+
+            // Bu nesne için; hareketi, geçici olarak devre dışı bırak.
+            a0.circle.dontMotion()
+            a0.circle.center()
+
+            // NOT: Sayfa boyutu değiştirildiğinde,
+            // nesnenin hareketsiz olarak gitmesini için dontMotion() kullanılmıştır.
+
+            a0.btn1.center()
+            a0.btn1.top -= 150
+
+            a0.btn2.center()
+            a0.btn2.top += 150
+
+        }
+        
+        var refreshCircle = function(self) {
+
+            a0.circle.top = self.top - 55
+            a0.circle.left = self.left - 55
+
+            // NOT: CSS hareketi eklendiği için,
+            // nesnenin, özellik değişiklikleri hareket ile olacaktır.
+
+            // NOT: 55 sayısnın hesabı: num((a0.circle.width / 2) - (self.width / 2))
+
+            // NOT: Burada; self, üzerine basılan nesnedir.
+
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML içeriği -->
+        
+    </body>
+</html>

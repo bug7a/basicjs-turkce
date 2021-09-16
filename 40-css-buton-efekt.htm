@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>CSS Buton Efekt</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
+
+        <style>
+
+            /* normal hali */
+            .button-type1 {
+
+                cursor: pointer;
+                
+            }
+
+            /* üzerine gelindiğinde */
+            .button-type1:hover {
+
+                /* Metin ve arkaplan rengini değiştirmek için kullanılabilir */
+                /*
+                background-color: orangered !important;
+                color: white !important;
+                */
+
+                filter: brightness(120%);
+
+            }
+
+            /* basıldığında */
+            .button-type1:active {
+
+                filter: brightness(80%);
+                transform: scale(0.95);
+
+            }
+
+        </style>
+
+        <script>
+            
+        // DEĞİŞKENLER
+            
+        var myButton, myButton2, myButton3, myButton4, myButton5, myButton6
+        
+        // BAŞLANGIÇ FONKSİYONLARI
+            
+        // İlk çalışan fonksiyon.
+        var start = function() {
+
+            page.color = "lightgray"
+            
+            myButton = createButton(50, 50)
+            that.text = "Buton 1"
+            that.textColor = "rgba(0, 0, 0, 0.65)"
+            that.color = "#689BD2"
+            // CSS ile geçişleri yumuşat.
+            that.setMotion("background-color 0.5s, color 0.5s, filter 0.5s, transform 0.5s")
+            // Yazdığımız CSS kodları ile bağlantısını sağla.
+            that.element.classList.add("button-type1")
+
+            myButton2 = createButton(50, 110)
+            that.text = "Buton 2"
+            that.color = "cadetblue"
+            that.textColor = "rgba(0, 0, 0, 0.65)"
+            that.setMotion("background-color 0.5s, color 0.5s, filter 0.5s, transform 0.5s")
+            that.element.classList.add("button-type1")
+
+            myButton3 = createButton(50, 170)
+            that.text = "Buton 3"
+            that.color = "tomato"
+            that.textColor = "rgba(0, 0, 0, 0.65)"
+            that.setMotion("background-color 0.5s, color 0.5s, filter 0.5s, transform 0.5s")
+            that.element.classList.add("button-type1")
+
+            myButton4 = createButton(50, 230)
+            that.text = "Buton 4"
+            that.color = "gold"
+            that.textColor = "rgba(0, 0, 0, 0.65)"
+            that.setMotion("background-color 0.5s, color 0.5s, filter 0.5s, transform 0.5s")
+            that.element.classList.add("button-type1")
+
+            myButton5 = createButton(50, 290)
+            that.text = "Buton 5"
+            that.color = "lightgray"
+            that.textColor = "rgba(0, 0, 0, 0.65)"
+            that.setMotion("background-color 0.5s, color 0.5s, filter 0.5s, transform 0.5s")
+            that.element.classList.add("button-type1")
+
+            myButton6 = createButton(50, 350)
+            that.text = "Buton 6"
+            that.color = "white"
+            that.textColor = "rgba(0, 0, 0, 0.65)"
+            that.setMotion("background-color 0.5s, color 0.5s, filter 0.5s, transform 0.5s")
+            that.element.classList.add("button-type1")
+            
+        }
+        
+        /*
+
+        Buton nesnesine, küçük ikonlar eklemek için,
+        https://www.w3schools.com/howto/howto_css_icon_buttons.asp
+
+        KULLANIMI:
+        myButton.text = "<i class='fa fa-folder'></i> Folder"
+
+        NOT: Bağlantıda verilen, font-awesome.min.css kütüphanesini sayfaya eklemeyi unutmayın.
+
+        Desteklenen diğer iconları da göremek için:
+        https://fontawesome.com/v4.7/icons/
+
+        */
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML içeriği -->
+        
+    </body>
+</html>

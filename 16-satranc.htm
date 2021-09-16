@@ -7,8 +7,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
-        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
 
         <script>
             
@@ -155,7 +155,7 @@
                 birTas.value = taslarBilgi[i]
 
                 // Taşların konumu, CSS ile hareketli değişsin.
-                birTas.contElement.style.transition = "left 0.5s, top 0.5s";
+                birTas.setMotion("left 0.5s, top 0.5s");
                 
                 // Her bir taş resminin nesnesini, 
                 // tasAnahtar ile çağırılmak üzere tas değişkenine ekle.

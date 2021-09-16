@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Karmaşık Şekil Çizmek</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+            
+        var boxRotate = 0
+
+        var colors1 = ["seagreen", "lightgray", "steelblue"]
+        var colors2 = ["orangered", "tomato", "gold", "yellow", "steelblue"]
+            
+        // İlk çalışan fonksiyon.
+        var start = function() {
+            
+           setLoopTimer(2)
+            
+        }
+        
+        // Her saniye çalışan fonksiyon.
+        var loop = function() {
+
+            if (boxRotate < 1000) {
+
+                createBox(50, 50)
+                that.width = random(90, 620)
+                that.height = random(90, 620)
+                that.border = 1
+                that.borderColor = colors1[random(0, colors1.length - 1)]
+                that.color = "transparent"
+                that.opacity = 0.1
+                that.element.style.visibility = "visible"
+                // NOT: Nesnenin hızlı gösterilmesi için yapılmıştır.
+                // çünkü, basic.js kütüphanesi, nesneleri bir süreliğine saklar.
+                that.center()
+
+                boxRotate++
+                that.rotate = boxRotate
+
+
+            }
+
+            if (boxRotate >= 1000) {
+                if (boxRotate < 2500) {
+
+                createBox(50, 50)
+                that.width = random(90, 220)
+                that.height = random(90, 220)
+                that.border = 1
+                that.borderColor = colors2[random(0, colors2.length - 1)]
+                that.color = "transparent"
+                that.opacity = 0.3
+                that.element.style.visibility = "visible"
+                that.center()
+
+                boxRotate++
+                that.rotate = boxRotate
+
+                }
+            }
+
+            /*
+            if (boxRotate >= 2500) {
+                if (boxRotate < 2520) {
+
+                createBox(50, 50)
+                that.width = 300
+                that.height = 300
+                that.border = 1
+                that.round = 60
+                that.borderColor = "mediumorchid"
+                that.color = "transparent"
+                that.opacity = 0.3
+                that.element.style.visibility = "visible"
+                that.center()
+
+                boxRotate++
+                that.rotate = boxRotate
+
+                }
+            }
+            */
+
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML içeriği -->
+        
+    </body>
+</html>

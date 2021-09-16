@@ -7,8 +7,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
-        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
 
         <script>
 
@@ -65,7 +65,7 @@
             // Not: Resimlerin hepsi, aynı boyutta üst üste geldiğinde 
             // bir saati oluşturacak şekilde tasarlanmıştır.
             
-            // Ana dizindeki, resimler klasörünün içindeki, 
+            // Ana dizinde, resimler klasörünün içindeki, 
             // ilgili resimleri inceleyebilirsiniz.
 
         }
@@ -105,12 +105,12 @@
         }
         
         // pYeni nesnesini, pOrnek nesnesinin konum ve boyutunda ayarla.
-        var boyutKopyala = function(pYeni, pOrnek) {
+        var boyutKopyala = function(yeniNesne, ornekNesne) {
             
-            pYeni.width = pOrnek.width
-            pYeni.height = pOrnek.height
-            pYeni.top = pOrnek.top
-            pYeni.left = pOrnek.left
+            yeniNesne.width = ornekNesne.width
+            yeniNesne.height = ornekNesne.height
+            yeniNesne.top = ornekNesne.top
+            yeniNesne.left = ornekNesne.left
             
         }
         
@@ -120,6 +120,7 @@
         
         - Duvar saatinin altında, 12:09:00 formatında
           saati dijital olarak gösteren bir bölüm eklenebilir.
+        - Başlangıçtaki duraksama iyileştirilebilir.
           
         */
 

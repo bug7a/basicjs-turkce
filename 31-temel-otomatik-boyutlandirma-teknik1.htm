@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Temel Otomatik Boyutlandırma</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+
+        /*
+
+            - Etiket (Label) nesnesinin yüksekliği "auto" olarak belirlendiğinde,
+              boyutun tarayıcı tarafından hesaplanması bir zaman alıyor.
+
+            - Bu örnekte, nesneye metin eklendikten sonra,
+            nesnenin hesaplanmış yüksekliğinin nasıl kullanılabileceği gösterilmiştir.
+
+        */
+            
+        // DEĞİŞKENLER
+
+        var articleList = [
+            "Integer at risus in ligula pharetra finibus. Suspendisse et magna convallis, aliquam ex sed, facilisis turpis. Ut commodo urna purus, vitae scelerisque nibh volutpat nec.",
+            "Vestibulum tempus ornare tellus, lobortis laoreet augue. Suspendisse malesuada ullamcorper sapien, a lacinia eros ornare vel. Praesent lacinia nisl sed lorem sollicitudin, vel rutrum est sagittis.",
+            "Nulla accumsan ex urna, id rutrum libero finibus sit amet.",
+            "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras molestie dui nisi, ac rutrum leo venenatis ac. Maecenas cursus tincidunt nisi quis pellentesque. Vivamus id massa metus. Etiam semper erat quis dolor tristique, non molestie ante mollis.",
+            "Fusce dignissim.",
+            "Aenean",
+            "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
+            "Maecenas commodo varius metus a fermentum."
+        ]
+
+        // İlk sayfa
+        var a0
+
+        // Oluşturulan nesnelerin listesi.
+        var lblArticleList = [];
+            
+        // İlk çalışan fonksiyon.
+        var start = function() {
+
+            // NESNE: Sayfanın taşıyıcısı
+            a0 = createBox(0, 0, page.width, page.height)
+            a0.scrollY = 1
+
+            // Biraz yazı oluştur.
+            for (var i = 0; i < 10; i++) {
+                
+                // Yazıyı, a0 nesnesinin içinde, arti0 isminde oluştur. Diğerleri arti1, arti2, arti3 ...
+                // NESNE: Yazılardan biri
+                a0["lblArticle" + i] = createLabel(20, 0, 250, "auto")
+                that.color = "lightgray"
+                that.fontSize = 20
+                that.space = 10
+                that.round = 8
+
+                // Rasgele bir metin aktar.
+                that.text = articleList[random(0, articleList.length - 1)]
+
+                // Listeye ekle
+                lblArticleList.push(that)
+                that.onResize(refreshPositionOf_lblArticles)
+
+                // NOT: Nesnelerden, birinin boyutu değiştiğinde,
+                // tüm nesneler yeniden konumlandırılır.
+
+            }
+            
+        }
+
+        // Tüm nesneleri yeniden konumlandır.
+        var refreshPositionOf_lblArticles = function() {
+
+            // Nesneler arası boşluk.
+            var ARTICLE_BOTTOM_SPACE = 5
+            // Bir sonraki metnin yukarı ile mesafesi.
+            var nextArticleTop = 0
+
+            for (var i = 0; i < lblArticleList.length; i++) {
+
+                lblArticleList[i].top = nextArticleTop
+                nextArticleTop += lblArticleList[i].height + ARTICLE_BOTTOM_SPACE
+
+            }
+
+        }
+        
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML içeriği -->
+        
+    </body>
+</html>

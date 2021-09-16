@@ -7,14 +7,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
-        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
-        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
 
         <script>
             
         /*
         
-        Bir roketin, konum ve açı özelliklerinin; metin kutusuna girilen veriler ile değiştirilmesi.
+        - Bir roketin, konum ve açı özelliklerinin; metin kutusuna girilen veriler ile değiştirilmesi.
         
         */
             
@@ -42,7 +42,7 @@
             that.round = 6
             that.color = "whitesmoke"
             // Paneli ve taşıdığı nesneleri %70 oranına küçült.
-            that.contElement.style.zoom = 0.7
+            that.element.style.zoom = 0.7
 
             
             // Roket X (TextBox)
@@ -75,7 +75,6 @@
             that.text = "Değişiklikleri Uygula"
             that.color = "tomato"
             that.width = boxKontrol.txtRoketYon.width
-            that.minimal = 1
             that.aline(boxKontrol.txtRoketYon, "bottom", 30)
             that.onClick(degisikligiUygula)
             

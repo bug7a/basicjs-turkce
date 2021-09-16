@@ -8,8 +8,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
-        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
-        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
 
         <script>
 
@@ -20,7 +20,7 @@
             - Label (etiket)
             - Box (kutu)
 
-            Bu teknik sayesinde, ihtiyacının olan tüm özellikleri, bu algoritmaya ekleyebilirsiniz.
+            Bu teknik ile, ihtiyacın olan tüm diğer özellikleri de, bu algoritmaya ekleyebilirsiniz.
 
         */
             
@@ -65,18 +65,22 @@
             // NESNE: Başlık 1
             tblListe.title1 = createButton(0, 0, 140, TITLE_HEIGHT)
             that.text = "Sıra"
+            // Butonun üzerine gelindiğinde, el imleci çıkmasın.
+            that.buttonElement.style.cursor = "default"
             that.prop(propListeTitle)
             that.color = "lightblue"
 
             // NESNE: Başlık 2
             tblListe.title2 = createButton(0, 0, 200, TITLE_HEIGHT)
             that.text = "İsim"
+            that.buttonElement.style.cursor = "default"
             that.prop(propListeTitle)
             that.aline(tblListe.title1, "right")
 
             // NESNE: Başlık 3
             tblListe.title3 = createButton(0, 0, 240, TITLE_HEIGHT)
             that.text = "EPosta"
+            that.buttonElement.style.cursor = "default"
             that.prop(propListeTitle)
             that.aline(tblListe.title2, "right")
             

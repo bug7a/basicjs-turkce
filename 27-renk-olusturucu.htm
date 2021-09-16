@@ -7,8 +7,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
-        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
-        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
 
         <script>
         
@@ -55,7 +55,7 @@
         var start = function() {
 
             // Ürettiğiniz rengi arkaplan olarak deneyin.
-            page.color = "rgb(180, 180, 180)"
+            page.color = "rgb(230, 230, 230)"
             
             // Renk düzenleme nesneleri.
             cleRed = createColorEdit(250, 20, "orangered")
@@ -171,6 +171,9 @@
             that.round = 30
             that.fontSize = 35
             that.onClick(colorEditObject.increase)
+
+            // Özel nesneyi, basic.js sistemine dahil et.
+            makeBasicObject(colorEditObject)
             
             return colorEditObject
             

@@ -7,24 +7,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
-        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
-        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
-        
-        <style>
-
-            /* Web sayfası gibi seçilebilmesini engelle. */
-
-            * {
-                -webkit-tap-highlight-color: rgba(0,0,0,0);
-            }
-            
-            body {
-                -webkit-touch-callout: none;
-                -webkit-text-size-adjust: none;
-                -webkit-user-select: none;   
-            }
-
-        </style>
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
 
         <script>
 
@@ -34,6 +18,7 @@
 
         */
 
+        // Zarların taşıyıcısı
         var b1
         var lblBilgi
 
@@ -50,19 +35,19 @@
             // Kutuyu sayfanın ortasına koy.
             that.center()
             // İlk ortalamadan sonra, CSS animasyonu ekle.
-            that.contElement.style.transition = "left 0.5s, top 0.5s";
+            that.setMotion("left 0.5s, top 0.5s")
 
             // NESNE: Birinci zar.
             b1.imgZar1 = createImage(20, 20, 100, 100)
             that.load("resimler/zar1.png")
             // Zarların dönüşüne, CSS animasyonu ekle.
-            that.contElement.style.transition = "transform 1s";
+            that.setMotion("transform 1s")
             
             // NESNE: İkinci zar.
             b1.imgZar2 = createImage(20, 20, 100, 100)
             that.right = 20
             that.load("resimler/zar6.png")
-            that.contElement.style.transition = "transform 1s";
+            that.setMotion("transform 1s")
 
             // NESNE: Kullanım bilgisi veren yazı.
             lblBilgi = createLabel()
@@ -76,7 +61,7 @@
             // Yazıyı, kutunun altına hizala.
             that.aline(b1, "bottom", 10)
             // CSS animasyonu ekle.
-            lblBilgi.contElement.style.transition = "opacity 0.5s, left 0.5s, top 0.5s";
+            lblBilgi.setMotion("opacity 0.5s, left 0.5s, top 0.5s")
 
             // Sayfaya basıldığında zar at.
             page.onClick(zarAt)

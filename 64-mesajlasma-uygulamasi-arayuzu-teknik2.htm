@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Mesajlaşma Uygulaması Arayüzü</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+
+        /*
+
+            MESAJLASMA UYGULAMASI ARAYÜZÜ
+            POSITION: RELATIVE TEKNİĞİ,
+
+            - CSS'teki position özelliği, relative olarak değiştirilen nesneler,
+            birbirlerini iterek konumlanırlar. Koordinat sistemi devre dışı kalır.
+            - Kutu içindeki yazılar, kutunun yüksekliğini genişletir.
+            - Kutu içindeki kutular ise, alt alta dizilir. Üst üste gelemez.
+
+            - Bu teknikte, eğer nesnelerden birinin içeriği değiştirilirse,
+            tarayıcı hesaplamayı yapar ve diğer nesneleri otomatik kaydırır.
+
+            padding: iç boşluktur.
+            margin: dış boşluktur.
+
+            - .space özelliği, padding kullanır.
+            - NOT: basic.js varsayılan position değeri, absolute olarak ayarlanmıştır.
+
+        */
+            
+        // DEĞİŞKENLER
+
+        var articles = [
+            "Integer at risus in ligula pharetra finibus. Suspendisse et magna convallis, aliquam ex sed, facilisis turpis. Ut commodo urna purus, vitae scelerisque nibh volutpat nec.",
+            "Vestibulum tempus ornare tellus, lobortis laoreet augue. Suspendisse malesuada ullamcorper sapien, a lacinia eros ornare vel. Praesent lacinia nisl sed lorem sollicitudin, vel rutrum est sagittis.",
+            "Nulla accumsan ex urna, id rutrum libero finibus sit amet.",
+            "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras molestie dui nisi, ac rutrum leo venenatis ac. Maecenas cursus tincidunt nisi quis pellentesque. Vivamus id massa metus. Etiam semper erat quis dolor tristique, non molestie ante mollis.",
+            "Fusce dignissim.",
+            "Merhaba,",
+            "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
+            "Maecenas commodo varius metus a fermentum."
+        ]
+
+        // NOT: metinler, lorem ipsum ile üretilmiştir. Bir anlamı yoktur.
+
+        // Başlangıç sayfası
+        var a0
+
+        var messageId = 0
+            
+        // İlk çalışan fonksiyon.
+        var start = function() {
+
+            // NESNE: Sayfanın taşıyıcısı
+            a0 = createBox(0, 0, 450, page.height)
+            that.scrollY = 1
+            that.center("left")
+
+
+            // 10 tane rasgele mesaj ekle.
+            for (var i = 0; i < 10; i++) {
+                createRandomMessage()
+            }
+                  
+            
+        }
+
+        var loop = function() {
+
+            // Her saniye, rasgele bir mesaj gönder.
+            createRandomMessage()
+            // Her tekrarda, çalıştırılma zamanını değiştir.
+            setLoopTimer(random(500, 2500))
+
+        }
+
+        var createRandomMessage = function() {
+
+            // Rasgele bir mesaj oluştur.
+            var randomMessage = articles[random(0, articles.length - 1)]
+
+            // Rasgele, 2 kişiden biri yazsın.
+            if (random(1, 2) == 1) {
+                addNewMessage(randomMessage, "right", "avatar1.png", "pink")
+            } else {
+                addNewMessage(randomMessage, "left", "avatar2.png", "lightblue")
+            }
+
+        }
+
+        var addNewMessage = function(message, position, icon, color) {
+
+            // Mesajın anahtar numarası
+            messageId++
+
+            var messageItem
+
+            // NESNE: Her bir parçanın taşıyıcı kutusu
+            a0["b" + messageId] = createBox(0, 0, 450, "auto")
+            that.color = "whitesmoke"
+            // Diğer kutular ile etkileşime girer.
+            that.element.style.position = "relative"
+            messageItem = a0["b" + messageId]
+            
+            // NESNE: Yazılardan biri
+            messageItem.lblContent = createLabel(0, 0, 350, "auto")
+            that.color = color
+            that.fontSize = 20
+            that.spaceY = 20
+            that.spaceX = 10
+            that.round = 8
+            // Rasgele metni, nesne içinde göster.
+            that.text = message
+            // İçinde bulunduğu kutunun yüksekliğini değiştirir.
+            that.element.style.position = "relative"
+            // Nesneye, dışarıdan boşluk bırak.
+            that.element.style.marginBottom = "10px"
+
+            // NESNE: Kullanıcının küçük resmi.
+            messageItem.imgAvatar = createImage(30, 20, 30, 30)
+            that.load("resimler/31/" + icon)
+            that.round = 15
+            // Resme iç boşluk ekle
+            that.space = 3
+            that.color = "lightgray"
+
+            // Pozisyona göre, farklılıkları uygula.
+            if (position == "right") {
+                // Mesaj sağda
+                messageItem.lblContent.element.style.marginLeft = "85px"
+                messageItem.imgAvatar.left = 30
+            } else {
+                // Mesaj solda
+                messageItem.lblContent.element.style.marginLeft = "15px"
+                messageItem.imgAvatar.left = 390
+            }
+
+            // İlk mesaj için, üstten biraz boşluk bırak.
+            if (messageId == 1)  {
+                messageItem.element.style.marginTop = "50px"
+            }
+
+            messageItem.lblContent.onResize(function(self) {
+
+                // Kaydırma çubuğunu altta tut.
+                a0.element.scrollTo({
+                    left: 0,
+                    top: a0.element.scrollHeight,
+                    behavior: 'smooth'
+                }); 
+
+            })            
+
+        }
+        
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML içeriği -->
+        
+    </body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>CSS ile Nesneleri Hareketlendirmek</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+
+        /*
+
+            Bir nesnenin; konum, boyut ve/veya açısını, 
+            hareket ile değiştirmek istediğimizde, bu yöntemi kullanabiliriz.
+
+        */
+            
+        // DEĞİŞKENLER
+
+        var box1
+
+        // box1'in hareket edeceği alanlar.
+        var objectBase1
+        var objectBase2
+        var objectBase3
+        var objectBase4
+
+        // ÖZEL FONKSİYONLAR
+            
+        // İlk çalışan fonksiyon.
+        var start = function() {
+
+            page.color = "white"
+
+            // NESNE: Sol üst alan.
+            objectBase1 = createBox(50, 50, 100, 100)
+            that.color = "lightgray"
+            that.hiddenColor = "orangered"
+            that.border = 0
+            that.onClick(moveObject)
+
+            // NESNE: Sağ üst alan.
+            objectBase2 = createBox(0, 0, 60, 60)
+            that.color = "lightgray"
+            that.hiddenColor = "seagreen"
+            that.left = page.width - that.width - 50
+            that.top = 50
+            that.round = 50
+            that.border = 0
+            that.onClick(moveObject)
+
+            // NESNE: Sol alt alan.
+            objectBase3 = createBox(0, 0, 120, 120)
+            that.color = "lightgray"
+            that.hiddenColor = "steelblue"
+            that.left = 50
+            that.top = page.height - that.height - 50
+            that.round = 13
+            that.rotate = 15
+            that.border = 0
+            that.onClick(moveObject)
+
+            // NESNE: Sağ alt alan.
+            objectBase3 = createBox(0, 0, 40, 220)
+            that.color = "lightgray"
+            that.hiddenColor = "yellow"
+            that.left = page.width - that.width - 50
+            that.top = page.height - that.height - 50
+            that.border = 0
+            that.onClick(moveObject)
+
+            // NESNE: Hareket eden kare.
+            box1 = createBox(0, 0, 50 ,50)
+            that.color = "black"
+            that.borderColor = "black"
+            that.border = 0
+            // Başlangıçta, ortalanmış olsun.
+            that.center()
+
+            // Nesneye, CSS hareketi ekle
+            that.setMotion("left 1s, top 1s, width 1s, height 1s, transform 1s, background-color 1s, border-radius 1s");
+            
+            // NOT: setMotion() fonksiyonu ile, bu ayarlamayı yaptıktan sonra,
+            // Artık bu nesnenin, bir özelliğini değiştirdiğinizde, yavaşça olacaktır.
+
+            // NOT: box1 nesnesinin en üstte görünmesi için,
+            // diğer nesnelerden sonra oluşturulmuştur.
+
+            // HAREKETİ SIFIRLAMAK:
+            // Hareket ayarlarını sıfırlamak için.
+            // box1.setMotion("none")
+            
+        }
+
+        
+        // DİĞER FONKSİYONLAR
+        
+        var moveObject = function(self) {
+
+            // Kutuyu, tıklanan kutu ile aynı özelliklere ayarla.
+            box1.left = self.left
+            box1.top = self.top
+            box1.height = self.height
+            box1.width = self.width
+
+            box1.color = self.hiddenColor
+            box1.round = self.round
+            box1.rotate = self.rotate
+            
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML içeriği -->
+        
+    </body>
+</html>

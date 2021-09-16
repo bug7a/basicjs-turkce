@@ -8,10 +8,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
-        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
-        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
 
         <style>
+
+            /* Tüm nesnelerdeki yazılar seçilebilsin. */
+            .basic_box, .basic_label, .basic_button, .basic_textbox-main, .basic_image  {
+
+                user-select: auto;
+                -webkit-user-select: auto;
+
+            }
         
             .colored-word {
                 
@@ -54,6 +62,12 @@
             that.text = document.getElementById("my-html-content").innerHTML
             // Dikey kaydırmaya izin ver.
             that.scrollY = 1
+
+            // Otomatik yükseklik kullanımı:
+            // that.height = "auto"
+            // that.onResize(function(self){
+            //     print(self.height)
+            // })
             
         }
 

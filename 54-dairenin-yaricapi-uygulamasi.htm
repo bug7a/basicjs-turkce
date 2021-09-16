@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Dairenin Yarıçapı Uygulaması</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
+
+        <style>
+
+            body {
+                overflow: hidden;
+            }
+
+        </style>
+
+        <script>
+    
+        // DEĞİŞKENLER
+
+        var PI = 3.14
+
+        // Başlangıç sayfası 
+        var a0
+        
+        // ÖZEL FONKSİYONLAR
+            
+        // İlk çalışan fonksiyon.
+        var start = function() {
+
+            // NESNE: Başlangıç sayfası
+            a0 = cbox(0, 0, page.width, page.height)
+
+            // NESNE: Ortadaki daire
+            a0.circle = cbox(50, 150)
+            that.color = "#FE5D49"
+            // CSS hareketi ekle.
+            that.setMotion("left 1s, top 1s, width 1s, height 1s, border-radius 1s")
+
+            // NESNE: Dairenin altındaki bilgi yazısı
+            a0.lblInfo = clbl(0, 0, 300, 40)
+            that.text = ""
+            that.fontSize = 13
+            that.textAlign = "center"
+            that.setMotion("top 1s")
+
+            // NESNE: Dairenin yarı çapının yazıldığı, metin kutusu
+            a0.txtR = ctxt(50, 50, 150)
+            that.title = "Dairenin Yarıçapı:"
+            that.text = "100"
+            that.textAlign = "center"
+            that.onChange(updateCircle)
+
+            // NESNE: Metin kutusunun yanındaki, milimetre bilgisi
+            a0.txtRDesc = clbl(0, 0, 170, 30)
+            that.text = "milimetre (mm)"
+            that.fontSize = 17
+            that.textColor = "#00000080"
+            that.aline(a0.txtR, "right", 10)
+            that.top += 12
+
+            // NOT: txtRDesc nesnesinin, boyutu manuel verilmiştir.
+
+            // NESNE: En alttaki, açıklama yazısı
+            a0.lblBottomInfo = clbl(0, 0, 246, 42)
+            that.text = "Dairenin boyutu PIksel (px) cinsindendir.<br>Milimetre temsilidir."
+            // %60 görünür, siyah renk. Arkaplan ile daha uyumlu görünür.
+            that.textColor = "rgba(0, 0, 0, 0.6"
+            that.fontSize = 12
+            that.color = "white"
+            that.textAlign = "center"
+            // Yazının kenarlarında, sınıra boşluk bırak.
+            that.spaceY = 4
+            that.spaceX = 10
+            that.round = 8
+            that.bottom = 30
+            that.center("left")
+
+            // Daireyi güncelle.
+            updateCircle()
+
+            // Sayfa boyutu, her değiştiğinde
+            page.onResize(pageResized)
+            
+        }
+        
+        // DİĞER FONKSİYONLAR
+
+        var pageResized = function() {
+
+            a0.width = page.width
+            a0.height = page.height
+
+            // Hareketi, geçici olarak devre dışı bırak.
+            a0.circle.dontMotion()
+            a0.circle.center()
+            // Hareketi, geçici olarak devre dışı bırak.
+            a0.lblInfo.dontMotion()
+            a0.lblInfo.aline(a0.circle, "bottom", 10)
+            a0.lblInfo.center("left")
+            a0.lblBottomInfo.center("left")
+
+            // NOT: Hareket, geçici olarak devre dışı bırakıldığında;
+            // sayfa boyutu değiştirildiğinde, nesneler hareketsiz olarak ortalanacak.
+
+        }
+        
+        var updateCircle = function() {
+
+            var r = num(a0.txtR.text)
+
+            // r sadece, 0 - 400 arası olabilir.
+            if (r > 400) {
+                r = 400
+                a0.txtR.text = str(r)
+            } else if (r < 0) {
+                r = 0
+                a0.txtR.text = str(r)
+            }
+
+            a0.circle.width = num(r * 2)
+            a0.circle.height = a0.circle.width
+            a0.circle.round = r
+            a0.circle.center()
+
+            var circumference = num(2 * PI * r)
+            var area = num(PI * r * r)
+
+            a0.lblInfo.text = "<span style='font-family: opensans-bold'>Çevresi:</span> " + circumference + " mm<br>"
+            a0.lblInfo.text += "<span style='font-family: opensans-bold'>Alanı:</span> " + area + " mm<sup>2</sup>"
+            a0.lblInfo.top = a0.circle.top + a0.circle.height + 10
+            a0.lblInfo.center("left")
+
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML içeriği -->
+        
+    </body>
+</html>

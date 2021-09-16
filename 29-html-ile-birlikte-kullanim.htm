@@ -8,8 +8,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
-        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
-        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
 
         <style>
 
@@ -26,8 +26,16 @@
                 border-radius: 8px;
                 opacity: 0.9;
                 font-weight: bold;
-                color:rgba(14, 14, 14, 0.85);
+                cursor:pointer;
+                color:rgba(255, 255, 255, 0.85);
+                filter: brightness(120%);
 
+            }
+
+            .color-btn:hover {
+
+                filter: brightness(100%);
+                
             }
 
         </style>
@@ -36,8 +44,8 @@
 
         /*
 
-            Klasik HTML ve CSS ile geliştirilmiş, bir web sayfasının veya uygulamanın,
-            html kodlarının içindeki bir elemente, basic js nesnelerini eklemek.
+            HTML ve CSS ile geliştirilmiş, bir web sayfasının veya uygulamanın,
+            html kodlarının içindeki bir elemente, basic.js nesnelerini eklemek.
 
         */
             
@@ -60,7 +68,7 @@
             boxDIV.color = "#141414"
             boxDIV.round = 8
             // Bu nesneyi, Belirtilen DIV elementinin içine taşı.
-            document.getElementById("color-box").appendChild(boxDIV.contElement)
+            document.getElementById("color-box").appendChild(boxDIV.element)
 
             // Renk Kutusu
             boxDIV.boxColor = createBox(0, 0, 30, 30)

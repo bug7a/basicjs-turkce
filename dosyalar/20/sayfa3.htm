@@ -8,25 +8,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
         <!-- Kütüphane dosyaları, buradan 2 dizin geride olduğu için, dosya yolu ../../ ile başlıyor. -->
-        <link rel="stylesheet" type="text/css" href="../../kutuphane/basic-1.4.css">
-        <script src="../../kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="../../kutuphane/basic.css">
+        <script src="../../kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Ortak kullanılan kodlar, farklı bir dosyaya konulmuştur. -->
         <script src="close-button.js" type="text/javascript" charset="utf-8"></script>
         
         <style>
-            
-        /* Web sayfası gibi seçilebilmesini engelle. */
-
-        * {
-            -webkit-tap-highlight-color: rgba(0,0,0,0);
-        }
-
-        body {
-            -webkit-touch-callout: none;
-            -webkit-text-size-adjust: none;
-            -webkit-user-select: none;   
-        }
 
         /* scroll rengini beyaz yap. */
 
@@ -53,8 +41,12 @@
         
         // DEĞİŞKENLER
 
-        var MAX_WIDTH = 400
-        var ORIGINAL_WIDTH = 600
+        // Uygulamanın orjinal genişliği
+        var APP_WIDTH = 600
+        // İstenilen maksimum genişlik.
+        var APP_MAX_WIDTH = 400
+        // NOT: Masaüstünde açıldığında, dar görünmesi için 400 yazılmıştır.
+        // 850 olarak değiştirilebilir.
         
         var a0
 
@@ -76,7 +68,7 @@
             page.color = "white"
             
             // Maksimum genişliğe sığdır.
-            page.fit(ORIGINAL_WIDTH, MAX_WIDTH)
+            page.fit(APP_WIDTH, APP_MAX_WIDTH)
             
             // NESNE: Sayfa1 taşıyıcı.
             a0 = createBox(0, 0, 600, page.height)
@@ -109,7 +101,7 @@
         }
 
         var goBack = function () {
-            go("../../20-mobil-uygulama-sablon.htm")
+            go("../../20-temel-mobil-uygulama-sablonu.htm")
         }
         
         </script>

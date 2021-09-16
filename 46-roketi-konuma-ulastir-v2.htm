@@ -2,14 +2,14 @@
 <html>
     <head>
         
-        <title>Rocketi Konuma Ulaştır V2</title>
+        <title>Roketi Konuma Ulaştır V2</title>
         
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
-        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
-        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
 
         <script>
 
@@ -84,6 +84,8 @@
             that.textAlign = "right"
             that.top = 15
             that.right = 15
+            that.width = 200
+            that.height = 20
 
 
             // NESNE: roket resmi
@@ -92,7 +94,7 @@
             // that.rotate = 0
 
             // Fare basılı iken çalıştır.
-            window.addEventListener('mousedown', mouseDown);
+            window.addEventListener('mousedown', mouseDown)
 
             // loop() fonksiyonunu 5ms aralık ile çalıştır.
             setLoopTimer(8)
@@ -156,8 +158,8 @@
             lblInfo.visible = 0
             
             // Farenin konumunu, yeni konum olarak sakla.
-            newX = event.offsetX;
-            newY = event.offsetY;
+            newX = event.offsetX
+            newY = event.offsetY
 
             // Hedefi göster.
             lblFinish.visible = 1

@@ -8,24 +8,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
-        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
-        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- SEARCHABLE LIST NESNESİNİN KODU -->
         <script src="dosyalar/37/searchable-list.js" type="text/javascript" charset="utf-8"></script>
 
         <style>
 
-            /* Web sayfası gibi seçilebilmesini engelle. */
-
-            * {
-                -webkit-tap-highlight-color: rgba(0,0,0,0);
-            }
-            
             body {
-                -webkit-touch-callout: none;
-                -webkit-text-size-adjust: none;
-                -webkit-user-select: none;   
+                overflow: hidden;
             }
 
         </style>
@@ -48,6 +40,9 @@
         */
             
         // DEĞİŞKENLER
+
+        var APP_ORIGINAL_WIDTH = 480;
+        var APP_MAX_WIDTH = 480;
 
         // Meyve, sebze listesi
         var plantList = [
@@ -82,25 +77,27 @@
             
         // Listeler
         var objPlantList
-        //var objPieceList
+        // var objPieceList
             
         // İlk çalışan fonksiyon.
         var start = function() {
 
+            page.fit(APP_ORIGINAL_WIDTH, APP_MAX_WIDTH)
             page.color = "lightblue"
 
             // Birinci liste nesnesi (Parametreler: width, height)
             objPlantList = createSearcableList(400, 450)
             that.top = 20
             that.left = 40
+
             that.fill(plantList)
             that.onClick(listItemClicked)
 
             // İkinci liste nesnesi
-            //objPieceList = createSearcableList(300, 270)
-            //that.top = 480
-            //that.left = 40
-            //that.fill(pieceList)
+            // objPieceList = createSearcableList(300, 270)
+            // that.top = 480
+            // that.left = 40
+            // that.fill(pieceList)
 
         }
 

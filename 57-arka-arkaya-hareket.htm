@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Arka Arkaya Hareket</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
+
+        <style>
+
+            body {
+
+                /* Sayfa yüklenirken, beyaz titreme yapmaması için */
+                background-color: black;
+
+            }
+
+        </style>
+
+        <script>
+           
+        // İlk sayfa
+        var a0
+            
+        // İlk çalışan fonksiyon.
+        var start = function() {
+
+            // NESNE: Taşıyıcı sayfa
+            a0 = cbox(0, 0, page.width, page.height)
+            a0.color = "transparent"
+
+            // NESNE: Hareketli daire
+            a0.box1 = cbox(0, 0, 80, 80)
+            that.color = "tomato"
+            that.round = 40
+            that.setMotion("top 2s, background-color 2s")
+
+            // İlk konumu
+            that.center()
+            that.top -= 200
+            that.withMotion(function(self) {
+                startAnimation(self);
+            })
+
+            page.onResize(pageResized)
+            
+        }
+
+        var startAnimation = function(self) {
+            
+            // Hareket et
+            self.center()
+            self.top += 200
+            setTimeout(function() {
+                // İlk konuma geri dön
+                that.center()
+                that.top -= 200
+                setTimeout(function() {
+                    // Tekrar kendini çağırarak,
+                    // hareketin hep devam etmesini sağla.
+                    startAnimation(self)
+                }, 2000)
+            }, 2000)
+
+            // NOT: setTimeout() fonksiyonunu araştırabilirsiniz. JavaScript setTimeout
+
+        }
+
+        var pageResized = function() {
+
+            a0.width = page.width
+            a0.height = page.height
+
+            a0.box1.center("left")
+
+        }
+        
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML içeriği -->
+        
+    </body>
+</html>

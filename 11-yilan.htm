@@ -7,8 +7,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
-        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
 
         <script>
         
@@ -143,33 +143,22 @@
                     that.left = x * 20
                     that.top = 100 + (y * 20)
                     that.border = 0
+                    // Tüm kareleri önce beyaza boya,
                     that.color = "white"
-                    
-                }
-            }
-            
-            // Tüm arka planı beyaz ile, sınırları siyah ile boya.
-            for (var y = 1; y <= DIKEY_KARE_SAYISI; y++) {
-                for (var x = 1; x <= YATAY_KARE_SAYISI; x++) {
 
-                    // Genel arka plan rengi beyaz olsun.
-                    var arkaplanRenk = "white"
-
-                    // Eğer sınırlar boyanıyor ise, siyah olsun.
+                    // Ama eğer, sınırlar boyanıyor ise, siyah olsun.
                     if (x == 1) { 
-                        arkaplanRenk = "black"
+                        that.color = "black"
                     } else if (x == YATAY_KARE_SAYISI) { 
-                        arkaplanRenk = "black"
+                        that.color = "black"
                     }
 
                     if (y == 1) { 
-                        arkaplanRenk = "black"
+                        that.color = "black"
                     } else if (y == DIKEY_KARE_SAYISI) { 
-                        arkaplanRenk = "black"
+                        that.color = "black"
                     }
-
-                    // Konumu boya.
-                    kareBoya(x, y, arkaplanRenk)
+                    
                 }
             }
             

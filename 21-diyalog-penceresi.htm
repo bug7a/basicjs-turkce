@@ -7,8 +7,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
-        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
-        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
 
         <script>
 
@@ -40,7 +40,6 @@
             that.text = "Uyarı 1"
             that.color = "#3C3135"
             that.textColor = "rgba(255, 255, 255, 0.8)"
-            that.minimal = 0
             that.onClick(showDialog1)
 
             // NESNE: İkinci diyaloğu açar.
@@ -48,7 +47,6 @@
             that.text = "Uyarı 2"
             that.color = "#3C3135"
             that.textColor = "rgba(255, 255, 255, 0.8)"
-            that.minimal = 0
             that.aline(btnDialog1, "right", 10)
             that.onClick(showDialog2)
 
@@ -140,7 +138,7 @@
             that.color = "transparent"
             that.border = 0
             // CSS animasyonu ekle, şeffaflık.
-            that.contElement.style.transition = "opacity 0.3s";
+            that.setMotion("opacity 0.3s")
 
             // NESNE: Arkaplanı siyah kaplayan kutu.
             object.boxBlack = createBox(0, 0, page.width, page.height)
@@ -155,7 +153,7 @@
             that.border = 0
             that.round = 6
             // Biraz gölge ekle. Kenraları çok keskin renk geçişi olmasın.
-            that.contElement.style.boxShadow = "2px 3px 6px rgba(0, 0, 0, 0.6)"
+            that.element.style.boxShadow = "2px 3px 6px rgba(0, 0, 0, 0.6)"
             that.center()
             
             // NESNE: Başlık.
@@ -170,7 +168,7 @@
             that.textAlign = "center"
             that.space = 12
             that.rotate = 0
-            that.contElement.style.fontFamily = "opensans-bold"
+            that.element.style.fontFamily = "opensans-bold"
             
             // NESNE: Açıklama.
             object.window.lblDesc = createLabel()
@@ -183,7 +181,7 @@
             object.window.btnOkay = createButton()
             that.text = ""
             that.color = "lightgray"
-            that.minimal = 1
+            that.minimal = 0
             that.bottom = 10
             that.right = 10
             
@@ -301,7 +299,7 @@
             // NOT: Görünmezlik ise, nesnenin altında kalanlara basılabilmesi için.
 
             // Nesneyi, that olarak belirle.
-            setAsThat(object)
+            makeBasicObject(object)
 
             // Nesneyi cevap ver.
             return object

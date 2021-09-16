@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Sayfayı Parçalara Bölme</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
+
+        <style>
+
+            body {
+                overflow: hidden;
+            }
+
+        </style>
+
+        <script>
+
+        /*
+
+        - Her uygulama, bir veya daha fazla sayfadan oluşur. Ve bu sayfaları da, 
+        tasarımına göre kutulara bölerek, nesneleri daha kolay ve işlevsel yerleştirebiliriz.
+
+        - Siz, sayfalarınıza istediğiniz isimleri verebilirsiniz,
+
+        Ben, kısa olması ve baktığımda katmanları hızlı bir şekilde anlamak için,
+        şu şekilde isimlendiriyorum.
+
+        - Başlangıç sayfası; a0 ve diğer sayfalar; a1, a2, a3 ...
+        - Bir sayfanın içindeki bölümler; b1, b2, b3 ...
+        - Eğer bölümlerin de bölünmesi gerekirse; c1, c2, c3 ...
+
+        a0: Başlangıç sayfası
+        a1: Kullanıcı listesi
+        a2: Mesajlaşma sayfası
+        a3: Ayarlar sayfası
+
+        Böylece, örneğin; a1.b2.c1.lblContent diye bir nesne var ise,
+        bu etiket nesnesinin; birinci sayfanın, ikinci bölümünün, 
+        ilk parçasında olduğunu isminden görebilirim.
+
+        */
+
+        var APP_ORIGINAL_WIDTH = 450
+        var APP_MAX_WIDTH = 450
+        var APP_B1_HEIGHT = 100
+        var APP_B3_HEIGHT = 150
+            
+        // a0: Başlangıç sayfası
+        // a1: Sayfa 1
+        var a0, a1
+
+        // Sık kullanılan nesnelere verilen kısa isimler.
+        var title
+        var content
+        
+        // ÖZEL FONKSİYONLAR
+            
+        // İlk çalışan fonksiyon.
+        var start = function() {
+
+            page.fit(APP_ORIGINAL_WIDTH, APP_MAX_WIDTH)
+
+            // NESNE: BAŞLANGIÇ SAYFASI ***
+
+            // NESNE: Başlangıç sayfası
+            a0 = cbox(0, 0, APP_ORIGINAL_WIDTH, page.height)
+            that.color = basic.ACTION2_COLOR
+            that.center("left")
+
+            a0.btnStart = cbtn()
+            that.text = "Sayfa'yı Göster"
+            that.width = 200
+            that.minimal = 1
+            that.color = "white"
+            that.center()
+            that.onClick(function(self) {
+                a0.visible = 0
+                a1.visible = 1
+            })
+
+
+            // NESNE: SAYFA 1 ***
+
+            // NESNE: Sayfa 1
+            a1 = cbox(0, 0, APP_ORIGINAL_WIDTH, page.height)
+            that.color = "black"
+            that.center()
+            a1.visible = 0
+
+            // NESNE: Üst bölüm
+            a1.b1 = cbox(0, 0, a1.width, APP_B1_HEIGHT)
+            that.color = "lightgray"
+
+            // NESNE: Üst bölümde bir geri butonu
+            a1.b1.imgBack = cimg(20, 0, 30, 30)
+            that.load("resimler/63/back.png")
+            that.center("top")
+            that.opacity = 0.65
+            that.onClick(function(self) {
+                a0.visible = 1
+                a1.visible = 0
+            })
+
+            // NESNE: Üst bölüm içinde bir nesne
+            a1.b1.lblTitle = clbl(0, 0, "auto", "auto")
+            that.text = "a1.b1.lblTitle"
+            that.onResize(function(self){
+                self.center()
+            })
+            // İsmi, kısa olarak kullanacağım.
+            title = a1.b1.lblTitle
+            
+            // NESNE: Orta bölüm
+            a1.b2 = cbox()
+            that.width = a1.width
+            that.height = a1.height - APP_B1_HEIGHT - APP_B3_HEIGHT
+            that.top = APP_B1_HEIGHT
+            that.color = basic.ACTION2_COLOR
+            that.scrollY = 1
+
+            // NESNE: Orta bölümde bir nesne
+            a1.b2.lblContent = clbl(20, 20, 250, 30)
+            that.text = "a1.b2.lblContent"
+            that.textColor = "white"
+
+            // NESNE: Orta bölüm içinde bir alt bölüm
+            a1.b2.c1 = cbox(0, 0, APP_ORIGINAL_WIDTH - 40, 150)
+            that.color = "white"
+            that.left = 20
+            that.top = 300
+
+            // NESNE: Alt bölüm içinde bir nesne
+            a1.b2.c1.lblContent = clbl(0, 0, "auto", "auto")
+            that.text = "a1.b2.c1.lblContent"
+            that.textColor = "black"
+            that.onResize(function(self) {
+                self.center()
+            })
+            // İsmi, kısa olarak kullanacağım.
+            content = a1.b2.c1.lblContent
+
+            // NESNE: Orta bölüm içinde başka bir alt bölüm
+            a1.b2.c2 = cbox(0, 0, APP_ORIGINAL_WIDTH - 40, 150)
+            that.color = "white"
+            that.left = 20
+            that.top = page.height + 100
+
+            // NESNE: Alt bölüm içinde bir nesne
+            a1.b2.c2.lblContent = clbl(0, 0, "auto", "auto")
+            that.text = "a1.b2.c2.lblContent"
+            that.textColor = "black"
+            that.onResize(function(self) {
+                self.center()
+            })
+
+            // NESNE: Alt bölüm
+            a1.b3 = cbox()
+            that.width = a1.width
+            that.height = 150
+            that.color = "lightgray"
+            that.bottom = 0
+
+            // NESNE: Alt bölüm içinde bir nesne
+            a1.b3.lblTitle = clbl()
+            that.text = "a1.b3.lblTitle"
+            that.width = "auto"
+            that.onResize(function(self){
+                self.center()
+            })
+
+            page.onResize(pageResized)
+            
+        }
+        
+        // DİĞER FONKSİYONLAR
+        
+        var pageResized = function() {
+            
+            page.fit(APP_ORIGINAL_WIDTH, APP_MAX_WIDTH)
+
+            // Başlangıç sayfası
+            a0.height = page.height
+            a0.center("left")
+            // Sayfa yüksekliği değiştiği için, butonu yeniden ortala.
+            a0.btnStart.center()
+
+            // Sayfa 1
+            a1.height = page.height
+            a1.center("left")
+            // Orta bölümün yüksekliği değişir.
+            a1.b2.height = a1.height - APP_B1_HEIGHT - APP_B3_HEIGHT
+
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML içeriği -->
+        
+    </body>
+</html>

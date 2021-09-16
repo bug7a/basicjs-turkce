@@ -8,34 +8,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
-        <link rel="stylesheet" type="text/css" href="kutuphane/basic-1.4.css">
-        <script src="kutuphane/basic-1.4.js" type="text/javascript" charset="utf-8"></script>
-
-        <style>
-
-            /* Web sayfası gibi seçilebilmesini engelle. */
-
-            * {
-                -webkit-tap-highlight-color: rgba(0,0,0,0);
-            }
-            
-            body {
-                -webkit-touch-callout: none;
-                -webkit-text-size-adjust: none;
-                -webkit-user-select: none;   
-            }
-
-        </style>
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
 
         <script>
 
         /*
 
-            - tab, tüm nesneyi taşıyan kutu.
+            - tabs, tüm nesneyi taşıyan kutu.
 
             - Bu nesne, iki parçaya bölünmüştür;
-            1. tab.b1, butonları gruplayan, taşıyıcı kutu.
-            2. tab.b2, içerik kutularını gruplayan taşıyıcı kutu
+            1. tabs.b1, butonları gruplayan, taşıyıcı kutu.
+            2. tabs.b2, içerik kutularını gruplayan taşıyıcı kutu
 
             Böylece, butonları grup olarak ortalayabiliyor ve içerikleri yine grup
             olarak kaydırabiliyorum.
@@ -53,15 +37,13 @@
             Böylece; her bir içerik, birbirinden bağımsız ve özel olarak oluşturulabilir.
 
         */
-            
-        // DEĞİŞKENLER
-            
-        // Sekme çubuğu
-        var tab
 
         // Sekme çubuğu içerik boyutları
-        var tabBarContentWidth = 450
-        var tabBarContentHeight = 300
+        var TAB_CONTENT_WIDTH = 450
+        var TAB_CONTENT_HEIGHT = 300
+            
+        // Sekme çubuğu
+        var tabs
 
         // Sekme çubuğu, butonlar
         var tabBarButtons = [
@@ -79,37 +61,35 @@
             page.color = "whitesmoke"
 
             // NESNE: Sekme çubuğu taşıyıcı
-            tab = createBox(10, 10, tabBarContentWidth, tabBarContentHeight + 60)
+            tabs = createBox(10, 10, TAB_CONTENT_WIDTH, TAB_CONTENT_HEIGHT + 60)
             that.border = 0
             that.color = "transparent"
 
             // Butonların toplam genişliği hesaplanacak.
-            var b1Width = 0
+            var buttonsTotalWidth = 0
 
             // NESNE: Butonların taşıyıcısı
-            tab.b1 = createBox(0, 0, 50, 50)
+            tabs.b1 = createBox(0, 0, 50, 50)
             that.color = "white"
             that.border = 0
             that.round = 8
 
             // NESNE: Seçili butonun arkasına hareket eden renkli kutu
-            tab.b1.btnSelected = createBox(0, 0)
+            tabs.b1.btnSelected = createBox(0, 0)
             that.border = 2
             that.borderColor = "white"
             that.round = 8
             that.height = 50
-            // İlk yüklendiğinde, buton animasyonlu olur.
+             // İlk yüklenirken içerik hareketli olsun.
             that.width = 10
-            // İlk yüklendiğinde, buton animasyonsuz olur.
-            // that.width = 90
             that.color = "whitesmoke"
-            that.contElement.style.transition = "left 0.5s, width 0.5s, background-color 0.5s"
+            that.setMotion("left 0.5s, width 0.5s, background-color 0.5s")
 
             // Butonları oluştur
             for (var i = 0; i < tabBarButtons.length; i++) {
                 // NESNE: Buton
-                tab.b1["btn" + i] = createButton(0, 0, tabBarButtons[i].width, 50)
-                that.left = b1Width
+                tabs.b1["btn" + i] = createButton(0, 0, tabBarButtons[i].width, 50)
+                that.left = buttonsTotalWidth
                 that.text = tabBarButtons[i].name
                 that.minimal = 1
                 that.round = 8
@@ -117,40 +97,38 @@
                 that.indexNumber = i
                 that.onClick(tabBarBtnClicked)
 
-                b1Width += that.width
+                buttonsTotalWidth += that.width
             }
 
             // Taşıyıcıyı, butonların toplam genişliğine ayarla.
-            tab.b1.width = b1Width
-            tab.b1.center("left")
+            tabs.b1.width = buttonsTotalWidth
+            tabs.b1.center("left")
 
             // İçeriklerin toplam genişliği hesaplanacak.
-            var b2Width = 0
+            var contentsTotalWidth = 0
 
             // NESNE: İçeriklerin taşıyıcısı
-            tab.b2 = createBox(0, 60, 50, 50)
-            that.height = tabBarContentHeight
+            tabs.b2 = createBox(0, 60, 50, 50)
+            that.height = TAB_CONTENT_HEIGHT
             that.round = 0
             that.border = 0
-            // İlk yüklenirken içerik animasyonlu olur.
-            that.left -=  tabBarContentWidth / 2
-            // İlk yüklenirken içerik animasyonsuz olur.
-            // that.left =  0
-            that.contElement.style.transition = "left 0.5s"
+            // İlk yüklenirken içerik hareketli olsun.
+            that.left -=  TAB_CONTENT_WIDTH / 2
+            that.setMotion("left 0.5s")
 
             // İçerikleri oluştur
             for (var i = 0; i < tabBarButtons.length; i++) {
                 // Her bir içerik için bir taşıyıcı
-                tab.b2["box" + i] = createBox(0, 0, tabBarContentWidth, tabBarContentHeight)
-                that.left = b2Width
+                tabs.b2["box" + i] = createBox(0, 0, TAB_CONTENT_WIDTH, TAB_CONTENT_HEIGHT)
+                that.left = contentsTotalWidth
                 that.border = 0
                 that.round = 4
-                b2Width += tabBarContentWidth
+                contentsTotalWidth += TAB_CONTENT_WIDTH
 
             }
 
             // Taşıyıcıyı, içeriklerin toplam genişline ayala.
-            tab.b2.width = b2Width
+            tabs.b2.width = contentsTotalWidth
 
             // İçerik taşıyıcıların , içlerini dolduran fonksiyonlar.
             createBox0Content()
@@ -158,14 +136,14 @@
             createBox2Content()
             createBox3Content()
             
-            tab.center()
+            tabs.center()
 
             page.onResize(centerAll)
 
             // Başlangıçta, ilk butona basılmış gibi ayarla.
-            setTimeout(function() {
-                tabBarBtnClicked(tab.b1.btn0)
-            }, 100)
+            tabs.withMotion(function(self) {
+                tabBarBtnClicked(tabs.b1.btn0)
+            })
             
         }
         
@@ -173,25 +151,25 @@
 
         var centerAll = function() {
 
-            tab.center()
+            tabs.center()
 
         }
         
         // Butona basıldığında, gereken işlemleri yap.
         var tabBarBtnClicked = function(self) {
             // Renkli kutuyu, butonun konum ve boyutuna getir.
-            tab.b1.btnSelected.left = self.left
-            tab.b1.btnSelected.width = self.width
+            tabs.b1.btnSelected.left = self.left
+            tabs.b1.btnSelected.width = self.width
             // Renkli kutunun rengini, içerik kutusunun rengi ile aynı yap.
-            tab.b1.btnSelected.color = tab.b2["box" + self.indexNumber].color
+            tabs.b1.btnSelected.color = tabs.b2["box" + self.indexNumber].color
             // Basılan butona göre, içeriği hareket ettir.
-            tab.b2.left = (self.indexNumber * tabBarContentWidth) * -1
+            tabs.b2.left = (self.indexNumber * TAB_CONTENT_WIDTH) * -1
             
         }
         
         var createBox0Content = function() {
 
-            var box = tab.b2.box0
+            var box = tabs.b2.box0
 
             box.color = "Lavender"
 
@@ -207,7 +185,7 @@
 
         var createBox1Content = function() {
 
-            var box = tab.b2.box1
+            var box = tabs.b2.box1
 
             box.color = "PaleTurquoise"
 
@@ -223,7 +201,7 @@
 
         var createBox2Content = function() {
 
-            var box = tab.b2.box2
+            var box = tabs.b2.box2
 
             box.color = "Bisque"
 
@@ -239,7 +217,7 @@
 
         var createBox3Content = function() {
 
-            var box = tab.b2.box3
+            var box = tabs.b2.box3
 
             box.color = "whitesmoke"
 
