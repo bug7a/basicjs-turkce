@@ -4,7 +4,7 @@
 /*
 
 
-v1.6.2
+v1.6.3
 
 
 basic.js NEDİR?
@@ -181,9 +181,14 @@ basic.motionController.DONT_MOTION_TIME = 5;
 basic.start = function () {
 
     page = new MainBox();
-    page.element = document.getElementsByTagName("BODY")[0];
-
     selectBox(page);
+
+    page.box = createBox(0, 0, page.width, page.height);
+    that.element.style.position = "fixed";
+    that.color = "transparent";
+    page.onResize(function() {
+        page.refreshSize();
+    });
 
     if (typeof start === "function") {
         start();
@@ -204,14 +209,15 @@ basic.afterStart = function () {
 
 
 // Konsola metin yazdır.
-var print = function ($message) {
+basic.print = function ($message) {
 
     console.log($message);
 
 }
+var print = basic.print;
 
 // Rasgele bir sayı üretir. Tek parametreye izin verilmiyor.
-var random = function ($first, $second) {
+basic.random = function ($first, $second) {
 
     let myNum = 0;
 
@@ -228,9 +234,10 @@ var random = function ($first, $second) {
     return myNum;
 
 }
+var random = basic.random;
 
 // Sayıya çevir. ($type: "float" veya "integer")
-var num = function ($str, $type = "float") {
+basic.num = function ($str, $type = "float") {
 
     if ($type == "float") {
         var i = parseFloat($str);
@@ -241,16 +248,18 @@ var num = function ($str, $type = "float") {
     }
     
 }
+var num = basic.num;
 
 // Metine çevir.
-var str = function ($num) {
+basic.str = function ($num) {
 
     return String($num);
 
 }
+var str = basic.str;
 
 // Mobil olup/olmadığını kontrol et. (1: mobil, 0: değil)
-var isMobile = function () {
+basic.isMobile = function () {
 
     let answer = 0;
 
@@ -262,9 +271,10 @@ var isMobile = function () {
     return answer;
 
 }
+var isMobile = basic.isMobile;
 
 // URL aç.
-var go = function ($url, $windowType = "_self") {
+basic.go = function ($url, $windowType = "_self") {
 
     // window.location.href = $url;
     var openedWindow = window.open($url, $windowType);
@@ -273,9 +283,10 @@ var go = function ($url, $windowType = "_self") {
     return openedWindow;
 
 }
+var go = basic.go;
 
 // İki haneli saat ve tarih için başında 0 gösterir. 03:10:05
-var twoDigitFormat = function($number) {
+basic.twoDigitFormat = function($number) {
 
     if ($number <= 9) {
         $number = "0" + $number;
@@ -284,9 +295,10 @@ var twoDigitFormat = function($number) {
     return $number;
 
 }
+var twoDigitFormat = basic.twoDigitFormat;
 
 // Bilgiyi kaydetmek ve geri yüklemek.
-var storage = {
+basic.storage = {
 
     save(key, value) {
         window.localStorage.setItem(key, JSON.stringify(value));
@@ -299,9 +311,10 @@ var storage = {
     }
 
 }
+var storage = basic.storage;
 
 // Saat bilgileri.
-var clock = {
+basic.clock = {
 
     get hour() {
         let dt = new Date();
@@ -317,9 +330,10 @@ var clock = {
     }
 
 };
+var clock = basic.clock;
 
 // Tarih bilgileri.
-var date = {
+basic.date = {
 
     get year() {
         let dt = new Date();
@@ -356,10 +370,12 @@ var date = {
     }
 
 }
+var date = basic.date;
 
 // Temel nesnelerin, ortak metod ve özellikleri.
 class Basic_UIComponent {
 
+    /*
     _type;
     _upperObject;
 
@@ -381,12 +397,12 @@ class Basic_UIComponent {
 
     _motionString;
     _clickable;
+    */
 
     constructor($type) {
 
         this._type = $type;
 
-        this._element = null;
         this._visible = 1;
         this._displayType = "block";
         this._opacity = 1;
@@ -716,13 +732,19 @@ class Basic_UIComponent {
 /* MAINBOX COMPONENT (page) */
 class MainBox {
 
+    /*
+    _box;
     _element;
+    _bodyElement;
     _backgroundColor;
     _zoom;
+    */
 
     constructor() {
 
-        this._element = null;
+        this._bodyElement = document.getElementsByTagName("BODY")[0];
+        this._element = this._bodyElement;
+
         this._backgroundColor = "white";
         this._zoom = 1;
 
@@ -732,16 +754,39 @@ class MainBox {
         return this._element;
     }
 
-    set element($value) {
-        this._element = $value;
-    }
-
-    
     get contElement() {
         return this._element;
     }
-    
 
+    get bodyElement() {
+        return this._bodyElement;
+    }
+
+    get box() {
+        return this._box;
+    }
+
+    set box($value) {
+        this._box = $value;
+        this._element = this._box.element;
+    }
+    /*
+    set scrollX($value) {
+        this.box.scrollX = $value;
+    }
+
+    get scrollX() {
+        return this.box.scrollX;
+    }
+
+    set scrollY($value) {
+        this.box.scrollY = $value;
+    }
+
+    get scrollY() {
+        return this.box.scrollY;
+    }
+    */
     get width() {
         let _w;
         _w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
@@ -761,9 +806,13 @@ class MainBox {
     set zoom($value) {
         this._zoom = $value;
         // page.zoom kullanılır ise, body margin 0px olarak ayarlanır.
-        this.element.style.margin = "0px"
-        this.element.style.transformOrigin = "top left";
-        this.element.style.transform = "scale(" + $value + ")";
+        // TODO: Bu kodu silebilirsin artık. fixed box eklendi.
+        this.bodyElement.style.margin = "0px"
+        this.bodyElement.style.transformOrigin = "top left";
+        this.bodyElement.style.transform = "scale(" + $value + ")";
+
+        page.refreshSize();
+
     }
 
     get color() {
@@ -772,7 +821,7 @@ class MainBox {
 
     set color($value) {
         this._backgroundColor = $value;
-        this.element.style.backgroundColor = $value;
+        this.bodyElement.style.backgroundColor = $value;
     }
 
     fit($value = document.body.clientWidth, $maxValue = 900) {
@@ -794,6 +843,11 @@ class MainBox {
 
     }
 
+    refreshSize() {
+        page.box.width = page.width;
+        page.box.height = page.height;
+    }
+
     _addEventListener($event, $func) {
         window.addEventListener($event, $func);
     }
@@ -810,6 +864,7 @@ class MainBox {
         // Eklenen nesnenin, üst nesnesi değişiyor.
         if ($obj.upperObject != this) {
             $obj.upperObject = this;
+            // this.box.clickable = 1;
             this.element.appendChild($obj.contElement);
         }
     }
@@ -953,14 +1008,14 @@ class Box extends Basic_UIComponent {
 }
 
 // Alternatif kullanım
-const createBox = function ($left, $top, $width, $height) {
+var createBox = function ($left, $top, $width, $height) {
 
     return new Box($left, $top, $width, $height);
 
 }
 
 // Alternatif kullanım
-const cbox = function ($left, $top, $width, $height) {
+var cbox = function ($left, $top, $width, $height) {
 
     return new Box($left, $top, $width, $height);
 
@@ -1088,14 +1143,14 @@ class Button extends Basic_UIComponent {
 }
 
 // Alternatif kullanım1
-const createButton = function ($left, $top, $width, $height) {
+var createButton = function ($left, $top, $width, $height) {
 
     return new Button($left, $top, $width, $height);
 
 }
 
 // Alternatif kullanım 2
-const cbtn = function ($left, $top, $width, $height) {
+var cbtn = function ($left, $top, $width, $height) {
 
     return new Button($left, $top, $width, $height);
 
@@ -1104,8 +1159,10 @@ const cbtn = function ($left, $top, $width, $height) {
 /* TEXTBOX COMPONENT */
 class TextBox extends Basic_UIComponent {
 
-    _titleElement = null;
-    _mainElement = null;
+    /*
+    _titleElement;
+    _mainElement;
+    */
 
     constructor($left = 0, $top = 0, $width = basic.TEXTBOX_WIDTH, $height = basic.TEXTBOX_HEIGHT) {
 
@@ -1300,14 +1357,14 @@ class TextBox extends Basic_UIComponent {
 }
 
 // Alternatif kullanım
-const createTextBox = function ($left, $top, $width, $height) {
+var createTextBox = function ($left, $top, $width, $height) {
 
     return new TextBox($left, $top, $width, $height);
 
 }
 
 // Alternatif kullanım
-const ctxt = function ($left, $top, $width, $height) {
+var ctxt = function ($left, $top, $width, $height) {
 
     return new TextBox($left, $top, $width, $height);
 
@@ -1436,14 +1493,14 @@ class Label extends Basic_UIComponent {
 }
 
 // Alternatif kullanım
-const createLabel = function ($left, $top, $width, $height) {
+var createLabel = function ($left, $top, $width, $height) {
 
     return new Label($left, $top, $width, $height);
 
 }
 
 // Alternatif kullanım
-const clbl = function ($left, $top, $width, $height) {
+var clbl = function ($left, $top, $width, $height) {
 
     return new Label($left, $top, $width, $height);
 
@@ -1453,7 +1510,9 @@ const clbl = function ($left, $top, $width, $height) {
 class Image extends Basic_UIComponent {
 
     // Not: CheckBox resim nesnesi ile yapılabilir.
+    /*
     _autoSize;
+    */
 
     constructor($left = 0, $top = 0, $width = 0, $height = 0) {
 
@@ -1468,11 +1527,6 @@ class Image extends Basic_UIComponent {
         this._border = 0;
         this._borderColor = "#4A4A4A";
         this._round = 0;
-        
-        // Text
-        this._fontSize = null;
-        this._textColor = null;
-        this._textAlign = null;
 
         let imageElement = document.createElement("IMG");
         imageElement.classList.add("basic_image");
@@ -1609,14 +1663,14 @@ class Image extends Basic_UIComponent {
 }
 
 // Alternatif kullanım
-const createImage = function ($left, $top, $width, $height) {
+var createImage = function ($left, $top, $width, $height) {
 
     return new Image($left, $top, $width, $height);
 
 }
 
 // Alternatif kullanım
-const cimg = function ($left, $top, $width, $height) {
+var cimg = function ($left, $top, $width, $height) {
 
     return new Image($left, $top, $width, $height);
 
@@ -1624,11 +1678,11 @@ const cimg = function ($left, $top, $width, $height) {
 
 class Sound {
 
+    /*
     _element;
+    */
 
     constructor() {
-
-        this._element = null;
 
         let element = document.createElement("AUDIO");
         let source = document.createElement("SOURCE");
@@ -1872,7 +1926,7 @@ basic.antiZoom = function ($value) {
 }
 
 // Her saniye tekrar eden fonksiyonun zamanını ayarlar.
-const setLoopTimer = function ($time) {
+basic.setLoopTimer = function ($time) {
     
     if (typeof loop === "function") {
 
@@ -1891,9 +1945,10 @@ const setLoopTimer = function ($time) {
     }
 
 }
+var setLoopTimer = basic.setLoopTimer;
 
 // Hangi box nesnesi seçili ise, yeni eklenen nesneler onun içinde oluşturulur.
-const selectBox = function ($box) {
+basic.selectBox = function ($box) {
 
     basic.selectedBox = $box;
 
@@ -1901,13 +1956,15 @@ const selectBox = function ($box) {
     // document.getElementById("elementID").appendChild(boxObject.element)
 
 }
+var selectBox = basic.selectBox;
 
 // Nesne hangi kutu nesnesinin içine eklendiği.
-const getSelectedBox = function () {
+basic.getSelectedBox = function () {
     
     return basic.selectedBox;
 
 }
+var getSelectedBox = basic.getSelectedBox;
 
 // Özel bir nesne oluşturulduğunda, that ve exThat nesnelerini yeniden düzenle.
 const makeBasicObject = function($newObject) {

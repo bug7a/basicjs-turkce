@@ -54,7 +54,8 @@ Have Fun.
     position:absolute;
     display:block;
     visibility: hidden;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: hidden;
     width:100px;
     height:100px;
     background-color: whitesmoke;
@@ -68,6 +69,8 @@ Have Fun.
     margin: 0px;
     box-sizing: border-box;
     pointer-events:none;
+    /* firefoxda da scroll görünmesin */
+    scrollbar-width: none;
     
 }
 
@@ -163,6 +166,7 @@ Have Fun.
     background-position: left top;
     background-repeat: no-repeat;
     background-size:100% 100%;
+    pointer-events:auto;
     
 }
 
@@ -232,4 +236,22 @@ Have Fun.
     border-radius: 0px;
     pointer-events:none;
     
+}
+
+.basic_box::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+}
+  
+.basic_box::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.basic_box::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+.basic_box::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.4);
 }

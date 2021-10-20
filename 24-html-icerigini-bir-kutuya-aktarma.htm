@@ -20,6 +20,34 @@
                 -webkit-user-select: auto;
 
             }
+
+            /* Kaydırma çubuğunu özelleştir. */
+            .basic_box::-webkit-scrollbar {
+                width: 10px;
+                height: 10px;
+                /* NOT: Kaydırma çubuğu, kutu nesnesinin içinde 10px lik bir yer kaplıyor. */
+            }
+            
+            .basic_box::-webkit-scrollbar-track {
+                /* background: rgba(0, 0, 0, 0.08); */
+                border-radius: 10px;
+                border: 3px solid rgba(0, 0, 0, 0);
+                background-clip: padding-box;
+            }
+
+            .basic_box::-webkit-scrollbar-thumb {
+                background: rgba(0, 0, 0, 0.2);
+                border-radius: 10px;
+                border: 3px solid rgba(0, 0, 0, 0);  /* Transparent border together with `background-clip: padding-box` does the trick */
+                background-clip: padding-box;
+            }
+
+            .basic_box::-webkit-scrollbar-thumb:hover {
+                background: rgba(0, 0, 0, 0.4);
+                border-radius: 10px;
+                border: 3px solid rgba(0, 0, 0, 0);  /* Transparent border together with `background-clip: padding-box` does the trick */
+                background-clip: padding-box;
+            }
         
             .colored-word {
                 
@@ -57,7 +85,7 @@
             // NESNE: HTML içeriğini taşıyacak kutu.
             boxContent = createBox(40, 40, 350, 250)
             that.color = "whitesmoke"
-            that.round = 10
+            that.round = 6
             // HTML kodunu al ve nesnenin içine yerleştir.
             that.text = document.getElementById("my-html-content").innerHTML
             // Dikey kaydırmaya izin ver.

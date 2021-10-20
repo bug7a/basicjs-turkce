@@ -1,5 +1,5 @@
 
-basic.js KÜTÜPHANESİ (v1.6.2) - EL KİTABI
+basic.js KÜTÜPHANESİ (v1.6.3) - EL KİTABI
 
 
 GİRİŞ
@@ -82,8 +82,10 @@ NOT: Saat, sayaç, tarih gibi değerler için kullanılabilir.
 
 SAYFA NESNESİ (NESNE ADI: page, SINIF ADI: MainBox):
 - Sayfanın yönetimini sağlayan nesnedir.
+- Ekranın görünen alanını temsil eder. Kaydırma çubuğunu (Scroll) desteklemez.
+-- Kaydırma çubuğu, sadece kutu nesnesi (BOX) ile kullanılabilir.
 
-page.element
+page.bodyElement
 - Nesneyi, HTML ile bağlayan element nesnesidir.
 - HTML'de <body> elementini kullanır.
 - JavaScript'te document.getElementsByTagName("BODY")[0] ile elde edilen nesnedir.
