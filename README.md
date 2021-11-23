@@ -8,7 +8,7 @@ Ve proje geliştirmeyi kolaylaştıran JavaScript kütüphanesi.<br />
 * Beş temel nesne üzerine inşa edilmiştir. (Label, Button, TextBox, Image, Box)
 * Masaüstü ve mobil uygulama geliştirme deneyimine yakın, nesne tabanlı bir mantık ile tasarlanmıştır.
 * C, C++, C#, Java, Python, Swift, PHP, ASP.NET vb. programlama dillerini daha kolay öğrenmenize faydası olur.
-* Arayüz tasarım araçları ile uyumlu çalışır.
+* Arayüz tasarım araçları ile aynı konumlandırma mantığına sahiptir. Bu da; tasarımınızı uygulamaya çevirirken kolaylık sağlar.
 * Kullanılan programlama dili JavaScript'dir. Projeler, tarayıcı veya WebView üzerinde çalıştırılabilir.
 
 ### Örnek Projelerden Bazıları
