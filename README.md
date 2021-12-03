@@ -1,6 +1,6 @@
 ### Bilgi
 
-Programlamaya yeni başlayanlar için: Nesne tabanlı örnek yazılım projeleri.<br>
+Programlamaya yeni başlayanlar için tasarlanmış; nesne-tabanlı örnek yazılım projeleri.<br> 
 Ve proje geliştirmeyi kolaylaştıran JavaScript kütüphanesi.<br />
 
 * İlk 10 proje, yazılım geliştirme mantığını öğrenmenize yardımcı olması için özel olarak tasarlanmıştır.
@@ -9,6 +9,7 @@ Ve proje geliştirmeyi kolaylaştıran JavaScript kütüphanesi.<br />
 * Masaüstü ve mobil uygulama geliştirme deneyimine yakın, nesne tabanlı bir mantık ile tasarlanmıştır.
 * C, C++, C#, Java, Python, Swift, PHP, ASP.NET vb. programlama dillerini daha kolay öğrenmenize faydası olur.
 * Arayüz tasarım araçları ile aynı konumlandırma mantığına sahiptir. Bu da; tasarımınızı, uygulamaya çevirirken kolaylık sağlar.
+* Bu teknikler ile, tamamen özelleştirilebilir ve dinamik uygulamalar geliştirilebilmektedir.
 * Kullanılan programlama dili JavaScript'dir. Projeler, tarayıcı veya WebView üzerinde çalıştırılabilir.
 
 ### Örnek Projelerden Bazıları
