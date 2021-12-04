@@ -14,8 +14,7 @@ Ve proje geliştirmeyi kolaylaştıran JavaScript kütüphanesi.<br />
 
 ### Örnek Projelerden Bazıları
 
-![alt tag](https://bug7a.github.io/basicjs-turkce/preview.png) <br>
-![alt tag](https://bug7a.github.io/basicjs-turkce/preview2.png)
+![alt tag](https://bug7a.github.io/basicjs-turkce/preview.png)
 
 ### İletişim Bilgileri
 
