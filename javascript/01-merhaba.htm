@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <title>Merhaba Dünya</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+
+        // KOD YAZMA ALANI BAŞLANGICI
+
+        /*
+
+        ALGORİTMA:
+
+        Bir düğme / tuş (Button) nesnesine basıldığında,
+        bir metin kutusu (TextBox) nesnesinin içine "Merhaba Dünya" yazdıran algoritma.
+
+
+        ÇALIŞMA MANTIĞI:
+
+        - Bir metin kutusu ve bir düğme nesnesi, oluşturuluyor ve istenilen konumlara hizalanıyor.
+        - btnYaz isimli düğme nesnesine basıldığında,  mesajYaz() fonksiyonu çalışıyor.
+        - mesajYaz() fonksiyonu, txtMesaj isimli metin kutusu nesnesine "Merhaba Dünya" yazdırıyor.
+
+
+        TEMEL EĞİTİM:
+
+        Konu anlatımları ve daha fazlası için mobil uygulamayı kullanabilirsiniz.
+        (Android) https://play.google.com/store/apps/details?id=com.bugraozden.cik
+
+
+        PROJE ANLATIMI:
+
+        Projenin, adım adım anlatım videosu.
+        https://youtu.be/zPOKz3w1YmY
+
+        */
+        
+        // Kullanılacak değişkenleri tanımla.
+
+        // Metin kutusu (TextBox) nesnesini taşıyacak değişkeni tanımla.
+        var txtMesaj
+        // Düğme (Button) nesnesini taşıyacak değişkeni tanımla.
+        var btnYaz
+
+        // NOT: Değişkenlerin başındaki ilk 3 harf (kısaltma)
+        // içlerinde taşıdıkları nesneleri, algoritma içinde
+        // daha rahat takip edebilmemiz için eklenmiştir.
+
+        // İlk çalışan fonksiyon; her şey yüklendiğinde, otomatik çalıştırılır.
+        var start = function() {
+
+            // Programın görünümünü oluştur.
+
+            // Metin kutusu (TextBox) nesnesini oluştur.
+            txtMesaj = createTextBox()
+            // Nesnenin sola olan mesafesini belirle. (Pixel cinsinden)
+            txtMesaj.left = 50
+            // Nesnenin yukarıya olan mesafesini belirle. (Pixel cinsinden)
+            txtMesaj.top = 50
+
+            // Düğme (Button) nesnesini oluştur.
+            btnYaz = createButton()
+            // Nesnenin üzerindeki yazıyı belirle.
+            btnYaz.text = "Yaz"
+            // Nesnenin solo olan mesafesini belirle.
+            btnYaz.left = 50
+            // Nesnenin yukarıya olan mesafesini belirle.
+            btnYaz.top = 110
+
+            // Nesneye her basıldığında, mesajYaz() fonksiyonun çalışsın.
+            btnYaz.onClick(mesajYaz)
+
+            // NOT: mesajYaz() fonksiyonun sonunda parantez kullandığımızda,
+            // fonksiyonun çalışmasını istemiş oluyoruz.
+            // Parametre olarak bir fonksiyon gönderirken,
+            // parantezleri yazmıyoruz.
+            
+        }
+
+        // Düğmeye basıldığında, metin kutusunda mesajı gösteren fonksiyon.
+        var mesajYaz = function() {
+
+            // Metin kutusunun içine mesajı aktar.
+            txtMesaj.text = "Merhaba Dünya"
+            
+        }
+
+        /*
+
+        GELİŞTİRME ÖNERİSİ:
+
+        txtMesaj isimli metin kutusunu (TextBox) temizleyen,
+        başka bir Tuş / Düğme (Button) nesnesi eklenebilir.
+        Button ismi, btnTemizle ve çağırdığı fonksiyon ismi, 
+        mesajTemizle() olabilir.
+
+        
+        İNGİLİZCE - TÜRKÇE SÖZLÜK:
+
+        Kullanılan kelimelerin, türkçe karşılıkları.
+
+        variable (kısaltılmışı var) = değişken
+        start = başlat
+        create = oluştur, oluşturmak
+        text = metin
+        box = kutu
+        pixel (kısaltılmışı px) = piksel, görüntü elemanı
+        top = üst
+        left = sol
+        button = buton, düğme
+        on = üzerinde, üstünde, esnasında
+        click = tıkla, tıklamak
+        function = fonksiyon, işlev
+
+        */
+
+        // KOD YAZMA ALANI SONU
+
+        </script>
+
+        <!-- NOT: Kod yazma alanının dışındakiler, standart HTML etiketleridir. -->
+
+    </head>
+    <body>
+        
+        <!-- HTML içeriği -->
+        
+    </body>
+</html>

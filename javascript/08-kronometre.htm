@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <title>Kronometre</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+
+        /*
+            
+        ALGORİTMA:
+        
+        - Ne kadar zaman geçtiğini ölçen bir uygulama.
+        
+        */
+        
+        // Nesneleri taşıyan değişkenler.
+        var imgArkaplan
+        var imgDakika
+        var imgSaniye
+        var btnBaslat
+        var lblSayac
+        
+        // Geçen zamanın saklandığı değişkenler.
+        var sayacSaniye = 0
+        var sayacDakika = 0
+
+        // İlk çalışan fonksiyon.
+        var start = function() {
+
+            page.color = "indianred"
+
+            // Saatin arka plan resmini oluştur. Parametreler: left, top, width, height
+            imgArkaplan = createImage(0, 0, 200, 200)
+            that.load("resimler/saat-bos.png")
+            // Nesneyi, page nesnesinin tam ortasına hizala.
+            that.center()
+            
+            // Not: nesne.center() fonksiyonu, nesneyi, 
+            // içinde bulunduğu nesneye göre, otomatik ortalar.
+            // Sadece yatay ortalama için: nesne.center("left")
+            // Sadece dikey ortalama için: nesne.center("top")
+            
+            // Saat üzerindeki, sayısal bilgi.
+            lblSayac = createLabel()
+            that.text = "00:00"
+            that.textAlign = "center"
+            that.width = imgArkaplan.width
+            that.left = imgArkaplan.left
+            that.top = imgArkaplan.top + 135
+            
+            // Not: Sayısal bölüm, oluşturulma sırası sebebi ile,
+            // saniye ve dakika çubuklarının altında kalacaktır.
+            // Son oluşturulan nesne, en üstte görünür.
+            
+            // Saatin dakika çubuğu.
+            imgDakika = createImage()
+            that.load("resimler/saat-dakika.png")
+            boyutKopyala(that, imgArkaplan)
+            
+            // Saatin saniye çubuğu.
+            imgSaniye = createImage()
+            that.load("resimler/saat-saniye.png")
+            boyutKopyala(that, imgArkaplan)
+            
+            // Kronometre başlatma/durdurma düğmei
+            btnBaslat = createButton()
+            that.text = "Başlat"
+            that.color = "cadetblue"
+            // Nesneyi, saatin altında ortalanmış ve 25px boşluk bırakarak hizala.
+            that.top = imgArkaplan.top + imgArkaplan.height + 25
+            that.left = imgArkaplan.left + ((imgArkaplan.width - btnBaslat.width) / 2)
+            that.onClick(baslatDurdur)
+
+        }
+        
+        // Her saniye tekrar eden fonksiyon.
+        var loop = function() {
+
+            // Eğer başlat düğmesine basılı ise
+            if (btnBaslat.text == "Durdur") {
+
+                // Saniye değişkenini 1 arttır.
+                sayacSaniye++
+
+                // Eğer saniye değişkeni 60'a gelmiş ise
+                if (sayacSaniye == 60) {
+                    // Saniye değişkenini sıfırla.
+                    sayacSaniye = 0
+                    // Dakika değişkenini 1 arttır.
+                    sayacDakika++
+                }
+
+                // Saat görünümünü güncelle.
+                guncelle()
+
+            }
+
+        }
+        
+        // Bir nesnenin boyutlarını, verilen örnek ile aynı yapan fonksiyon.
+        var boyutKopyala = function(yeniNesne, ornekNesne) {
+            
+            // yeni nesnesinin boyutlarını, ornek ile aynı yap.
+            yeniNesne.width = ornekNesne.width
+            yeniNesne.height = ornekNesne.height
+            yeniNesne.top = ornekNesne.top
+            yeniNesne.left = ornekNesne.left
+            
+        }
+        
+        // Düğmeye basıldığında çalışacak fonksiyon.
+        var baslatDurdur = function() {
+            
+            // Eğer görünen düğme başlat ise
+            if (btnBaslat.text == "Başlat") {
+                // Düğmeyi durdur yap ve boya
+                btnBaslat.text = "Durdur"
+                btnBaslat.color = "tomato"
+            
+            // Eğer görünen düğme durdur ise
+            } else if (btnBaslat.text == "Durdur") {
+                // Düğmeyi başlat yap ve boya
+                btnBaslat.text = "Başlat"
+                btnBaslat.color = "cadetblue"
+                
+            }
+            
+        }
+        
+        // Saat parçalarını ve sayısal ekranı güncelleyen fonksiyon.
+        var guncelle = function() {
+            
+            // Saat parçalarını güncelle.
+            imgSaniye.rotate = sayacSaniye * 6
+            imgDakika.rotate = sayacDakika * 6
+            
+            // Sayısal ekranı güncelle.
+            lblSayac.text = sayacDakika + ":" + sayacSaniye
+            
+        }
+        
+        /*
+        
+        GELİŞTİRME ÖNERİLERİ: 
+        
+        - Sıfırlama düğmesi eklenebilir.
+        - Zamanın gösterildiği format 0:2, şu şekilde olmalı 00:02.
+          Saniye ve dakika, her zaman iki basamaklı görünmeli. 
+          if (x < 10) "0" + x olarak "göster".
+          
+        */
+        
+        </script>
+
+    </head>
+    <body></body>
+</html>

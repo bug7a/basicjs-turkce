@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <title>Renkler Sozlüğü</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+
+        /*
+        
+        ALGORİTMA:
+        
+        - Türkçe ismi girilen bir rengin, ingilizce karşılığını dizi değişkeninden
+          bulup, getiren bir sözlük uygulaması.
+        
+        */
+
+        // Metin kutuları.
+        var txtTurkce
+        var txtInglizce
+        // Düğme.
+        var btnCevir
+        
+        // Kelimelerin listesi.
+        var kelimeListe = [
+        
+          {turkce: "kırmızı", ingilizce: "red"},
+          {turkce: "mavi", ingilizce: "blue"},
+          {turkce: "yeşil", ingilizce: "green"},
+          {turkce: "sarı", ingilizce: "yellow"},
+          {turkce: "turuncu", ingilizce: "orange"},
+          {turkce: "siyah", ingilizce: "black"},
+          {turkce: "beyaz", ingilizce: "white"},
+          {turkce: "pembe", ingilizce: "pink"},
+          {turkce: "gri", ingilizce: "gray"},
+          {turkce: "lacivert", ingilizce: "darkblue"},
+          {turkce: "mor", ingilizce: "purple"},
+          {turkce: "kahverengi", ingilizce: "brown"}
+            
+        ]
+        
+        // NOT: kelimeListe bir dizidir. 
+        // Her bir elememan ise birer nesnedir.
+        
+        // Nesnelerin de turkce ve ingilizce isimlerinde,
+        // kendi elemanları vardır.
+
+        // İlk çalışan fonksiyon.
+        var start = function() {
+            
+            // Arkaplan rengini belirle.
+            page.color = "white"
+
+            // Türkçe Metin Kutusu. Parametreler: left, top, width
+            txtTurkce = createTextBox(50, 50, 150)
+            that.text = "yeşil"
+            that.title = "Türkçe:"
+            // Efekleri kaldır.
+            that.minimal = 1
+            that.color = "lightgray"
+            
+            // İngilizce Metin Kutusu.
+            txtInglizce = createTextBox()
+            that.width = 150
+            that.title = "İngilizce:"
+            // Efekleri kaldır.
+            that.minimal = 1
+            that.color = "lightgray"
+            // Nesneye, metin girişi yapılamasın.
+            that.enabled = 0
+            // txtTurkce nesnesinin sağına, 25px boşluk bırakarak hizala.
+            that.aline(txtTurkce, "right", 25)
+
+            // Çevir Düğmesi.
+            btnCevir = createButton()
+            that.text = "Çevir"
+            that.width = 150
+            that.color = "lightgray"
+            // txtTurkce nesnesinin altına, 10px boşluk bırakarak hizala.
+            that.aline(txtTurkce, "bottom", 10)
+            // Nesneye basıldığında, hangi fonksiyonun çalışacağını belirle.
+            that.onClick(kelimeCevir)
+
+        }
+
+        // Kelimenin ingilizce karşılığı bulan fonksiyon.
+        var kelimeCevir = function() {
+            
+            // Dizi uzunluğu kadar tekar et.
+            for (var i = 0; i < kelimeListe.length; i++) {
+                
+                // Kaçıncı sırada olduğunu tespit et.
+                if (kelimeListe[i].turkce == txtTurkce.text) {
+                    
+                    // İngilizce karşılığını yaz.
+                    txtInglizce.text = kelimeListe[i].ingilizce
+                    
+                    // Renk ismine göre, boyama yap.
+                    btnCevir.color = txtInglizce.text
+                    
+                }
+                
+            }
+            
+        }
+        
+        /*
+        
+        GELİŞTİRME ÖNERİLERİ:
+        
+        - İngilizce renkler de yazılabilsin. O zaman da Türkçe'ye çevirsin.
+        1. Öncelikle, İngilizce metin kutusunun .enabled özelliği 1 olmalı.
+        2. İngilizce'den Türkçe'ye çeviri farklı bir düğme ile yapılabilir veya
+           eğer İngilizce metin kutusu dolu ise, ingilice'den Türkçe'ye çevir.
+           yok eğer sadece Türkçe metin kutusu dolu ise, Tükçe'den İngilizce'ye çevir.
+           olarak yapılabilir.
+          
+        */
+
+        </script>
+
+    </head>
+    <body></body>
+</html>

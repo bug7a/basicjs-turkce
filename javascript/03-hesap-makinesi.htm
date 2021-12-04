@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Hesap Makinesi</title>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
+
+        
+        <script>
+            
+        /*
+
+        ALGORİTMA:
+            
+        - İki metin kutusu (TextBox) ile, işlem yapılacak sayılar isteniyor.
+        - Matematiksel işlemleri yapmak için, dört düğme (Button) kullanılmış.
+        - Yapılan işlemin sonucu, başka bir metin kutusunda gösteriliyor.
+        
+
+        TEMEL EĞİTİM:
+        
+        Konu anlatımları ve daha fazlası için mobil uygulamayı kullanabilirsiniz.
+        (Android) https://play.google.com/store/apps/details?id=com.bugraozden.cik
+
+
+        PROJE ANLATIMI:
+
+        Projenin, adım adım anlatım videosu.
+        https://youtu.be/fAMWzewpE1Q
+        
+        */
+        
+        // Giriş ve sonuç metin kutuları. (TextBox)
+        var txtSayi1
+        var txtSayi2
+        var txtSonuc
+        
+        // İşlem düğmeleri. (Button)
+        var btnTopla
+        var btnCikar
+        var btnCarp
+        var btnBol
+        
+        // İlk çalıştırılan fonksiyon.
+        var start = function() {
+            
+            // Sayfanın arka plan rengini duman grisi olarak belirle.
+            page.color = "whitesmoke"
+
+            // Birinci sayı girişi için metin kutusu (TextBox) oluştur.
+            txtSayi1 = createTextBox()
+            // Metin olarak algılanması için, tırnak içinde yazalım.
+            txtSayi1.text = "0"
+            txtSayi1.title = "Sayı 1:"
+            txtSayi1.left = 20
+            txtSayi1.top = 50
+
+            // İkinci sayı girişi için metin kutusu oluştur.
+            txtSayi2 = createTextBox()
+            txtSayi2.text = "0"
+            txtSayi2.title = "Sayı 2:"
+            txtSayi2.left = txtSayi1.left
+            // Bu nesneyi, txtSayi1 nesnesinin 40px (piksel) altına yerleştir.
+            txtSayi2.top = txtSayi1.top + txtSayi1.height + 40
+
+            // Toplama düğmesi oluştur.
+            btnTopla = createButton()
+            btnTopla.text = "Topla"
+            btnTopla.left = txtSayi1.left
+            // Bu nesneyi, txtSayi2 nesnesinin 10px altına yerleştir.
+            btnTopla.top = txtSayi2.top + txtSayi2.height + 10
+            btnTopla.onClick(toplamaYap)
+
+            // Çıkartma düğmesi oluştur.
+            btnCikar = createButton()
+            btnCikar.text = "Çıkart"
+            // Bu nesneyi, btnTopla nesnesinin 10px sağına yerleştir.
+            btnCikar.left = btnTopla.left + btnTopla.width + 10
+            btnCikar.top = btnTopla.top
+            // Nesnenin rengini domates kırmızısı yap.
+            btnCikar.color = "tomato"
+            btnCikar.onClick(cikarmaYap)
+
+            // Çarpma düğmesi oluştur.
+            btnCarp = createButton()
+            btnCarp.text = "Çarp"
+            btnCarp.left = txtSayi1.left
+            // Bu nesneyi, btnTopla nesnesinin 10px altına yerleştir.
+            btnCarp.top = btnTopla.top + btnTopla.height + 10
+            btnCarp.color = "lightgray"
+            btnCarp.onClick(carpmaYap)
+
+            // Bölme düğmesi oluştur.
+            btnBol = createButton()
+            btnBol.text = "Böl"
+            // Nesneyi, btnCikar nesnesi ile aynı soldan boşluk olsun.
+            btnBol.left = btnCikar.left
+            // Nesneyi, btnCarp nesnesi ile aynı yukarıdan boşluk olsun.
+            btnBol.top = btnCarp.top
+            btnBol.color = "lightgray"
+            btnBol.onClick(bolmeYap)
+
+            // Sonuç için metin kutusu oluştur.
+            txtSonuc = createTextBox()
+            txtSonuc.title = "Sonuç:"
+            txtSonuc.left = txtSayi1.left
+            txtSonuc.top = btnCarp.top + btnCarp.height + 40
+
+        }
+
+        // Toplama yapan fonksiyon
+        var toplamaYap = function() {
+            
+            // Toplama işlemini yap ve sonucu, metin kutusuna yaz.
+            txtSonuc.text = num(txtSayi1.text) + num(txtSayi2.text)
+
+            // NOT: num(metin) fonksiyonu,
+            // metin olarak gönderilen parametrenin, 
+            // sayıya çevrilmiş halini cevap verir.
+
+            // ÖRNEK KULLANIMLAR:
+            // num("5") cevap: 5
+            // num("5.5") cevap: 5.5
+            // num("5.5", "integer") cevap: 5
+            // str(5) cevap: "5"
+
+            // NOT: str(numara) fonksiyonu ise,
+            // sayı olarak gönderilen parametrenin, 
+            // metne çevrilmiş halini cevap verir.
+            
+        }
+
+        // Çıkarma yapan fonksiyon.
+        var cikarmaYap = function() {
+            
+            // Çıkarma işlemini sonucunu metin kutusuna yaz.
+            txtSonuc.text = num(txtSayi1.text) - num(txtSayi2.text)
+            
+        }
+
+        // Çarpma yapan fonksiyon.
+        var carpmaYap = function() {
+            
+            // Çarpma işlemini sonucunu metin kutusuna yaz.
+            txtSonuc.text = num(txtSayi1.text) * num(txtSayi2.text)
+            
+        }
+
+        // Bölme yapan fonksiyon.
+        var bolmeYap = function() {
+            
+            // Bölüme işlemini sonucunu metin kutusuna yaz.
+            txtSonuc.text = num(txtSayi1.text) / num(txtSayi2.text)
+
+            // Not: Ondalıklı sayıyı, tam sayıya çevirmek:
+            // 3 / 2 işleminin cevabı ondalıklı sayıdır. 1.5
+            // num("1.5", "integer") fonksiyonu, sonucu tam sayıya çevirir. 1
+            // txtSonuc.text = num(num(txtSayi1.text) / num(txtSayi2.text), "integer")
+
+        }
+        
+        
+        /*
+        
+        GELİŞTİRME ÖNERİLERİ:
+        
+        - Her işlem düğmesine basıldığında, sonuç metin kutusunun başlığı (.title) değişebilir.
+          "Toplama işleminin sonucu:", "Çıkarma işleminin sonucu:" vb.
+        - Sonuç, tam işlem olarak gösterilebilir. 2 + 1 = 3
+        - İşleme devam et düğmesi eklenebilir. Sonucu, ilk metin kutusuna yazar
+          ve ikinci metin kutusunu temizler.
+
+
+        İNGİLİZCE - TÜRKÇE SÖZLÜK:
+
+        Kullanılan kelimelerin, türkçe karşılıkları.
+
+        variable (kısaltılmışı var) = değişken
+        start = başlat
+        page = sayfa
+        color = renk
+        create = oluştur, oluşturmak
+        text = metin
+        box = kutu
+        title = başlık
+        pixel (kısaltılmışı px) = piksel, görüntü elemanı
+        top = üst
+        left = sol
+        width = genişlik
+        height = yükseklik
+        button = buton, düğme
+        on = üzerinde, üstünde, esnasında
+        click = tıkla, tıklamak
+        function = fonksiyon, işlev
+        number (kısaltılmışı num) = numara, sayı
+        integer = tam sayı tipinde değişken.   110
+        float = ondalıklı sayı tipinde değişken.   0.5
+
+        */
+            
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML içeriği -->
+        
+    </body>
+</html>

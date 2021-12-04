@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Duvar Saati</title>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+
+        /*
+            
+        ALGORİTMA:
+            
+        - Güncel saati gösteren, duvar saati.
+
+
+        ÇALIŞMA MANTIĞI:
+            
+        - Saatin her bir hareketli parçası için, bir resim tasarlanmıştır.
+          Ve güncel saat bilgisine göre, açıları değiştirilmektedir.
+        
+        */
+        
+        // Saati oluşturan 4 resim nesnesi.
+        var imgArkaplan
+        var imgSaat
+        var imgDakika
+        var imgSaniye
+        
+        
+        // İlk çalışan fonksiyon.
+        var start = function() {
+
+            page.color = "tomato"
+
+            // Saatin arka plan resmini oluştur ve hizala.
+            imgArkaplan = createImage()
+            that.load("resimler/saat-arkaplan.png")
+            that.width = 200
+            that.height = 200
+            // Nesneyi, ekranın tam ortasına, hesaplayarak hizala.
+            that.top = (page.height - that.height) / 2
+            that.left = (page.width - that.width) / 2
+
+            // Saat resmini yükle ve hizala.
+            imgSaat = createImage()
+            that.load("resimler/saat-saat.png")
+            boyutKopyala(that, imgArkaplan)
+            
+            // Dakika resmini yükle ve hizala.
+            imgDakika = createImage()
+            that.load("resimler/saat-dakika.png")
+            boyutKopyala(that, imgArkaplan)
+            
+            // Saniye resmini yükle ve hizala.
+            imgSaniye = createImage()
+            that.load("resimler/saat-saniye.png")
+            boyutKopyala(that, imgArkaplan)
+            
+            // Not: Resimlerin hepsi, aynı boyutta üst üste geldiğinde 
+            // bir saati oluşturacak şekilde tasarlanmıştır.
+            
+            // Ana dizinde, resimler klasörünün içindeki, 
+            // ilgili resimleri inceleyebilirsiniz.
+
+        }
+        
+        // Her saniye tekrar çalışan fonksiyon.
+        var loop = function() {
+            
+            // BİLGİ:
+            // Bir daire, 360 derecedir.
+            // Bir saatin dairesinde, 
+            // 12 saat, 60 dakika veya 60 saniye vardır.
+            
+            // SORU:
+            // Saat 12'de, resmin derecesi 0 ise
+            // Saat 1'de resmin derecesi kaç olmalıdır?
+            
+            // ÇÖZÜM:
+            // 360 dereceyi, 12'ye bölerek,
+            // Her 1 saatlik hareketi hesaplayabiliriz.
+            
+            // CEVAP:
+            // 1 saat için 30 derece hareket etmelidir.
+            
+            // Dakika ve saniye için ise cevap,
+            // 360 / 60 = 6 derecedir.
+            
+            // Şimdi, bu bilgiler ile,
+            // saat resimlerinin açılarını, 
+            // güncel saat bilgisine göre çevirelim.
+
+            imgSaniye.rotate = clock.second * 6
+            imgDakika.rotate = clock.minute * 6
+            imgSaat.rotate = clock.hour * 30
+
+            // Not: clock nesnesi, güncel zamanı verir.
+            
+        }
+        
+        // pYeni nesnesini, pOrnek nesnesinin konum ve boyutunda ayarla.
+        var boyutKopyala = function(yeniNesne, ornekNesne) {
+            
+            yeniNesne.width = ornekNesne.width
+            yeniNesne.height = ornekNesne.height
+            yeniNesne.top = ornekNesne.top
+            yeniNesne.left = ornekNesne.left
+            
+        }
+        
+        /*
+        
+        GELİŞTİRME ÖNERİSİ: 
+        
+        - Duvar saatinin altında, 12:09:00 formatında
+          saati dijital olarak gösteren bir bölüm eklenebilir.
+        - Başlangıçtaki duraksama iyileştirilebilir.
+          
+        */
+
+        </script>
+
+    </head>
+    <body></body>
+</html>

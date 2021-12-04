@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Sayaç</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script>
+            
+        /*
+
+        ALGORİTMA:
+            
+        - Her saniye, etiket (Label) üzerindeki sayının bir arttırılması 
+          ve düğmeye (Button) basıldığında sıfırlanması.
+
+
+        ÇALIŞMA MANTIĞI:
+            
+        - Düğmeye basıldığında, sıfırlama işlemini yapacak fonksiyon çalıştırılır.
+        - Sayıyı bir arttıran başka bir fonksiyon ise, 
+          her saniye çalıştırılan loop() fonksiyonunun içine eklenmiştir.
+
+        */
+
+            
+        // Görünen sayı.
+        var lblSayi
+        // Sıfırlama butonu.
+        var btnArttir
+
+        // İlk çalışan fonksiyon.
+        var start = function() {
+            
+            page.color = "lightblue"
+
+            // Bir etiket nesnesi oluştur. Parametreler: left, top
+            lblSayi = createLabel(50, 50)
+            that.text = "0"
+            // Yazıyı, kendi genişliğinin içerisinde ortalanmış olarak yaz.
+            that.textAlign = "center"
+            // Yazının boyutunu, 40px yap.
+            that.fontSize = 40
+
+            // Bir düğme nesnesi oluştur. Parametreler: left, top
+            btnArttir = createButton(50, 120)
+            that.text = "Sıfırla"
+            that.onClick(sayiSifirla)
+
+            // lblSayi nesnesini, btnArttir ile uyumlu hale getirelim.
+            
+            // Yazının rengini, düğmenin rengi ile aynı yap.
+            lblSayi.textColor = btnArttir.color
+            // Yazının kapladığı genişliği, düğmenin genişliği ile aynı yap.
+            lblSayi.width = btnArttir.width
+            
+            // Not: Bu örnekte, hızlı kod yazabilmek için 
+            // bazı kısa yazımlar kullanılmıştır.
+            
+            // Not: that değişkeni, son oluşturulan nesneyi taşımaktadır.
+            
+        }
+
+        // Her saniye çalışan fonksiyon. (Otomatik çalıştırılır.)
+        var loop = function() {
+            
+            // Sayıyı 1 arttır.
+            sayiArttir()
+            
+        }
+
+        // Düğmeye basıldığında sayinın 1 arttırılmasını sağlayan fonksiyon.
+        var sayiArttir = function() {
+            
+            // Etiket (Label) nesnesindeki değeri 1 ile topla ve geri yaz.
+            lblSayi.text = num(lblSayi.text) + 1
+
+            // Not: Nesnenin .text özelliği, taşıdığı bilgiyi
+            // otomatik metin (string) veri tipine dönüştürülür.
+            
+        }
+        
+        // Düğmeye basıldığında, sayinın 0 olmasını sağlayan fonksiyon.
+        var sayiSifirla = function() {
+            
+            // Etiket (Label) nesnesindeki değeri "0" yap.
+            lblSayi.text = "0"
+            
+        }
+        
+        /*
+        
+        GELİŞTİRME ÖNERİLERİ:
+        
+        - Artan sayı; saat formatında, dakika ve saniye olarak (00:00) gösterilebilir.
+        - Başka ne geliştirme yapılabilir diye düşünüp, tasarlayın ve geliştirmeye çalışın.
+
+        
+        İNGİLİZCE - TÜRKÇE SÖZLÜK:
+        
+        Anlamını bilmediğiniz ingilizce kelimeler için,
+        https://translate.google.com/ internet sitesini kullanabilirsiniz.
+        
+        */
+
+        </script>
+
+    </head>
+    <body></body>
+</html>

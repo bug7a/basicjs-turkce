@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Çarpım Tablosu</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script>
+            
+        /*
+
+        ALGORİTMA:
+        
+        Bir metin kutusu (TextBox) ile, işlem yapılacak sayı isteniyor. 
+        Ve düğmeye (Button) basıldığında; verilen sayının, 1 den 10 a kadar çarpımları listeleniyor.
+        
+
+        TEMEL EĞİTİM:
+        
+        Konu anlatımları ve daha fazlası için mobil uygulamayı kullanabilirsiniz.
+        (Android) https://play.google.com/store/apps/details?id=com.bugraozden.cik
+
+        
+        PROJE ANLATIMI:
+
+        Projenin, adım adım anlatım videosu.
+        https://www.youtube.com/watch?v=euFpefGUNYs
+        
+        */ 
+        
+        // Sayının alınacağı metin kutusu. (TextBox)
+        var txtSayi
+        // Oluşturma düğmesi. (Button)
+        var btnOlustur
+        // Çarpım tablosunun listeleneceği etiket. (Label)
+        var lblCarpimTablosu
+        
+        // İlk çalıştırılan fonksiyon.
+        var start = function() {
+
+            // Sayfanın arka plan rengini beyaz duman olarak belirle.
+            page.color = "whitesmoke"
+
+            // Metin kutusu (TextBox) nesnesi oluştur.
+            txtSayi = createTextBox()
+            // Nesnenin içeriğini belirle.
+            txtSayi.text = "8"
+            // Nesnenin başlığını belirle.
+            txtSayi.title = "Bir sayı giriniz:"
+            // Nesnenin sola olan mesafesini belirle.
+            txtSayi.left = 50
+            // Nesnenin yukarıya olan mesafesini belirle.
+            txtSayi.top = 50
+            // Nesnenin genişliğini belirle. (Pixel cinsinden)
+            txtSayi.width = 130
+
+            // Düğme (Button) nesnesi oluştur.
+            btnOlustur = createButton()
+            // Nesnenin üzerindeki yazıyı belirle.
+            btnOlustur.text = "Oluştur"
+            // Konumunu, txtSayi nesnesine göre hesaplayarak belirle.
+            btnOlustur.left = txtSayi.left
+            btnOlustur.top = txtSayi.top + txtSayi.height + 10
+            // Düğmeye basıldığında çalışacak fonksiyonu belirle.
+            btnOlustur.onClick(tabloOlustur)
+            
+            // Etiket (Label) nesnesi oluştur.
+            lblCarpimTablosu = createLabel()
+            // Nesnenin içeriğini temizle.
+            lblCarpimTablosu.text = ""
+            // Sola olan mesafesi txtSayi nesnesinin 30px sağında olsun.
+            lblCarpimTablosu.left = txtSayi.left + txtSayi.width + 30
+            // Yukarıya olan mesafesi txtSayi nesnesi ile aynı olsun.
+            lblCarpimTablosu.top = txtSayi.top
+            
+        }
+
+        // Düğmeye basıldığında, çarpım tablosunu oluşturan fonksiyon.
+        var tabloOlustur = function() {
+            
+            // Etiketin içini temizle.
+            lblCarpimTablosu.text = ""
+            
+            // 10 kere tekrar et.
+            for (var i = 1; i <= 10; i++) {
+                
+                // İşlemin görünümünü oluştur. Örnek: 1 x 7 =
+                var islem = i + " x " + txtSayi.text + " = "
+                
+                // Çarpma işleminin sonucunu hesapla.
+                var sonuc = num(txtSayi.text) * i
+                
+                // Not: num(metin) fonksiyonu,
+                // metin olarak gönderilen parametrenin, 
+                // sayıya çevrilmiş halini cevap verir.
+
+                // İşlemi etikete ekle
+                lblCarpimTablosu.text = lblCarpimTablosu.text + islem + sonuc + "<br>"
+                
+                // Not: <br> kelimesi, HTM (Hyper Text Markup) dilinde,
+                // bir alt satıra geçmek için kullanılır.
+                
+            }
+            
+        }
+        
+        /*
+        
+        GELİŞTİRME ÖNERİSİ:
+        
+        lblCarpimTablosu nesnesinin sağında, aynısından bir tane daha olsun ve 
+        istenen sayının bir fazlası ile ikinci bir çarpım tablosu daha oluşturulsun.
+
+
+        İNGİLİZCE - TÜRKÇE SÖZLÜK:
+
+        Kullanılan kelimelerin, türkçe karşılıkları.
+
+        variable (kısaltılmışı var) = değişken
+        start = başlat
+        page = sayfa
+        color = renk
+        create = oluştur, oluşturmak
+        text = metin
+        box = kutu
+        title = başlık
+        pixel (kısaltılmışı px) = piksel, görüntü elemanı
+        top = üst
+        left = sol
+        width = genişlik
+        height = yükseklik
+        button = buton, düğme
+        on = üzerinde, üstünde, esnasında
+        click = tıkla, tıklamak
+        function = fonksiyon, işlev
+        number (kısaltılmışı num) = numara, sayı
+        
+        */
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML içeriği -->
+        
+    </body>
+</html>

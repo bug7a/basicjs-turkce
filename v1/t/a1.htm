@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Aranabilen Liste</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- SEARCHABLE LIST NESNESİNİN KODU -->
+        <script src="dosyalar/37/searchable-list.js" type="text/javascript" charset="utf-8"></script>
+
+        <style>
+
+            body {
+                overflow: hidden;
+            }
+
+        </style>
+
+        <script>
+
+        /*
+
+        Temel nesneler (TextBox, Label, Image, Box), kullanılarak geliştirilmiş; 
+        içinde arama yapılabilen bir liste nesnesi.
+
+        Bu Örneğin Amacı:
+
+        - Hazır bir liste nesnesinin, çalışma mantığı hakkında fikir verir.
+        - Bu teknikler kullanılarak, özel ve benzersiz nesneler oluşturulabilir.
+        
+        NOT: Nesnenin çalışmasını incelemek ve geliştirmek için, 
+        "dosyalar/37/searchable-list.js" dosyasına bakınız.
+
+        */
+            
+        // DEĞİŞKENLER
+
+        var APP_ORIGINAL_WIDTH = 480;
+        var APP_MAX_WIDTH = 480;
+
+        // Meyve, sebze listesi
+        var plantList = [
+            {title:"Brokoli", desc:"Sebze", logo:"brokoli.png"},
+            {title:"Çilek", desc:"Meyve", logo:"cilek.png"},
+            {title:"Domates", desc:"Sebze", logo:"domates.png"},
+            {title:"Elma", desc:"Meyve", logo:"elma.png"},
+            {title:"Havuç", desc:"Sebze", logo:"havuc.png"},
+            {title:"Karpuz", desc:"Meyve", logo:"karpuz.png"},
+            {title:"Limon", desc:"Meyve", logo:"limon.png"},
+            {title:"Muz", desc:"Meyve", logo:"muz.png"},
+            {title:"Nar", desc:"Meyve", logo:"nar.png"},
+            {title:"Patlıcan", desc:"Sebze", logo:"patlican.png"},
+            {title:"Yaban Mersini", desc:"Meyve", logo:"yabanmersini.png"},
+            {title:"Yeşil Biber", desc:"Sebze", logo:"yesilbiber.png"}
+        ]
+
+        // Satranç taşları
+        var pieceList = [
+            {title:"Şah", desc:"Tek Taş", logo:"sah-beyaz.png"},
+            {title:"Vezir", desc:"Tek Taş", logo:"vezir-beyaz.png"},
+            {title:"At", desc:"İki Taş", logo:"at-beyaz.png"},
+            {title:"Fil", desc:"İki Taş", logo:"fil-beyaz.png"},
+            {title:"Kale", desc:"İki Taş", logo:"kale-beyaz.png"},
+            {title:"Piyon", desc:"Sekiz Taş", logo:"piyon-beyaz.png"}
+        ]
+
+        // NOT: Tüm bilgiler bir dizi değişkeninde tutuluyor.
+        // - Algoritmamız dinamik bir yapıya sahip oluyor.
+        // - İstediğimizde, ajax ile veri tabandan çektiğimiz bilgileride gösterebiliriz.
+        // - php ve mysql
+            
+        // Listeler
+        var objPlantList
+        // var objPieceList
+            
+        // İlk çalışan fonksiyon.
+        var start = function() {
+
+            page.fit(APP_ORIGINAL_WIDTH, APP_MAX_WIDTH)
+            page.color = "lightblue"
+
+            // Birinci liste nesnesi (Parametreler: width, height)
+            objPlantList = createSearcableList(400, 450)
+            that.top = 20
+            that.left = 40
+
+            that.fill(plantList)
+            that.onClick(listItemClicked)
+
+            // İkinci liste nesnesi
+            // objPieceList = createSearcableList(300, 270)
+            // that.top = 480
+            // that.left = 40
+            // that.fill(pieceList)
+
+        }
+
+        // Basılan parçanın bilgilerini consola yazdır.
+        var listItemClicked = function(self, item, itemIndex, itemData) {
+
+            print(itemIndex + "-" + itemData.title)
+
+            // - self, üzerine basılan liste nesnesi.
+            // - item, üzerine basılan parça.
+            // - itemIndex, basılan parçanın dizideki sıra numarası.
+            // - itemData, basılan parçanın dizideki elemanı.
+
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML içeriği -->
+        
+    </body>
+</html>

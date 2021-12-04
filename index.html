@@ -1,0 +1,781 @@
+<!-- Bismillah -->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Kodlama Öğrenmeye Nereden Başlamalıyım?</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/png" href="favicon.png">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="basic.css">
+        <script src="basic.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+
+        /*
+
+        Kod Yazmayı Öğrenme Rehberi:
+
+        */
+            
+        // DEĞİŞKENLER
+
+        var CONTENT_WIDTH = 700;
+            
+        var contentArea;
+        var bottomArea;
+        var a0;
+
+        var boxStartEffect;
+
+        const sampleList = [
+            "Merhaba<br>Dünya",
+            "Çarpım Tablosu",
+            "Hesap Makinesi", 
+            "Zarlar",
+            "Tic-tac-toe",
+            "Sayaç",
+            "Duvar<br>Saati",
+            "Kronometre",
+            "Matematik<br>Oyunu",
+            "Renk<br>Sözlüğü",
+            "Yılan<br>Oyunu (11)",
+            "Satranç (16)",
+            "Yapılacaklar<br>Listesi (58)",
+            "Daire<br>Yarı Çapı (54)",
+            "Aranabilen<br>Liste (37)",
+            "Uzunluk<br>Ölçüsü (65)",
+            "Mayın Tarlası (67)",
+            "Mobil Şablon (35)"
+        ];
+
+        const sampleURLList = [
+            "01-merhaba",
+            "02-carpim-tablosu",
+            "03-hesap-makinesi", 
+            "04-zarlar",
+            "05-xox-oyun",
+            "06-sayac",
+            "07-duvar-saat",
+            "08-kronometre",
+            "09-matematik-oyun",
+            "10-renk-sozluk",
+            "11-yilan",
+            "16-satranc",
+            "58-yapilacaklar-listesi-uygulamasi",
+            "54-dairenin-yaricapi-uygulamasi",
+            "37-aranabilen-liste",
+            "65-uzunluk-olcusu-cevirme-uygulamasi",
+            "67-mayin-tarlasi-mekanikleri",
+            "35-mobil-uygulama-sablon-v2"
+        ];
+
+        const videoList = [
+            "Tanıtım",
+            "Geliştirme<br>Ortamı",
+            "İlk Proje", 
+            "Diğer<br>Projeler"
+        ];
+
+        const videoURLList = [
+            "https://youtu.be/AbxcfLIvuIY",
+            "https://www.youtube.com/watch?v=vSt5EFDkhpI",
+            "https://www.youtube.com/watch?v=zPOKz3w1YmY", 
+            "https://www.youtube.com/watch?v=euFpefGUNYs&list=PLlkulm4kNfGMaDuvfTgL5Ca-JDGmFpgFz&index=4&ab_channel=Bu%C4%9Fra%C3%96zden"
+        ];
+
+        
+        // ÖZEL FONKSİYONLAR
+            
+        // İlk çalışan fonksiyon.
+        var start = function() {
+
+            // BOX: İçeriğin göründüğü kutu. 700x500
+            contentArea = cbox(0, 0, 700, 500);
+            that.color = "gray";
+            that.round = 45;
+            that.element.style.boxShadow = "0px 0px 60px #14141480"; // CC75AA80
+            that.center();
+
+            // BOX: Altta, kullanım koşulları ve iletişim butonlarının taşıyıcı kutusu.
+            bottomArea = cbox(0, 0, CONTENT_WIDTH, 60);
+            that.color = "transparent"
+
+            // BOX: Butonları grup olarak ortalamak için.
+            bottomArea.b1 = cbox(0, 0);
+            that.height = 50;
+            that.color = "transparent";
+
+            // BUTTON: Kullanım koşulları butonu.
+            bottomArea.b1.btnInfo = cbtn(0, 0);
+            that.text = "Kullanım Koşulları"
+            that.width = 185;
+            that.color = "transparent";
+            that.minimal = 1;
+            that.fontSize = 16;
+            that.textColor = "gray";
+            that.opacity = 0.8;
+            that.element.classList.add("motion-zoomOnMouseOver-forButtonWithOutWhite");
+            that.color = "transparent"
+            that.onClick(function() {
+                goto_url("https://bugraozden.com/cocuklar-icin-kodlama/gizlilik-politikasi.htm");
+            });
+
+            // LABEL: Butonları ayıran çizgi.
+            bottomArea.b1.lblSpace = clbl();
+            that.text = "|"
+            that.color = "transparent";
+            that.fontSize = 16;
+            that.textColor = "lightgray";
+            that.color = "transparent"
+            that.aline(bottomArea.b1.btnInfo, "right", 1);
+            that.top = 14;
+
+            // BUTTON: Video ve örnekler butonu.
+            bottomArea.b1.btnContact = cbtn();
+            that.text = "İletişim"
+            that.width = 100;
+            that.color = "transparent";
+            that.minimal = 1;
+            that.fontSize = 16;
+            that.textColor = "gray";
+            that.opacity = 0.8;
+            that.color = "transparent"
+            that.element.classList.add("motion-zoomOnMouseOver-forButtonWithOutWhite");
+            that.aline(bottomArea.b1.btnInfo, "right", 10);
+            that.onClick(function() {
+                goto_url("https://bugraozden.com/");
+            });
+
+            bottomArea.b1.width = bottomArea.b1.btnInfo.width +
+                bottomArea.b1.btnContact.width +
+                10;
+
+            bottomArea.b1.center("left");
+
+            // BOX: Başlangıç sayfası
+            contentArea.a0 = cbox(0, 0, 700 * 3, 500);
+            that.setMotion("left .5s");
+            a0 = contentArea.a0;
+
+            // BOX: İçerik 1: (İlk Sayfa)
+            a0.b1 = cbox(0, 0, contentArea.width, contentArea.height);
+            that.color = "lightgray";
+
+            // IMAGE: İçeriğin arkaplan resmi.
+            a0.b1.imgBack = cimg(0, 0);
+            that.load("images/background.png");
+            that.autoSize = 2;
+            
+
+            // BOX: Kodlama öğrenmeye nereden başlamalıyım? Butonu.
+            a0.b1.btnStartCoding = cbox(0, 0, CONTENT_WIDTH - 120, 95);
+            that.center("left");
+            that.color = "transparent";
+            that.element.style.padding = "20px";
+            that.element.style.paddingLeft = "35px";
+            that.round = 25;
+            that.top = 250;
+            that.text = document.getElementById("btntext-btnStartCoding").innerHTML;
+            that.element.classList.add("motion-zoomOnMouseOver-forButton");
+            that.clickable = 1;
+            that.onClick(goto_b2);
+
+            // BOX: JavaScript programlama dili ile neler yapılabilir? Butonu.
+            a0.b1.btnOpenSamples = cbox(0, 0, CONTENT_WIDTH - 120, 95);
+            that.center("left");
+            that.color = "transparent";
+            that.element.style.padding = "20px";
+            that.element.style.paddingLeft = "35px";
+            that.round = 25;
+            that.top = 340;
+            that.text = document.getElementById("btntext-btnOpenSamples").innerHTML;
+            that.element.classList.add("motion-zoomOnMouseOver-forButton");
+            that.clickable = 1;
+            that.onClick(goto_b3);
+
+
+            // BOX: İçerik 2: (Temel Programlama Eğitimi)
+            a0.b2 = cbox(contentArea.width, 0, contentArea.width, contentArea.height);
+            that.color = "lightgray";
+
+            // IMAGE: İçeriğin arkaplan resmi.
+            a0.b2.imgBack = cimg(0, 0);
+            that.load("images/empty-background.png");
+            that.autoSize = 2;
+            that.onLoad(function(self) {
+                self.center();
+                self.top -= 120;
+            });
+
+            // BOX: Geri git resminin taşıyıcı kutusu.
+            a0.b2.c1 = cbox(0, 0, 90, 90);
+            that.color = "rgba(255, 255, 255, 0.6)";
+            that.round = that.width;
+            that.center("top");
+            that.left = (that.width - 40) * -1;
+            that.element.style.cursor = "pointer";
+            that.element.classList.add("motion-zoomOnMouseOver-forButton");
+            that.onClick(goto_b1);
+
+            // IMAGE: Geri git resmi.
+            a0.b2.c1.imgGoBack = cimg(50, 30, 30, 30);
+            that.load("images/goback.png");
+            that.clickable = 1;
+            that.opacity = 0.55;
+
+            // İçerik 2 in HTML elementi.
+            var startCodingElement = document.getElementById("content-1");
+
+            // BOX: İçerik 2: HTML içeriğini taşıyan kutu.
+            a0.b2.c2 = cbox(0, 0, contentArea.width, contentArea.height);
+            that.color = "transparent";
+            that.text = startCodingElement.innerHTML;
+
+            // BOX: İçerik 2: Uygulama indirme butonlarının kutusu.
+            var boxDownloadButtons = cbox(0, 0, 620, 100);
+            that.color = "transparent";
+            a0.b2.c2.element.children[0].children[2].appendChild(boxDownloadButtons.element);
+
+            // IMAGE: Google Play den alın buton resmi.
+            boxDownloadButtons.imgbtn1 = cimg();
+            that.load("images/google-black.png");
+            that.autoSize = 6;
+            that.clickable = 1;
+            that.element.style.cursor = "pointer";
+            that.element.classList.add("motion-zoomOnMouseOver-forButtonWithOutWhite");
+            that.onLoad(function(self) {
+                self.center();
+            });
+            that.onClick(function() {
+                goto_url("https://play.google.com/store/apps/details?id=com.bugraozden.cik");
+            });
+
+            /*
+
+                a0.btnDescription = cbtn(0, 0);
+                a0.btnDescription.text = "Bilgi";
+                that.minimal = 1;
+                that.color = "white";
+                that.border = 2;
+                that.borderColor = "#CC75AA";
+                that.textColor = "#CC75AA";
+                that.center();
+                that.top += 110;
+                that.left -= 80;
+
+                a0.btnSamples = cbtn(0, 0);
+                a0.btnSamples.text = "Projeler";
+                that.minimal = 1;
+                that.color = "#CC75AA";
+                that.textColor = "white";
+                that.center();
+                that.top += 110;
+                that.left += 80;
+
+            */
+
+            // BOX: İçerik 3: (JavaScrip ile Neler Yapılabilir?)
+            a0.b3 = cbox(contentArea.width, 0, contentArea.width, contentArea.height);
+            that.color = "lightgray";
+
+            // IMAGE: İçeriğin arkaplan resmi.
+            a0.b3.imgBack = cimg(0, 0);
+            that.load("images/empty-background.png");
+            that.autoSize = 2;
+            that.onLoad(function(self) {
+                self.center();
+                self.top -= 120;
+            });
+
+            // İçerik 3 in HTML elementi.
+            var sampleProjectsElement = document.getElementById("content-2");
+
+            // BOX: İçerik 3: HTML içeriğini taşıyan kutu.
+            a0.b3.c2 = cbox(0, 20, contentArea.width - 10, contentArea.height - 40);
+            that.color = "transparent";
+            that.scrollY = 1;
+            that.text = sampleProjectsElement.innerHTML;
+
+            // BOX: Geri git resminin taşıyıcı kutusu.
+            a0.b3.c1 = cbox(0, 0, 90, 90);
+            that.color = "rgba(255, 255, 255, 0.6)";
+            that.round = that.width;
+            that.center("top");
+            that.left = (that.width - 40) * -1;
+            that.element.style.cursor = "pointer";
+            that.element.classList.add("motion-zoomOnMouseOver-forButton");
+            that.onClick(goto_b1);
+
+            // IMAGE: Geri git resmi.
+            a0.b3.c1.imgGoBack = cimg(50, 30, 30, 30);
+            that.load("images/goback.png");
+            that.clickable = 1;
+            that.opacity = 0.55;
+
+            // BOX: Örnek projelerin taşındığı kutu.
+            var boxSample = cbox(0, 0, 620, 470);
+            that.color = "transparent";
+            that.element.style.overflow = "visible";
+            that.element.style.textAlign = "center";
+            a0.b3.c2.element.children[0].children[2].appendChild(boxSample.element);
+            
+            // BOX: Her bir örnek proje.
+            for(var i = 0; i < 18; i++) {
+
+                boxSample["b" + i] = cbox();
+                that.color = "transparent";
+                that.width = 100;
+                that.height = 145;
+                that.round = 6;
+                that.element.style.position = "relative";
+                that.element.style.display = "inline-block";
+                that.element.style.marginTop = "3px";
+                that.element.style.marginLeft = "3px";
+                that.element.style.cursor = "pointer";
+                that.element.classList.add("motion-zoomOnMouseOver-forButtonWithOutWhite");
+                that.index = i;
+                that.onClick(function(self) {
+                    goto_url("/kodlama-ogrenmeye-nereden-baslamaliyim/javascript/" + sampleURLList[self.index] + ".htm");
+                });
+
+                boxSample["b" + i].imgPreview = cimg(5, 5, 90, 90);
+                that.load("images/pro" + (i + 1) + ".png");
+                //that.opacity = 0.7;
+                that.round = 14;
+                // that.space = 6;
+                // hat.border = 1;
+                // that.borderColor = "#00000020";
+                that.element.style.boxShadow = "1px 2px 2px #14141420"; // CC75AA80
+                //that.value = itemURLs[i - 1];
+                
+                boxSample["b" + i].lblName = clbl();
+                //that.text = itemTitles[i - 1]
+                that.text = sampleList[i];
+                that.textAlign = "center";
+                that.width = 90;
+                that.aline(boxSample["b" + i].imgPreview, "bottom", 4);
+                that.fontSize = 14;
+                that.textColor = "#000000";
+                that.opacity = 0.8;
+
+            }
+
+            // BOX: İndirme butonu taşıyıcı kutu.
+            var boxDownloadOnGithub = cbox(0, 0, 600, 100);
+            //that.color = "transparent";
+            that.color = "#53AA8010"
+            that.element.style.overflow = "visible";
+            that.border = 1;
+            // that.borderColor = "lightgray";
+            that.borderColor = "#53AA8080";
+            that.round = 8;
+            that.element.classList.add("motion-zoomOnMouseOver-forDownloadButton");
+            that.element.style.cursor = "pointer";
+            that.element.style.transform = "scale(0.85)";
+            a0.b3.c2.element.children[0].children[4].appendChild(boxDownloadOnGithub.element);
+            that.onClick(function() {
+                goto_url("https://github.com/bug7a/basicjs-turkce/");
+            });
+
+            // IMAGE: İndirme ikonu.
+            boxDownloadOnGithub.imgDownload = cimg(40, 20, 60, 60);
+            that.load("images/download.png");
+            that.right = 40;
+            that.opacity = 0.8;
+
+            // BUTTON: GitHub üzerinden indir butonu.
+            boxDownloadOnGithub.btnDownloadOnGithub = cbtn(0, 0, 280, 65);
+            that.text = "GitHub Üzerinden İndir"; // <br><span style='font-size:16px;color:gray;'>(Tüm Projeler)</span>
+            that.color = "transparent";
+            that.element.style.fontFamily = "opensans-bold";
+            that.minimal = 1;
+            // that.textColor = "rgba(255, 255, 255, 0.8)";
+            that.textColor = "#53AA80";
+            that.round = 13;
+            that.center();
+
+            // BOX: Video butonları taşıyıcı kutu.
+            var boxVideos = cbox(0, 0, 620, 160);
+            that.color = "transparent";
+            that.element.style.overflow = "visible";
+            that.element.style.textAlign = "center";
+            a0.b3.c2.element.children[0].children[11].appendChild(boxVideos.element);
+            
+            // BOX: Her bir video butonu.
+            for(var i = 0; i < 4; i++) {
+
+                boxVideos["b" + i] = cbox();
+                that.color = "transparent";
+                that.width = 100;
+                that.height = 145;
+                that.round = 6;
+                that.element.style.position = "relative";
+                that.element.style.display = "inline-block";
+                that.element.style.marginTop = "3px";
+                that.element.style.marginLeft = "3px";
+                that.element.style.cursor = "pointer";
+                that.element.classList.add("motion-zoomOnMouseOver-forButtonWithOutWhite");
+                that.index = i;
+                that.onClick(function(self) {
+                    goto_url(videoURLList[self.index]);
+                });
+
+                boxVideos["b" + i].imgPreview = cimg(5, 5, 90, 90);
+                that.load("images/video.png");
+                //that.opacity = 0.7;
+                that.round = 14;
+                that.space = 8;
+                // hat.border = 1;
+                // that.borderColor = "#00000020";
+                // that.element.style.boxShadow = "1px 2px 2px #14141420"; // CC75AA80
+                //that.value = itemURLs[i - 1];
+                
+                boxVideos["b" + i].lblName = clbl();
+                //that.text = itemTitles[i - 1]
+                that.text = videoList[i];
+                that.textAlign = "center";
+                that.width = 90;
+                that.aline(boxSample["b" + i].imgPreview, "bottom", 4);
+                that.fontSize = 14;
+                that.textColor = "#000000";
+                that.opacity = 0.8;
+
+            }
+
+            a0.b2.visible = 0;
+            a0.b3.visible = 0;
+
+            boxStartEffect = createBox(0, 0, page.width, page.height)
+            that.setMotion("opacity 1s");
+            that.opacity = 1;
+            that.imgLoading = createImage(0, 0, 40, 40);
+            that.load("images/loading.png");
+            that.center();
+
+            a0.b1.imgBack.onLoad(function(self) {
+                self.center();
+                self.top -= 120;
+                setTimeout(function() {
+                    boxStartEffect.opacity = 0;
+                    setTimeout(function() {
+                        boxStartEffect.visible = 0;
+                    }, 1000);
+                }, 350)
+            });
+
+            refreshPage();
+            page.onResize(refreshPage);
+            
+        }
+
+        var refreshPage = function() {
+
+            page.fit(740, 740);
+            contentArea.center();
+            bottomArea.aline(contentArea, "bottom", 10);
+
+            boxStartEffect.width = page.width;
+            boxStartEffect.height = page.height;
+            boxStartEffect.imgLoading.center();
+        }
+        
+        // Her saniye çalışan fonksiyon.
+        var loop = function() {
+                        
+            
+        }
+        
+        
+        // DİĞER FONKSİYONLAR
+
+        var goto_b1 = function() {
+
+            setTimeout(function() {
+                a0.b2.visible = 0;
+                a0.b3.visible = 0;
+            }, 500);
+            
+            a0.left = 0;
+
+        }
+        
+        var goto_b2 = function() {
+
+            a0.b2.visible = 1;
+            a0.b3.visible = 0;
+
+            a0.left = contentArea.width * -1;
+            
+        }
+        
+        var goto_b3 = function() {
+
+            a0.b2.visible = 0;
+            a0.b3.visible = 1;
+
+            a0.left = contentArea.width * -1;
+            //a0.left = contentArea.width * 2 * -1;
+            
+        }
+
+        var goto_url = function(url) {
+
+            window.open(url, "_blank");
+
+        }
+
+        </script>
+
+        <style>
+
+            /* 40A5AF  588ABE */
+
+            /* Kaydırma çubuğunu özelleştir. */
+            .basic_box::-webkit-scrollbar {
+                width: 13px;
+                height: 10px;
+                /* NOT: Kaydırma çubuğu, kutu nesnesinin içinde 10px lik bir yer kaplıyor. */
+            }
+            
+            .basic_box::-webkit-scrollbar-track {
+                /* background: rgba(0, 0, 0, 0.08); */
+                background: rgba(255, 255, 255, 0.6);
+                border-radius: 10px;
+                border: 3px solid rgba(0, 0, 0, 0);
+                margin-block: 18px;
+                background-clip: padding-box;
+            }
+
+            .basic_box::-webkit-scrollbar-thumb {
+                background: rgba(0, 0, 0, 0.2);
+                border-radius: 10px;
+                border: 5px solid rgba(0, 0, 0, 0);  /* Transparent border together with `background-clip: padding-box` does the trick */
+                background-clip: padding-box;
+            }
+
+            .basic_box::-webkit-scrollbar-thumb:hover {
+                background: rgba(0, 0, 0, 0.4);
+                border-radius: 10px;
+                border: 5px solid rgba(0, 0, 0, 0);  /* Transparent border together with `background-clip: padding-box` does the trick */
+                background-clip: padding-box;
+            }
+
+            .btntext.title {
+
+                font-family: opensans-bold;
+                font-size: 20px;
+                color: #CC75AA;
+
+            }
+
+            .btntext.description {
+
+                font-size: 18px;
+                padding-left: 4px;
+
+            }
+
+            .startCodingPage {
+
+                font-size: 20px;
+                padding: 40px;
+                padding-top: 50px;
+
+            }
+
+            .startCodingPage .title {
+
+                font-family: opensans-bold;
+                text-align: center;
+                font-size: 26px;
+                color: #CC75AA;
+                /* make all uppercase */
+                /* text-transform: uppercase; */
+
+            }
+
+            .motion-zoomOnMouseOver-forButton {
+
+                transition: transform .5s, opacity .5s, background-color .5s;
+                cursor: pointer;
+
+            } 
+
+            .motion-zoomOnMouseOver-forButton:hover {
+
+                transform: scale(1.15) !important;
+                background-color: #FFFFFF !important;
+
+            } 
+
+            .motion-zoomOnMouseOver-forButton:active {
+
+                transform: scale(1) !important;
+
+            }
+
+            .motion-zoomOnMouseOver-forButtonWithOutWhite {
+
+            transition: transform .5s, opacity .5s, background-color .5s;
+            cursor: pointer;
+
+            } 
+
+            .motion-zoomOnMouseOver-forButtonWithOutWhite:hover {
+
+            transform: scale(1.15) !important;
+
+            } 
+
+            .motion-zoomOnMouseOver-forButtonWithOutWhite:active {
+
+            transform: scale(1) !important;
+
+            }
+
+            .motion-zoomOnMouseOver-forDownloadButton {
+
+            transform: scale(0.85) !important;
+            transition: transform .5s, opacity .5s, background-color .5s;
+            cursor: pointer;
+
+            } 
+
+            .motion-zoomOnMouseOver-forDownloadButton:hover {
+
+            transform: scale(1) !important;
+
+            } 
+
+            .motion-zoomOnMouseOver-forDownloadButton:active {
+
+            transform: scale(0.85) !important;
+
+            }
+
+        </style>
+
+    </head>
+    <body>
+
+        <div style="display:none;">
+
+            <div id="btntext-btnStartCoding">
+                <div class="btntext title">1. Kodlama öğrenmeye nereden başlamalıyım?</div>
+                <div class="btntext description">- Temel konuları, mobil uygulama üzerinden öğrenin.</div>
+            </div>
+
+            <div id="btntext-btnOpenSamples">
+                <div class="btntext title">2. JavaScript programlama dili ile neler yapılabilir?</div>
+                <div class="btntext description">- Örnekleri bilgisayarınıza indirin ve anlatım videolarını izleyin.</div>
+            </div>
+
+            <div id="content-1">
+
+                <div class="startCodingPage" >
+
+                    <div class="title">TEMEL PROGRAMLAMA EĞİTİMİ</div>
+
+                    <p>Değişken, döngü, koşullu ifade, fonksiyon, dizi ve nesne gibi temel birimlerin, ne işe yaradığını ve nasıl kullanıldıklarını öğrenmek için mobil uygulamamdan faydalanmanızı öneriyorum.</p>
+
+                    <div style="position:relative; width:620px; height: 100px;"></div>
+
+                    <p>Tüm konular, çocukların da anlayabileceği seviyede sadeleştirilmiş ve akılda kalıcı olması için eğlenceli yöntemler kullanılmıştır.</p>
+
+                </div>
+
+            </div>
+
+            <div id="content-2">
+
+                <div class="startCodingPage" style="padding-top:30px;" >
+
+                    <div class="title" >ÖRNEK PROJELER</div>
+
+                    <ul style="font-size:18px;">
+                        <li>İlk 10 proje, yazılım geliştirme mantığını öğrenmenize yardımcı olması için özel olarak tasarlanmıştır.</li>
+                        <li>HTML ve CSS kodları, kütüphane tarafından otomatik yazılır. Böylece öğrenciler, başlangıçta sadece algoritma geliştirmeye odaklanabilirler.</li>
+                        <!--<li>Masaüstü ve mobil uygulama geliştirme deneyimine yakın, nesne tabanlı bir mantık ile tasarlanmıştır.</li>
+                        <li>Beş temel nesneye sahiptir. (Label, Button, TextBox, Image, Box)</li>
+                        <li>C, C++, C#, Java, Python, Swift, PHP, ASP.NET vb. programlama dillerini daha kolay öğrenmenize faydası olur.</li>
+                        <li>Arayüz tasarım araçları ile aynı konumlandırma mantığına sahiptir. Bu da; tasarımınızı, uygulamaya çevirirken kolaylık sağlar.</li>
+                        <li>Kullanılan programlama dili JavaScript'dir. Projeler, tarayıcı veya WebView üzerinde çalıştırılabilir.</li>-->
+                    </ul>
+
+                    <!-- <p>Nesne tabanlı örnek yazılım projeleri. Ve proje geliştirmeyi kolaylaştıran JavaScript kütüphanesi.</p> -->
+
+                    <div style="position:relative; width:620px; height: 470px;"></div>
+
+                    <br>
+
+                    <div style="position:relative; width:600px; height: 100px;background-color: transparent;border-radius:8px;margin-left: 20px;"></div>
+
+                    <br>
+
+                    
+                    <ul style="font-size:18px;">
+                        <!-- <li>İlk 10 proje, yazılım geliştirme mantığını öğrenmenize yardımcı olması için özel olarak tasarlanmıştır.</li>
+                        <li>HTML ve CSS kodları, kütüphane tarafından otomatik yazılır. Böylece öğrenciler, başlangıçta sadece algoritma geliştirmeye odaklanabilirler.</li> -->
+                        <li>Masaüstü ve mobil uygulama geliştirme deneyimine yakın, nesne tabanlı bir mantık ile tasarlanmıştır.</li>
+                        <li>Beş temel nesneye sahiptir. (Label, Button, TextBox, Image, Box)</li>
+                        <li>C, C++, C#, Java, Python, Swift, PHP, ASP.NET vb. programlama dillerini daha kolay öğrenmenize faydası olur.</li>
+                        <li>Arayüz tasarım araçları ile aynı konumlandırma mantığına sahiptir. Bu da; tasarımınızı, uygulamaya çevirirken kolaylık sağlar.</li>
+                        <li>Kullanılan programlama dili JavaScript'dir. Projeler, tarayıcı veya WebView üzerinde çalıştırılabilir.</li>
+                    </ul>
+
+                    
+
+                    <br><br>
+
+                    <div class="title" >ANLATIM VİDEOLARI</div>
+
+                    <br>
+
+                    <div style="position:relative; width:620px; height: 160px;"></div>
+
+                    <br>
+
+                    <div class="title" >NEDEN JAVASCRIPT KULLANIYORUM?</div>
+
+                    <ul style="font-size:18px;">
+                        <li>Programlama dilinin, söz dizimi (syntax) basit. Bu da öğrenmeyi kolaylaştırıyor.</li>
+                        <li>Kaynak çok fazla. Yapmak istediğiniz proje ile ilgili, bir örnek veya kütüphane bulabilme olasılığınız yüksek.</li>
+                        <li>En olgunlaşmış, arayüz oluşturma teknolojisine (HTML ve CSS) sahip olduğunu düşünüyorum.</li>
+                        <li>Genel kullanım için uygun. Aynı bilgi ile farklı alanlarda yazılım geliştirilebiliyor.</li>
+                    </ul>
+
+                    <br><br>
+
+                    <div class="title" >KULLANIM ALANLARI</div>
+
+                    <ol style="font-size:18px;">
+                        <li>Web uygulamaları.</li>
+                        <li>Mobil uygulamalar.<br>
+                            - Yardımcı teknoloji: Apache Cordova
+                        </li>
+                        <li>Masaüstü uygulamalar.<br>
+                            - Yardımcı teknoloji: Electron JS
+                        </li>
+                        <li>İki Boyutlu veya basit üç boyutlu oyunlar.<br>
+                            - Yardımcı teknoloji: Three JS
+                        </li>
+                        <li>Web siteleri.</li>
+                    </ol>
+
+                    <br><br>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- HTML içeriği -->
+        
+    </body>
+</html>

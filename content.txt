@@ -1,0 +1,65 @@
+Yazılım Geliştirmeyi Öğrenme Rehberi:
+
+
+JavaScript ile Proje Geliştirmek
+"Kod yazmak, eğlenceli bir hobi olabilir."
+
+1. Kodlama öğrenmeye nereden başlamalıyım?
+    - Temel konuları, android uygulaması üzerinden öğrenin.
+
+2. JavaScript programlama dili ile neler yapılabilir?
+    - Örnekleri bilgisayarınıza indirin ve anlatım videolarını izleyin.
+
+
+Ek Bilgi - Eğitim - Örnekler
+
+
+Ek Bilgi:
+
+2. ÖRNEK PROJELER
+
+Programlamaya yeni başlayanlar için: Nesne tabanlı örnek yazılım projeleri.
+Ve proje geliştirmeyi kolaylaştıran JavaScript kütüphanesi.
+
+[1] [2] [3]
+
+[4] ...
+
+(örneklere basıldığında, kaynak kod görünmeden sadece çalışsın.)
+
+GitHub üzerinden indir.
+
+- İlk 10 proje, yazılım geliştirme mantığını öğrenmenize yardımcı olması için özel olarak tasarlanmıştır.
+- HTML ve CSS kodları, kütüphane (basic.js) tarafından otomatik yazılır. Böylece öğrenciler, başlangıçta sadece algoritma geliştirmeye odaklanabilirler.
+- Beş temel nesne üzerine inşa edilmiştir. (Label, Button, TextBox, Image, Box)
+- Masaüstü ve mobil uygulama geliştirme deneyimine yakın, nesne tabanlı bir mantık ile tasarlanmıştır.
+- C, C++, C#, Java, Python, Swift, PHP, ASP.NET vb. programlama dillerini daha kolay öğrenmenize faydası olur.
+- Arayüz tasarım araçları ile benzer konumlandırma mantığı kullanır.
+- Kullanılan programlama dili JavaScript'dir. Projeler, tarayıcı veya WebView üzerinde çalıştırılabilir.
+
+
+1. TEMEL PROGRAMLAMA EĞİTİMİ:
+
+Değişkenler, döngüler, koşullu ifadeler gibi temel birimlerin, ne işe yaradığını 
+ve nasıl kullanıldıklarını öğrenmek için mobil uygulamamdan faydalanmanızı öneriyorum.
+
+Android - iOS
+
+Android cihazlar için Google Play üzerinden indirilebilir:
+https://play.google.com/store/apps/de...
+
+NOT: Tüm konular, çocukların da anlayabileceği seviyede sadeleştirilmiş 
+ve akılda kalıcı olması için eğlenceli yöntemler kullanılmıştır.
+
+
+DELETE
+
+
+basic.js
+
+Programlamaya yeni başlayanlar için: Nesne tabanlı örnek yazılım projeleri.
+Ve proje geliştirmeyi kolaylaştıran JavaScript kütüphanesi.
+
+Programlamaya yeni başlayanlar için:
+
+JavaScript ile nesne tabanlı yazılım projeleri geliştirin:

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>XOX Oyunu</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+
+        /*
+
+        ALGORİTMA:
+            
+        - Üç'e üç (3x3) bir alan üzerinde, boş karelere basarak; "x" veya "o" sembolu olarak işaretliyor.
+
+
+        ÇALIŞMA MANTIĞI:
+            
+        - Her bir alan, bir resim nesnesidir.
+        - Üzerine basılan nesne, kendine sıradaki sembolün resim dosyasını yüklüyor.
+          
+
+        OYUNUN OYNANIŞI:
+        
+        - Bir oyuncu "x", diğeri ise "o" sembolünü kullanır.
+        - Sıra ile, boş karelerden birine kendi sembollerini koyarak devam ederler.
+        - Kendi sembolünden üç tane yatay, dikey veya çapraz olarak 
+          yan yana ilk getiren oyuncu, bir puan kazanır.
+        - Boş kareler dolana kadar, kimse başarılı olamaz ise berabere olur. Ve oyun yeniden başlatılır.
+        
+        */
+
+        // Sıranın kimde olduğunu saklayan değişken.
+        var siraKimde = "x"
+        
+        // Not: resimDegistir() fonksiyonu, ilk çalıştığında "x" eklemesi için,
+        // siraKimde değişkeni tanımlanırken, "x" değeri aktarılmıştır.
+
+        // İlk çalıştırılan fonksiyon.
+        var start = function() {
+            
+            page.color = "whitesmoke"
+            
+            // 3 x 3 tane resim nesnesini ekranda oluştur ve hizala.
+            for (var y = 0; y <= 2; y++) {
+                for (var x = 0; x <= 2; x++) {
+                    
+                    // Bir resim nesnesi oluştur.
+                    createImage()
+                    that.load("resimler/xox-bos.svg")
+                    that.width = 150
+                    that.height = 150
+                    // Döngü sayılarına göre nesneleri hizala.
+                    that.left = 40 + (180 * x)
+                    that.top = 40 + (180 * y)
+                    // Nesneye taşıması için bir bilgi ekleyelim.
+                    that.value = "bos"
+                    // Üzerine basıldığında fonksiyonu çalıştır.
+                    that.onClick(resimDegistir)
+                    
+                    // Not: that, en son oluşturulan nesnenin taşındığı bir değişkendir.
+                    
+                    // Not: Bu örnekte, 9 tane resim nesnesi oluşturulmuştur. 
+                    // Ve bu nesneler değişkenlere aktarılmamıştır.
+                    // Sonradan ulaşabileceğimiz özel isimleri yoktur.
+                    
+                }
+            }
+
+        }
+
+        // Resimlerden birine basıldığında çalışan fonksiyon.
+        var resimDegistir = function(basilanDugme) {
+            
+            // Not: Bir nesneye basıldığında, 
+            // nesnenin kendisi parametre olarak gönderilir.
+            
+            // Nesnenin, taşıdığı değer boş ise,
+            // (Demek ki; bir sembol seçilmemiş ve resme basılabilir.)
+            if (basilanDugme.value == "bos") {
+            
+                // Sıra "x" sembolünde ise,
+                if (siraKimde == "x") {
+                    
+                    // Basılan nesnenin özelliklerini düzenle.
+                    // "x" sembolunun resmini yükle.
+                    basilanDugme.load("resimler/xox-x.svg")
+                    // Taşınan değeri "x" olarak düzenle.
+                    basilanDugme.value = "x"
+                    // Sıradaki sembolu "o" olarak düzenle.
+                    siraKimde = "o"
+                    
+                } else if (siraKimde == "o") {
+                    
+                    // Veya sıra "o" sembolünde ise, aynı işlemleri onun için yap.
+                    
+                    basilanDugme.load("resimler/xox-o.svg")
+                    basilanDugme.value = "o"
+                    siraKimde = "x"
+                    
+                }
+                
+            }
+            
+        }
+        
+        /*
+        
+        GELİŞTİRME ÖNERİLERİ:
+        
+        - Oyun bittiğinde, yeniden başlatma düğmesi eklenebilir.
+        - Skorları tutmak için, bir bölüm geliştirilebilir.
+          Örneğin: Her kullanıcı için bir skor etiketi ve 
+          onları arttıran birer düğme.
+        - (ZOR) Kazananı otomatik tespit edip, skorunu arttıran ve
+          yeni oyun başlatan bir algoritma eklenebilir.
+        - Başka ne geliştirme yapılabilir diye düşünüp, tasarlayın ve geliştirmeye çalışın.
+
+        
+        İNGİLİZCE - TÜRKÇE SÖZLÜK:
+        
+        Anlamını bilmediğiniz ingilizce kelimeler için,
+        https://translate.google.com/ internet sitesini kullanabilirsiniz.
+        
+        */
+        
+        </script>
+
+    </head>
+    <body></body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <title>Yılan Oyunu</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+        
+        /*
+        
+        ALGORİTMA:
+        
+        - Eski telefonlardan bildiğimiz yılan oyununun benzeri.
+        
+        */
+
+        // Sabit sayılar
+        var YATAY_KARE_SAYISI = 28
+        var DIKEY_KARE_SAYISI = 23
+
+        // Not: Hepsinin büyük harf ile yazılması, 
+        // içeriğin sabit olduğunu belirten bir yazım tekniğidir.
+        
+        // Puan gösterme alanı.
+        var lblPuanBaslik
+        var lblPuan
+        
+        // Yön düğmeleri. (Resim nesnesi olacak.)
+        var imgYukari
+        var imgAsagi
+        var imgSag
+        var imgSol
+        
+        // Ekrandaki her bir kare.
+        var kareler
+        
+        // Yılanın hareket yönünü.
+        // yukarı, aşağı, sağ, sol olabilir.
+        var yon = "sağ"
+
+        // Yılanın hangi renk olacağı.
+        var yilanRenk = "tomato"
+
+        // Yılanı oluşturan noktaların listesi.
+        // Bilgi: başlangıçta 3 noktadan oluşuyor.
+        var noktalar = [
+            
+            {x: 4, y: 2},
+            {x: 3, y: 2},
+            {x: 2, y: 2}
+            
+        ]
+        
+        // İlk çalışan fonksiyon.
+        var start = function() {
+            
+            // Sayfanın arka plan rengini belirle.
+            page.color = "tomato"
+            
+            // loop() fonksiyonu tekrarlanma zamanı 250ms olsun.
+            setLoopTimer(250)
+            
+            // Puan Başlığı Etiketi. Parametreler: left, top
+            lblPuanBaslik = createLabel(360, 40)
+            that.text = "<b>Puan</b>"
+            that.textAlign = "center"
+            that.textColor = "black"
+            // Yükseklik verilmezse, aline() fonksiyonu altını hesaplayamaz.
+            that.height = 28
+            
+            // Puan Etiketi
+            lblPuan = createLabel()
+            that.text = "0"
+            that.textAlign = "center"
+            that.textColor = "black"
+            // lblPuanBaslik nesnesinin altına, boşluk bırakmadan hizala.
+            that.aline(lblPuanBaslik, "bottom")
+            
+            // Yön tuşlarını oluştur.
+
+            // Aşağı düğme (resim nesnesi). Parametreler: left, top, width, height
+            imgAsagi = createImage(455, 650, 50, 50)
+            that.value = "aşağı"
+            that.load("resimler/asagi-ok.png")
+            that.onClick(yonDegistir)
+
+            // Not: Diğer resim nesneleri, imgAsagi nesnesine göre hizalanıyor.
+            
+            // Yukarı düğme.
+            imgYukari = createImage()
+            that.value = "yukarı"
+            that.load("resimler/yukari-ok.png")
+            that.width = 50
+            that.height = 50
+            // imgAsagi resminin, 5px üstüne hizala.
+            that.aline(imgAsagi, "top", 5)
+            that.onClick(yonDegistir)
+            
+            // Sağ düğme.
+            imgSag = createImage()
+            that.value = "sağ"
+            that.load("resimler/sag-ok.png")
+            that.width = 50
+            that.height = 50
+            // imgAsagi resminin, 5px sağına hizala.
+            that.aline(imgAsagi, "right", 5)
+            that.onClick(yonDegistir)
+            
+            // Sol düğme.
+            imgSol = createImage()
+            that.value = "sol"
+            that.load("resimler/sol-ok.png")
+            that.width = 50
+            that.height = 50
+            // imgAsagi resminin, 5px soluna hizala.
+            that.aline(imgAsagi, "left", 5)
+            that.onClick(yonDegistir)
+            
+            
+            // Yılanın, hareket edeceği kareleri oluştur (28x23)
+            
+            // Boş bir nesne oluştur.
+            // Oluşturulan tüm kareler, bu nesneye eklenecek.
+            kareler = {}
+            
+            // Dikey ve yatay kare sayısı kadar tekrar et.
+            for (var y = 1; y <= DIKEY_KARE_SAYISI; y++) {
+                for (var x = 1; x <= YATAY_KARE_SAYISI; x++) {
+
+                    // karenin konumu ile, bir anahtar oluştur.
+                    var anahtar = x + "-" + y
+                    
+                    // Her bir kareyi, anahtar ile sakla.
+                    kareler[anahtar] = createBox()
+                    that.height = 19
+                    that.width = 19
+                    that.left = x * 20
+                    that.top = 100 + (y * 20)
+                    that.border = 0
+                    // Tüm kareleri önce beyaza boya,
+                    that.color = "white"
+
+                    // Ama eğer, sınırlar boyanıyor ise, siyah olsun.
+                    if (x == 1) { 
+                        that.color = "black"
+                    } else if (x == YATAY_KARE_SAYISI) { 
+                        that.color = "black"
+                    }
+
+                    if (y == 1) { 
+                        that.color = "black"
+                    } else if (y == DIKEY_KARE_SAYISI) { 
+                        that.color = "black"
+                    }
+                    
+                }
+            }
+            
+            // Başlangıçta, yılanı çiz.
+            for (var i = 0; i < noktalar.length; i++) {
+
+                // Noktalar dizisindeki konumları boya
+                kareBoya(noktalar[i].x, noktalar[i].y, yilanRenk)
+
+            }   
+            
+            // Başlangıçta, bir adet yem ekle.
+            yemEkle()
+            
+            
+        }
+        
+        // Her saniye çalışan fonksiyon.
+        var loop = function(){
+            
+            // Yılan her saniye, bir birim ilerlesin.
+            ilerle()
+            
+        }
+
+        // Yılanı, bir birim hareket ettiren fonksiyon.
+        var ilerle = function() {
+
+            // Çalışma mantığı: yılanın sonundan bir kare sil ve
+            // yılanın ilerleyeceği yönde yeni bir kare oluştur.
+
+            // 1. siyah kare ile karşılaşırsa, hiç bir işlem yapma.
+            // 2. turuncu kare ile karşılaşırsa, al ve yılanı uzat.
+            // 3. beyaz kare ile karşılaşırsa, yoluna devam et.
+
+            // Yılanın ilerleyeceği sonraki konumu taşıyan değişkenler.
+            var yeniX = 0
+            var yeniY = 0
+
+            // Yılanın bir sonraki konumunu hesapla, değişkenlerde sakla.
+            if (yon == "sağ") {
+                yeniX = noktalar[0].x + 1
+                yeniY = noktalar[0].y
+                
+            } else if (yon == "sol") {
+                yeniX = noktalar[0].x - 1
+                yeniY = noktalar[0].y
+                
+            } else if (yon == "aşağı") {
+                yeniX = noktalar[0].x
+                yeniY = noktalar[0].y + 1
+                
+            } else if (yon == "yukarı") {
+                yeniX = noktalar[0].x
+                yeniY = noktalar[0].y - 1
+                
+            }
+            
+            // Yılanın sonraki konumunun rengini değişkene aktar.
+            var sonrakiKareRenk = kareNeRenk(yeniX, yeniY)
+            
+            // Eğer sonraki konum beyaz ise,
+            if (sonrakiKareRenk == "white") {
+                
+                // UZAMADAN yeni konuma ilerle.
+                boyaVeGuncelle(yeniX, yeniY, 0)
+                
+            } else if (sonrakiKareRenk == "black")  {
+                
+                // Hiç bir şey yapma, oyun bitti.
+                
+                // Sorun: Yılan, siyah bir kare ile karşılaştıktan sonra,
+                // istenildiği zaman yön tuşları ile oyuna devam edilebilir.
+                // Bu sorun düzeltilmeli.
+                
+            } else if (sonrakiKareRenk == "gold") {
+                
+                // Yemi yuttun, UZAYARAK yeni konuma ilerle.
+                boyaVeGuncelle(yeniX, yeniY, 1)
+                // Yeni bir yem oluştur.
+                yemEkle()
+                // skor tablosunu 1 arttır.
+                puanArttir()
+                
+            }
+            
+            // Sorun: Hareket eden yılan kendi ile karşılaştığında,
+            // oyun devam etmemeli. Bu sorun düzeltilmeli.
+
+        }
+        
+        // Yılanın yeni konumunu boya ve noktalar dizisini güncelle.
+        var boyaVeGuncelle = function(pYeniX, pYeniY, pUzat) {
+            
+            // Eğer yılan UZAMADAN ilerleyecek ise,
+            if (pUzat == 0) {
+                
+                // Not: Eğer bu kare temizleme ve silme işlemi yapılmaz ise
+                // yılan bir birim uzun kalacaktır.
+                
+                // Yılanın son noktasını, nokta listesinden öğren
+                // ve ekranda bu noktayı beyaz ile boya
+                kareBoya(noktalar[noktalar.length - 1].x, noktalar[noktalar.length - 1].y, "white")
+
+                // Yılanın son noktasını, nokta listesinden sil.
+                noktalar.pop()
+                
+            }
+
+            // Yılanın sonraki konumunu boya.
+            kareBoya(pYeniX, pYeniY, yilanRenk)
+
+            // Yılanın nokta listesinin başına,
+            // yeni noktanın koordinatlarını ekle.
+            noktalar.unshift({x: pYeniX, y: pYeniY})
+            
+        }
+        
+        // Yılanın yönünü değiştirir.
+        var yonDegistir = function(basilanDugme) {
+            
+            // Yön bilgisini, basılan düğmenin .value özelliğinden al.
+            yon = basilanDugme.value
+
+        }
+        
+        // Rasgele konumda, yeni bir yem oluşturur.
+        var yemEkle = function() {
+            
+            // Rasgele bir konum seç. (Kenarlar hariç)
+            var x = random(2, YATAY_KARE_SAYISI - 1)
+            var y = random(2, DIKEY_KARE_SAYISI - 1)
+            
+            // Sorun: Rasgele seçilen yem koordinatları, düşük bir olasılık ile
+            // yılanın üzerinde çıkabilir. Bu sorun düzeltilmeli.
+            // Kontrol edilmeli ve gerekirse tekar, tekrar yeni koordinat üretilmeli.
+            
+            // Rasgele üretilmiş konumu turuncuya boya.
+            kareBoya(x, y, "gold")
+            
+        }
+        
+        // Not: Kendi, kareBoya fonksiyonumuzu yazalım.
+        var kareBoya = function(pX, pY, pRenk) {
+
+            // Karenin, anahtarını oluştur.
+            var anahtar = pX + "-" + pY
+            
+            kareler[anahtar].color = pRenk
+            
+        }
+        
+        // Not: Kendi kareNeRenk fonksiyonumuzu yazalım.
+        var kareNeRenk = function(pX, pY) {
+
+            // Karenin, anahtarını oluştur.
+            var anahtar = pX + "-" + pY
+            
+            return kareler[anahtar].color
+            
+        }
+        
+        // Skoru attırır.
+        var puanArttir = function() {
+            
+            // Etiketin, metnini sayıya çevir ve bir ile topla.
+            lblPuan.text = num(lblPuan.text) + 1
+            
+        }
+            
+        </script>
+
+    </head>
+    <body></body>
+</html>

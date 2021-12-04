@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+      <title>Zar At</title>
+      
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+      <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+      <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+      <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
+      
+
+      <script>
+
+      /*
+
+      ALGORİTMA:
+          
+      - Düğmeye basıldığında, iki zar rasgele olarak değişiyor.
+
+      
+      ÇALIŞMA MANTIĞI:
+          
+      - Zarlar, resim (Image) nesneleridir.
+      - Her bir sayı için bir zar resmi vardır. zar1.png, zar2.png vb.
+      - Düğmeye basıldığında, rasgele iki sayı belirlenir 
+        ve o sayıların karşılığı olan resimler, nesnelere yüklenir.
+      
+      */
+      
+      // Resim (Image) nesneleri.
+      var imgZar1
+      var imgZar2
+      // Düğme (Button) nesnesi.
+      var btnZarAt
+
+      // İlk çalıştırılan fonksiyon.
+      var start = function() {
+
+          page.color = "whitesmoke"
+
+          // Resim nesnelerini oluştur.
+          imgZar1 = createImage()
+          imgZar2 = createImage()
+          
+          // Not: ingilizcede i nin büyük hali I dır. Büyük İ yoktur.
+          // image (resim) kelimesinin büyük harf ile başyalan hali Image dir.
+          
+          // Nesnelerin sola olan mesafesi.
+          imgZar1.left = 175
+          imgZar2.left = 325
+          // Nesnelerin yukarıya olan mesafesi.
+          imgZar1.top = 50
+          imgZar2.top = 50
+          // Nesnelerin boyutlarını belirle.
+          imgZar1.width = 100
+          imgZar2.width = 100
+          imgZar1.height = 100
+          imgZar2.height = 100
+          // Resimleri dosyadan yükle.
+          imgZar1.load("resimler/zar1.png")
+          imgZar2.load("resimler/zar6.png")
+          
+          // Not: resimler klasörünün içinde, .png uzantılı resim dosyaları.
+          
+          // Resimlerin açılarını 0 derece olarak belirle.
+          imgZar1.rotate = 0
+          imgZar2.rotate = 0
+
+          // Button nesnesini oluştur.
+          btnZarAt = createButton()
+          // Nesnenin üzerindeki yazıyı düzenle.
+          btnZarAt.text = "Zar At"
+          // Nesnenin solo olan mesafesini hesapla.
+          btnZarAt.left = imgZar1.left + 60
+          // Nesnenin yukarıya olan mesafesini hesapla.
+          btnZarAt.top = imgZar1.top + imgZar1.height + 50
+          // Nesneye basıldığında hangi fonksiyonun çalışacağını belirle.
+          btnZarAt.onClick(zarAt)
+
+      }
+
+      // Zar resimlerini rasgele değiştiren fonksiyon.
+      var zarAt = function() {
+          
+          // 1 ile 6 arasında rasgele 2 sayı belirle.
+          var sayi1 = random(1, 6)
+          var sayi2 = random(1, 6)
+          
+          // Not: random(sayi1, sayi2) fonksiyonu, 
+          // verilen iki sayı arasından rasgele bir sayı üretir.
+          // (verilen sayılar dahil)
+          
+          // Resim dosyalarını yükle.
+          imgZar1.load("resimler/zar" + sayi1 + ".png")
+          imgZar2.load("resimler/zar" + sayi2 + ".png")
+          
+          // Nesneleri, 0 ile 90 arasında rasgele açılarda döndür.
+          imgZar1.rotate = random(0, 90)
+          imgZar2.rotate = random(0, 90)
+
+      }
+      
+      /*
+      
+      GELİŞTİRME ÖNERİLERİ:
+      
+      - Ekranın bir köşesinde, rasgele atılmış zarların sayı karşılıklarını gösteren
+        bir etiket (Label) nesnesi olabilir. 5 x 6
+      - Başka ne geliştirme yapılabilir diye düşünüp, tasarlayın ve geliştirmeye çalışın.
+
+      
+      İNGİLİZCE - TÜRKÇE SÖZLÜK:
+        
+      Anlamını bilmediğiniz ingilizce kelimeler için,
+      https://translate.google.com/ internet sitesini kullanabilirsiniz.
+      
+      */
+      
+      </script>
+
+    </head>
+    <body></body>
+</html>

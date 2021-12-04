@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <title>Matematik Oyunu</title>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+            
+        /*
+        
+        ALGORİTMA:
+        
+        - Bir matematik sorusu soruyor ve verilen cevap kontrol ediyor.
+        
+        */
+
+        // Metin kutusu nesnesi.
+        var txtSonuc
+        // Düğme nesneleri.
+        var btnKontrolEt
+        var btnYeniSoru
+        
+        // Sayıların saklandığı değişkenler.
+        var say1
+        var say2
+        var islemNum
+        var sonuc
+
+        // İlk çalışan fonksiyon.
+        var start = function() {
+            
+            page.color = "whitesmoke"
+
+            // Metin kutusu nesnesini oluştur. Parametreler: left, top
+            txtSonuc = createTextBox(50, 50)
+            
+            // Düğme nesnesini oluştur. Parametreler: left, top
+            btnYeniSoru = createButton(50, 110)
+            // Nesnenin üzerindeki yazıyı belirle.
+            that.text = "Yeni Soru"
+            that.color = "lightgray"
+            // Nesneye basıldığında hangi fonksiyonun çalışacağını belirle.
+            that.onClick(soruOlustur)
+
+            // Düğme nesnesini oluştur.
+            btnKontrolEt = createButton()
+            // btnYeniSoru nesnesinin sağına, 10px boşluk bırakarak hizala.
+            that.aline(btnYeniSoru, "right", 10)
+            // Nesnenin üzerindeki yazıyı belirle.
+            that.text = "Kontrol Et"
+            // Nesneye basıldığında, kontrolEt() fonksiyonu çalışsın.
+            that.onClick(kontrolEt)
+            
+            // Başlangıçta bir soru olustur.
+            soruOlustur()
+
+        }
+        
+        // Yeni bir soru oluşturan fonksiyon.
+        var soruOlustur = function() {
+            
+            // Metin kutusunun içini temizle.
+            txtSonuc.text = ""
+            
+            // Rasgele sayılar, 1 ile 20 arasında olsun.
+            say1 = random(1, 20)
+            say2 = random(1, 20)
+            
+            // Rasgele işlem
+            islemNum = random(1, 3)
+            
+            // Not: işlemNum 1, 2, veya 3 olabilir.
+            // 1: toplama, 2: çıkarma, 3: çarpma
+            
+            var soruMetin = " işleminin sonucu kaçtır?"
+            
+            // Eğer işlem toplama ise
+            if (islemNum == 1) {
+                sonuc = say1 + say2
+                txtSonuc.title = say1 + " + " + say2 + soruMetin
+                
+            } else if (islemNum == 2) {
+                sonuc = say1 - say2
+                txtSonuc.title = say1 + " - " + say2 + soruMetin
+                
+            } else if (islemNum == 3) {
+                sonuc = say1 * say2
+                txtSonuc.title = say1 + " x " + say2 + soruMetin
+                
+            }
+            
+        }
+
+        // Düğmeye basıldığında, işlem sonucunu kontrol eden fonksiyon.
+        var kontrolEt = function() {
+            
+            // Eğer verilen cevap, sonuc değişkenine eşit ise,
+            if (txtSonuc.text == sonuc) {
+                txtSonuc.text = "Tebrikler, doğru."
+                
+            } else {
+                txtSonuc.text = "Tekrar deneyin."
+                
+            }
+            
+        }
+        
+        /*
+        
+        GELİŞTİRME ÖNERİLERİ:
+        
+        - Metin kutusunun yanında, küçük (50x50) bir kutu olsun.
+          Doğru cevap verildiğinde, "green" ve yanlış cevap verildiğinde, "red" renk ile boyansın.
+        - Verilen toplam doğru ve yanlış cevap sayısı ekranda gösterilsin. Otomatik arttırılsın.
+        
+        */
+
+        </script>
+
+    </head>
+    <body></body>
+</html>
