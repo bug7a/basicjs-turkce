@@ -6,9 +6,11 @@ GİRİŞ
 
 Bu kitapta, basic.js kütüphanesi ile kullanabileceğiniz kodların listesi ve kısa açıklamalarını bulacaksınız.
 
-- Yaptığınız uygulama ilk açıldığında, BİR KERE start() fonksiyonu çağırılır. 
-Ve çağırılmadan önce, en dışta yazılmış tüm değişken ve fonksiyonlar kullanılmaya hazır hale gelmiş olur.
-Bakınız: 0C-bos-proje-sablonu.htm
+- Kütüphaneyi kullanan bir proje ilk açıldığında; var ise, BİR KERE start() fonksiyonu çağırılır.
+-- Öncesinde, en dışta yazılmış tüm değişken ve fonksiyonlar kullanılmaya hazır hale gelmiş olur.
+-- JavaScript'teki "load" olayını kullanır.
+Boş proje şablonuna bakınız: 0C-bos-proje-sablonu.htm
+Boş mobil uygulama şablonuna bakınız: 35-mobil-uygulama-sablon-v2.htm
 
 
 KULLANILAN VERİ TİPLERİ:
@@ -18,12 +20,15 @@ Basit veri tipleri:
 - integer, tam sayı. 10
 - float, ondalıklı sayı. 5.5
 - boolean, 1 veya 0
+
 Gelişmiş veri tipleri:
-- array, dizi. [ ]
-- object, nesne. { }
+- Array, dizi. [ ]
+- Object, nesne. { }
+
+Diğer tipler:
+- BasicObject, temel nesne. Label, Button, TextBox, Image veya Box nesnesi olabilir.
+-- Bu isim, basic.js kütüphanesinde bulunan nesneleri belirtmek için kullanılmış özel bir tanımlamadır.
 - function, fonksiyon. function() { }
-- BasicObject, temel nesne. Label, Button, TextBox, Image veya Box olabilir.
-NOT: BasicObject, basic.js kütüphanesinde bulunan nesneleri belirtmek için kullanılmış özel bir tanımlamadır.
 
 
 ---
@@ -33,7 +38,7 @@ TEMEL FONKSİYONLAR:
 
 random(number1:integer, number2:integer) : integer
 - Verilen iki sayı arasında, rasgele bir sayı üretir. 
-NOT: Verilen sayılar dahildir.
+-- Verilen sayılar dahildir.
 - Yukarıda, örnek olarak gösterilen kodun anlamları, sırası ile şöyledir;
 random, fonksiyonun ismi.
 number1, birinci parametrenin ismi.
@@ -41,6 +46,7 @@ integer, birinci parametrenin veri tipi.
 number2, ikinci parametrenin ismi.
 integer, ikinci parametrenin veri tipi.
 integer, fonksiyonun geri gönderdiği cevabın veri tipi.
+random(1, 8) --> 5
 Bakınız: 04-zarlar.htm
 
 print(message:string)
@@ -59,10 +65,6 @@ Bakınız: 03-hesap-makinesi.htm
 str(number:integer veya float) : string
 - Sayı tipindeki bir değeri, metin tipine çevirir.
 
-isMobile() : boolean
-- Cihazın mobil olup olmadığını kontrol eder.
-1: mobil cihaz, 0: bilgisayar
-
 go(url:string)
 go(url:string, windowType:string)
 - Başka bir .htm dosyasına veya URL adresine yönlendirme yapar.
@@ -76,13 +78,17 @@ twoDigitFormat(4) -> "04"
 twoDigitFormat(12) -> "12"
 NOT: Saat, sayaç, tarih gibi değerler için kullanılabilir.
 
+isMobile() : boolean
+- Cihazın mobil olup olmadığını kontrol eder.
+1: mobil cihaz, 0: bilgisayar
+
 
 ---
 
 
 SAYFA NESNESİ (NESNE ADI: page, SINIF ADI: MainBox):
 - Sayfanın yönetimini sağlayan nesnedir.
-- Ekranın görünen alanını temsil eder. Kaydırma çubuğunu (Scroll) desteklemez.
+- Ekranın görünen alanını temsil eder. Kaydırma Çubuğunu (Scroll Bar) desteklemez.
 -- Kaydırma çubuğu, sadece kutu nesnesi (BOX) ile kullanılabilir.
 
 page.bodyElement
@@ -95,32 +101,35 @@ page.color
 
 page.width
 - Sayfa genişliğini almanızı sağlar.
+-- Bu değer DEĞİŞTİRİLEMEZ. Sadece okunabilir.
 
 page.height
 - Sayfa yüksekliğini almanızı sağlar.
+-- Bu değer DEĞİŞTİRİLEMEZ. Sadece okunabilir.
 
 page.fit(originalWidth:integer, maxWidth:integer)
-- Sayfanın genişliğini, ekrana sığacak şekilde ayarlar.
+- İçeriğin genişliğini, ekrana sığacak şekilde ayarlar.
 originalWidth, ekranda görünmesini istediğiniz içeriğin genişliği. (Yanlarda bırakılacak boşluklar dahil.)
 maxWidth, içerik en fazla, ne kadar genişletilebilsin.
+-- Parametre boş bırakılır ise, originalWidth değeri ile aynı kabul edilir.
 -- maxWidth, içeriğin orjinal boyutundan büyük olmak zorunda değildir.
 Bakınız: 20-temel-mobil-uygulama-sablonu.htm
 
 page.zoom
-- Sayfanın büyükme/küçülme oranını ayarlar.
+- Sayfanın büyüme/küçülme oranını ayarlar.
 1: %100 boyut, 0.5: %50 boyut, 1.5: %150 boyut vb.
 - page.fit() fonksiyonu, bu özelliği kullanarak, sayfanın genişliğini ayarlar.
 - Taşıdığı değer float veri tipidir.
 - CSS'te transform:scale() özelliğini kullanır.
 
 page.onClick(func:function)
-- Sayfaya, her basıldığında tanımlanan fonksiyon çağırılır.
+- Sayfaya, her basıldığında; belirlenen fonksiyon çağırılır.
 -- Sayfaya eklenen tüm nesneler de sayfanın bir parçasıdır. Sayfa içindeki farklı bir nesneye basıldığında da bu olay tetiklenir.
 -- Eğer, eklenen nesneler dışında, basılma kontrol edilmek isteniyor ise, page nesnesinin içinde, arkada kalacak, şeffaf bir kutu nesnesi ekleyebilirsiniz.
 Bakınız: 65-uzunluk-olcusu-cevirme-uygulamasi.htm
 
 page.onResize(func:function)
-- Sayfa boyutu, her değiştiğinde tanımlanan fonksiyon çağırılır.
+- Sayfa boyutu, her değiştiğinde; belirlenen fonksiyon çağırılır.
 -- Sayfanın yüklendiğindeki ilk boyutu için ÇAĞIRILMAZ.
 
 page.add(object:BasicObject)
@@ -172,7 +181,7 @@ object.rotate
 
 object.visible
 - Nesneyi görünür/görünmez yapar.
-1: görünür, 0:görünmez
+1: görünür, 0: görünmez
 - CSS'te display özelliğini kullanır.
 
 object.opacity
@@ -219,11 +228,12 @@ object.element
 object.upperObject
 - Nesnenin, bir üst (içinde bulunduğu) nesnesini verir.
 - En tepedeki nesne page'dir.
-- Oluşturulan nesneler ilk page nesnesi içine taşınır.
--- selectBox(target:Box) fonksiyonu ile ilk taşınılacak nesne değiştirilebilir.
+- Oluşturulan nesneler ilk olarak, page nesnesi içine taşınır.
+-- selectBox(target:Box) fonksiyonu ile, ilk taşınılacak nesne değiştirilebilir.
 
 object.onResize(func:function)
-- Nesnenin boyutu, her değiştiğinde tanımlanan fonksiyon çağırılır.
+- Nesnenin boyutu, her değiştiğinde; belirlenen fonksiyon çağırılır.
+-- Nesne ilk oluşturulduğunda da çağırılır.
 - Otomatik boyutlandırılan nesnelerin, koordinat sistemindeki konumlarını güncellemek için kullanılabilir.
 -- label.width, label.height, button.width ve box.height özellikleri "auto" olarak belirlenebilir. lblName.width = "auto" gibi.
 -- Çağırılan fonksiyona, nesnenin kendisi gönderilir.
@@ -243,7 +253,7 @@ object.aline(target:BasicObject, direction:string, space:integer)
 "right": sağ, "left": sol, "top": üst, "bottom" alt tarafa konumlandırır.
 -- Parametre boş bırakılır ise, hedef nesnenin tam üstüne konumlandırır.
 - space, nesneler arasında ne kadar boşluk bırakılacağı.
--- Paramerte boş bırakılır ise, 0 olarak kabul edilir.
+-- Parametre boş bırakılır ise, 0 olarak kabul edilir.
 -- Hedef nesne, konumlandırma için .right ve/veya .bottom özelliklerini kullanıyor ise, konumlandırılan nesne de bu özellikleri kullanacaktır.
 Bakınız: 19-nesneleri-hizalama.htm
 
@@ -252,7 +262,7 @@ object.remove()
 
 object.prop(properties:Object)
 - Nesnenin özelliklerini, toplu olarak değiştirir.
-Örnek: object.prop({width: 100, height: 120, color: "red"})
+object.prop({width: 100, height: 120, color: "red"})
 Bakınız: 20-temel-mobil-uygulama-sablonu.htm
 
 object.setMotion(motionString:string)
@@ -308,13 +318,13 @@ object.scrollY
 - Nesneye, gerektiğinde dikey kaydırma çubuğu ekler.
 
 object.onClick(func:function)
-- Nesneye, her basıldığında tanımlanan fonksiyon çağırılır.
+- Nesneye, her basıldığında; belirlenen fonksiyon çağırılır.
 -- Çağırılan fonksiyona, nesnenin kendisi gönderilir.
 
 object.add(object:BasicObject)
 - Parametre olarak gönderilen nesneyi, bu kutu nesnesinin içine manuel olarak taşır.
 - Otomatik eklemek için; eklenmesi istenen nesne, kutu nesnesinin bir elemanı olarak oluşturulabilir.
--- Örnek: object.txtObject = createTextBox() gibi,
+object.txtObject = createTextBox() gibi.
 - HTML içinde oluşturulmuş bir <div> elementine, kutu nesnesi eklemek için,
 document.getElementById("elementID").appendChild(boxObject.element)
 Bakınız: 29-html-ile-birlikte-kullanim.htm
@@ -347,7 +357,7 @@ object.minimal
 - Nesneyi düz (flat) yapar.
 
 object.onClick(func:function)
-- Nesneye, her basıldığında tanımlanan fonksiyon çağırılır.
+- Nesneye, her basıldığında; belirlenen fonksiyon çağırılır.
 -- Çağırılan fonksiyona, nesnenin kendisi gönderilir.
 
 object.element
@@ -366,6 +376,7 @@ METİN KUTUSU NESNESİ (SINIF ADI: TextBox):
 
 createTextBox(left:integer, top:integer, width:integer, height:integer) : TextBox 
 - Alternatif olarak, ctxt(*) veya new TextBox(*) şeklinde de kullanılabilir.
+- Yeni bir metin kutusu nesnesi oluşturur.
 
 object.text
 - Nesnenin metnini belirler.
@@ -383,7 +394,7 @@ object.minimal
 1: düz, 0: makyajlı
 
 object.onChange(func:function)
-- Nesne içeriği her değiştiğinde, tanımlanan fonksiyon çalıştırılır.
+- Nesne içeriği her değiştiğinde, belirlenen fonksiyon çalıştırılır.
 -- Çağırılan fonksiyona, nesnenin kendisi gönderilir.
 
 object.element
@@ -407,7 +418,7 @@ YAZI NESNESİ (SINIF ADI: Label):
 
 createLabel(left:integer, top:integer, width:integer, height:integer) : Label 
 - Alternatif olarak, clbl(*) veya new Label(*) şeklinde de kullanılabilir.
-- Yeni bir nesne oluşturmak için kullanılır.
+- Yeni bir yazı nesnesi oluşturur.
 
 object.text
 - Nesne metnini değiştirir.
@@ -424,7 +435,7 @@ object.spaceY
 - İçerik ile nesne sınırının, üst ve altından boşluk bırakır.
 
 object.onClick(func:function)
-- Nesneye, her basıldığında tanımlanan fonksiyon çağırılır.
+- Nesneye, her basıldığında; belirlenen fonksiyon çağırılır.
 -- Çağırılan fonksiyona, nesnenin kendisi gönderilir.
 
 object.element
@@ -436,7 +447,7 @@ object.element
 
 
 RESİM NESNESİ (SINIF ADI: Image):
-- Bir resim dosyasını (.png, .jpg, .gif, .svg vb.), ekranda göstermek için kullanılır.
+- Bir resim dosyasını (.png, .jpg, .gif, .svg vb.) ekranda göstermek için kullanılır.
 
 createImage(left:integer, top:integer, width:integer, height:integer) : Image 
 - Alternatif olarak, cimg(*) veya new Image(*) şeklinde de kullanılabilir.
@@ -447,6 +458,13 @@ object.load(filePath:string)
 - Resim dosyasının yüklenmesi bir zaman alır.
 -- Yükleme tamamlandığında, onLoad() ile tanımlanmış fonksiyon çağırılır.
 
+object.autoSize
+- Yüklenen resmi, otomatik olarak boyutlandırır.
+0: nesnenin belirlenmiş boyutuna sığdır, 1: orjinal boyut, 2: orjinal boyutun yarısı, 3: orjinal boyutun üçte biri ...
+-- Varsayılan autoSize değeri 1 dir.
+-- Resmin, genişliği veya yüksekliği değiştirildiğinde, autoSize değeri 0 olur.
+NOT: Yüksek çözünürlüklü mobil cihazlarda; daha kaliteli görünüm elde etmek için, resim dosyaları büyük kaydedilip, ekrana yüklendiğinde küçültülebilir.
+
 object.naturalWidth
 - Resmin orjinal genişliğini verir. 
 -- onLoad() fonksiyonu içinde, kullanılmalı.
@@ -455,12 +473,6 @@ NOT: Eğer, object.autoSize = 1 ise, resim yüklendiğinde, .width ile .naturalW
 object.naturalHeight
 - Resmin orjinal yüksekliğini verir. 
 -- onLoad() fonksiyonu içinde, kullanılmalı.
-
-object.autoSize
-- Yüklenen resmi, otomatik olarak boyutlandırır.
-0: nesne boyutuna sığdır, 1: orjinal boyut, 2: 2 kat küçült, 3: 3 kat küçült.
--- Resmin, genişliği veya yüksekliği manuel değiştirildiğinde, autoSize özelliği kapatılır.
-NOT: Yüksek çözünürlüklü mobil cihazlarda; daha kaliteli görünüm elde etmek için, resim dosyaları büyük kaydedilip, ekrana yüklendiğinde küçültülebilir.
 
 object.space
 - Resim ile nesne sınırı arasında (iç) boşluk bırakır.
@@ -473,15 +485,13 @@ object.spaceY
 - Resim ile nesne sınırının, üst ve altından boşluk bırakır.
 
 object.onClick(func:function)
-- Nesneye, her basıldığında tanımlanan fonksiyon çağırılır.
+- Nesneye, her basıldığında; belirlenen fonksiyon çağırılır.
 -- Çağırılan fonksiyona, nesnenin kendisi gönderilir.
 
 object.onLoad(func:function)
 - Resim nesnesi yüklendiğinde, fonksiyon çağırılır.
 -- Çağırılan fonksiyona, nesnenin kendisi gönderilir.
-Örnek:
 var myImage = createImage()
-that.autoSize = 1
 that.load("resimler/roket.png")
 that.onLoad(function(self) {
 	print(self.width)
@@ -514,8 +524,8 @@ selectBox(boxObject:Box)
 getSelectedBox() : Box veya MainBox
 - Oluşturulan nesnelerin, ilk taşındığı nesneyi verir.
 
-makeBasicObject(object:Box veya BasicObject)
-- Oluşturduğunuz özel nesneyi, basic.js kütüphanesinin sistemine dahil eder.
+makeBasicObject(object:BasicObject)
+- Oluşturduğunuz özel nesneyi, basic.js kütüphanesinin ekosistemine dahil eder.
 -- Oluşturulan nesne, başka bir kutunun elemanı olarak aktarılır ise, otomatik o kutunun içine taşınır.
 -- Oluşturulan nesne, yeni bir nesne oluşturulana kadar, that değişkeni ile ulaşılabilir.
 - Özel tasarlanan nesneler, birden fazla temel nesneden oluşuyor ise, taşıyıcı nesne olarak; kutu nesnesi kullanılmalı.
@@ -641,7 +651,7 @@ Uncaught SyntaxError: Unexpected identifier
 Uncaught SyntaxError: Unexpected end of input
 Uncaught SyntaxError: Unexpected token ')'
 Uncaught SyntaxError: missing ) after argument list
-- Süslü paranzez, parantez ve diğer işaretleri kontrol edin.
+- Süslü parantez, parantez ve diğer işaretleri kontrol edin.
 -- Süslü parantez açılmamış ama kapatılmış olabilir.
 -- Fonksiyon çağırılırken, parantezi kapatılmamış olabilir.
 

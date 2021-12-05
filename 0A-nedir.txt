@@ -1,7 +1,7 @@
 
 BU NEDİR?
 
-Programlamaya yeni başlayanlar için: Nesne tabanlı örnek yazılım projeleri. 
+Programlamaya yeni başlayanlar için tasarlanmış; nesne-tabanlı örnek yazılım projeleri. 
 Ve proje geliştirmeyi kolaylaştıran JavaScript kütüphanesi.
 
 
@@ -16,12 +16,12 @@ KİMLER FAYDALANABİLİR?
 NELERİ ÖĞRENECEKSİNİZ?
 
 - Programlama dillerinde kullanılan temel birimleri.
-- Pratik yaptıkça, daha iyi algoritmalar geliştirebilmeyi.
+- JavaScript programlama dilini kullanmayı.
 - Nesne tabanlı programlama mantığını.
 - Bir projeyi, küçük parçalara bölerek geliştirebilmeyi.
 - Bilgileri yönetebilmeyi ve dinamik arayüzler oluşturabilmeyi.
 - Temel nesneleri birleştirerek, yeni ve benzersiz nesneler oluşturabilmeyi.
-- JavaScript programlama dilini kullanmayı.
+- Pratik yaptıkça, daha iyi algoritmalar geliştirebilmeyi.
 
 
 EK AÇIKLAMA:
@@ -31,8 +31,8 @@ EK AÇIKLAMA:
 - Beş temel nesne üzerine inşa edilmiştir. (Label, Button, TextBox, Image, Box)
 - Masaüstü ve mobil uygulama geliştirme deneyimine yakın, nesne tabanlı bir mantık ile tasarlanmıştır.
 - C, C++, C#, Java, Python, Swift, PHP, ASP.NET vb. programlama dillerini daha kolay öğrenmenize faydası olur.
-- Arayüz tasarım araçları ile uyumlu çalışır. Böylece tasarımlarınızı, kolayca uygulamaya çevirebilmenize imkan sağlar.
-- Bu teknikler ile, benzersiz ve tamamen özelleştirilebilir uygulamalar geliştirilebilmektedir.
+- Arayüz tasarım araçları ile aynı konumlandırma mantığına sahiptir. Bu da; tasarımınızı, uygulamaya çevirirken kolaylık sağlar.
+- Bu teknikler ile, tamamen özelleştirilebilir ve dinamik uygulamalar geliştirilebilmektedir.
 - Kullanılan programlama dili JavaScript'dir. Projeler, tarayıcı veya WebView üzerinde çalıştırılabilir.
 ** WebView: Programlama dillerinde, web içeriklerini görüntülemek için kullanılan nesne.
 
@@ -61,7 +61,7 @@ KULLANIM ALANLARI:
 
 Geliştirici: Buğra ÖZDEN
 Eposta: bugra.ozden@gmail.com
-Kişisel Sitem: http://bugraozden.com
+Kişisel Sitesi: http://bugraozden.com
 Projenin Sitesi: https://bug7a.github.io/basicjs-turkce/
 
 

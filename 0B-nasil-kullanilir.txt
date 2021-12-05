@@ -20,7 +20,7 @@ https://www.youtube.com/watch?v=vSt5EFDkhpI
 - Her bir proje, her hangi bir tarayıcı üzerinde çalışabilir.
 - "kutuphane" klasörü, basic.js kütüphanesini içermektedir.
 - "resimler" klasörü, bazı örnek projelerin kullandığı resimleri içermektedir.
-- Yeni bir proje oluştururken; "0C-bos-proje-sablonu.htm" dosyasını ve "kutuphane" klasörünü, farklı bir klasöre kopyalayın. Kopyaladığınız HTM dosyasını, yeniden isimlendirin (proje-ismi.htm vb.) ve bu klasörü, geliştirme ortamında açın.
+- Yeni bir proje oluştururken; "0C-bos-proje-sablonu.htm" dosyasını ve "kutuphane" klasörünü, farklı bir klasöre kopyalayın. Kopyaladığınız HTM dosyasını, yeniden isimlendirin (proje-ismi.htm vb.) ve bu klasörü, geliştirme ortamında açın. (Anlatım videolarında, bu aşamalar gösterilmiştir.)
 
 
 3. İLK ÖRNEK PROJE:
@@ -33,8 +33,7 @@ https://youtu.be/zPOKz3w1YmY
 
 4. TEMEL PROGRAMLAMA EĞİTİMİ:
 
-Değişkenler, döngüler, koşullu ifadeler gibi temel birimlerin, ne işe yaradığını 
-ve nasıl kullanıldıklarını öğrenmek için mobil uygulamamdan faydalanmanızı öneriyorum.
+Değişken, döngü, koşullu ifade, fonksiyon, dizi ve nesne gibi temel birimlerin, ne işe yaradığını ve nasıl kullanıldıklarını öğrenmek için mobil uygulamamdan faydalanmanızı öneriyorum.
 
 Android cihazlar için Google Play üzerinden indirilebilir:
 https://play.google.com/store/apps/details?id=com.bugraozden.cik
@@ -45,16 +44,15 @@ ve akılda kalıcı olması için eğlenceli yöntemler kullanılmıştır.
 
 5. TASARIM ORTAMI:
 
-Arayüz tasarım aracı olarak, Figma'yı öneriyorum. 
+Arayüz tasarım aracı olarak, Figma'yı öneriyorum.
 https://www.figma.com/
 
 
 ÖNERİLEN ÇALIŞMA YÖNTEMİ:
 
-- Bir projenin anlatım videosunu izlerken, deftere notlar alın.
-- Bu notlardan, projeyi yeniden yazmaya ve çalışma mantığını anlamaya çalışın.
-- Projeleri, aklınıza gelen ek özellikler ile geliştirmeye çalışın.
-- Kendi projenizde kullanmak için, kodların kullanımını da ayrıca not alın.
+- Bir projenin, anlatım videosunu izlerken; deftere notlar alın. Ve algoritmanın çalışma mantığı üzerine düşünün.
+- Bu notları kullanarak, projeyi yeniden yazın. Ve aklınıza gelen ek özellikler ile daha da geliştirmeye çalışın.
+- Kendi projenizde kullanmak üzere; kodların kullanımını da ayrıca not alın.
 
 
 Hayrını görmenizi dilerim,

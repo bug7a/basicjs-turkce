@@ -187,7 +187,9 @@ basic.start = function () {
     that.element.style.position = "fixed";
     that.color = "transparent";
     page.onResize(function() {
-        page.refreshSize();
+        if (typeof page.refreshSize === "function") {
+            page.refreshSize();
+        }
     });
 
     if (typeof start === "function") {
@@ -202,17 +204,13 @@ basic.start = function () {
 }
 
 basic.afterStart = function () {
-
     // Kullanıcının start() fonksiyonu çalıştırıldıktan sonra,
-
 }
 
 
 // Konsola metin yazdır.
 basic.print = function ($message) {
-
     console.log($message);
-
 }
 var print = basic.print;
 
@@ -659,8 +657,8 @@ class Basic_UIComponent {
         basic.resizeDetection.onResize(this, $func);
     }
 
-    removeOnResize($func) {
-        basic.resizeDetection.remove_onResize(this.element, $func);
+    remove_onResize($func) {
+        // basic.resizeDetection.remove_onResize(this.element, $func);
     }
 
     // Hareket
@@ -770,23 +768,7 @@ class MainBox {
         this._box = $value;
         this._element = this._box.element;
     }
-    /*
-    set scrollX($value) {
-        this.box.scrollX = $value;
-    }
 
-    get scrollX() {
-        return this.box.scrollX;
-    }
-
-    set scrollY($value) {
-        this.box.scrollY = $value;
-    }
-
-    get scrollY() {
-        return this.box.scrollY;
-    }
-    */
     get width() {
         let _w;
         _w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
@@ -824,15 +806,13 @@ class MainBox {
         this.bodyElement.style.backgroundColor = $value;
     }
 
-    fit($value = document.body.clientWidth, $maxValue = 900) {
+    fit($value = document.body.clientWidth, $maxValue) {
 
         page.zoom = 1
         let _w = page.width;
 
         // ikinci değer yok ise
-        if (!$maxValue) {
-            $maxValue = _w;
-        }
+        $maxValue = $maxValue || $value;
 
         // ekran genişliği izin verilenden fazla ise
         if (_w > $maxValue) {

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Klavye Tuşları</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
+
+        <style>
+
+            body {
+                overflow: hidden;
+            }
+
+        </style>
+
+        <script>
+            
+        // DEĞİŞKENLER
+            
+        var keyboard
+
+        // ÖZEL FONKSİYONLAR
+            
+        // İlk çalışan fonksiyon.
+        var start = function() {
+
+            page.fit(600)
+            page.color = "lightgray"
+
+            // BOX: Taşıyıcı
+            keyboard = createBox(0, 0, 560, 180)
+            that.color = "transparent"
+            that.center()
+
+            // NESNE: F tuşu
+            keyboard.keyF = createKey("f")
+            that.left = 80
+            that.top = 30
+
+            // NESNE: Boşluk tuşu
+            keyboard.keySpace = createKey("space", 240)
+            that.left = 40
+            that.top = 100
+            
+            // NESNE: Sol yön tuşu
+            keyboard.keyLeft = createKey("left", 60)
+            that.aline(keyboard.keySpace, "right", 50)
+
+            // NESNE: Aşağı yön tuşu
+            keyboard.keyDown = createKey("down", 60)
+            that.aline(keyboard.keyLeft, "right", 8)
+
+            // NESNE: Yukarı yön tuşu
+            keyboard.keyUp = createKey("up", 60)
+            that.aline(keyboard.keyDown, "top", 8)
+
+            // NESNE: Sağ yön tuşu
+            keyboard.keyRight = createKey("right", 60)
+            that.aline(keyboard.keyDown, "right", 8)
+
+            page.onResize(function() {
+                page.fit(600)
+                keyboard.center()
+            })
+
+            // Bir tuşa basıldığında yapılacaklar:
+            window.addEventListener("keydown", function (event) {
+
+                print(event.key)
+
+                if (event.defaultPrevented) {
+                    return; // Do nothing if the event was already processed
+                }
+
+                switch (event.key) {
+                    case "Down": // IE/Edge specific value
+                    case "ArrowDown":
+                    // Do something for "down arrow" key press.
+                    keyboard.keyDown.select()
+                    break;
+                    case "Up": // IE/Edge specific value
+                    case "ArrowUp":
+                    // Do something for "up arrow" key press.
+                    keyboard.keyUp.select()
+                    break;
+                    case "Left": // IE/Edge specific value
+                    case "ArrowLeft":
+                    // Do something for "left arrow" key press.
+                    keyboard.keyLeft.select()
+                    break;
+                    case "Right": // IE/Edge specific value
+                    case "ArrowRight":
+                    // Do something for "right arrow" key press.
+                    keyboard.keyRight.select()
+                    break;
+                    case " ":
+                    // Do something for "space" key press.
+                    keyboard.keySpace.select()
+                    break;
+                    case "f":
+                    case "F":
+                    // Do something for "space" key press.
+                    keyboard.keyF.select()
+                    break;
+                    case "Enter":
+                    // Do something for "enter" or "return" key press.
+                    break;
+                    case "Esc": // IE/Edge specific value
+                    case "Escape":
+                    // Do something for "esc" key press.
+                    break;
+                    default:
+                    return; // Quit when this doesn't handle the key event.
+                }
+
+                // Cancel the default action to avoid it being handled twice
+                event.preventDefault();
+
+            }, true);
+
+            // Tuşa basılma bırakıldığında yapılacaklar:
+            window.addEventListener("keyup", function (event) {
+
+                if (event.defaultPrevented) {
+                    return; // Do nothing if the event was already processed
+                }
+
+                switch (event.key) {
+                    case "Down": // IE/Edge specific value
+                    case "ArrowDown":
+                    // Do something for "down arrow" key press.
+                    keyboard.keyDown.unselect()
+                    break;
+                    case "Up": // IE/Edge specific value
+                    case "ArrowUp":
+                    // Do something for "up arrow" key press.
+                    keyboard.keyUp.unselect()
+                    break;
+                    case "Left": // IE/Edge specific value
+                    case "ArrowLeft":
+                    // Do something for "left arrow" key press.
+                    keyboard.keyLeft.unselect()
+                    break;
+                    case "Right": // IE/Edge specific value
+                    case "ArrowRight":
+                    // Do something for "right arrow" key press.
+                    keyboard.keyRight.unselect()
+                    break;
+                    case " ":
+                    // Do something for "space" key press.
+                    keyboard.keySpace.unselect()
+                    break;
+                    case "f":
+                    case "F":
+                    // Do something for "space" key press.
+                    keyboard.keyF.unselect()
+                    break;
+                    default:
+                    return; // Quit when this doesn't handle the key event.
+                }
+
+                // Cancel the default action to avoid it being handled twice
+                event.preventDefault();
+
+            }, true);
+            
+        }
+        
+        // DİĞER FONKSİYONLAR
+        
+        // Tuş nesnesi oluştur.
+        var createKey = function(text, width) {
+
+            // Genişlik verilmemiş ise 50 olsun.
+            width = width || 50
+
+            // BOX: Tuş taşıyıcı ve arkaplanı
+            var object = createBox(0, 0)
+            that.height = 50
+            that.width = width
+            that.round = 6
+
+            // LABEL: Tuş metni
+            object.lblText = createLabel(0, 0, "auto", "auto")
+            that.text = text
+            that.onResize(function(self) {
+                self.center()
+            })
+
+            object.select = function() {
+                object.color = basic.DARK_BACKGROUND_COLOR
+                object.lblText.textColor = "rgba(255, 255, 255, 0.85)"
+            }
+
+            object.unselect = function() {
+                object.color = "white"
+                object.lblText.textColor = basic.TEXT_COLOR
+            }
+
+            makeBasicObject(object)
+
+            return object
+            
+        }
+
+        /*
+
+        REFERANSLAR:
+
+        KeyboardEvent.key:
+        https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key
+
+        */
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML içeriği -->
+        
+    </body>
+</html>

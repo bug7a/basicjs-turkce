@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Mayın Tarlası Mekanikleri</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+        <!-- DIŞARIDAN YÜKLENEN KÜTÜPHANE DOSYALARI -->
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.css">
+        <script src="kutuphane/basic.js" type="text/javascript" charset="utf-8"></script>
+
+        <style>
+
+            body {
+                overflow: hidden;
+            }
+
+        </style>
+
+        <script>
+            
+        // DEĞİŞKENLER
+
+        var GAME_PAGE_WIDTH = 600
+
+        var selectedLevelIndex = 1
+        var levelList = [
+            {
+                name: "Easy",
+                width: 10,
+                height: 10,
+                mines: 15,
+                boxSize: 40,
+                fontSize: 28
+            },
+            {
+                name: "Medium",
+                width: 15,
+                height: 15,
+                mines: 30,
+                boxSize: 30,
+                fontSize: 21
+            },
+            {
+                name: "Hard",
+                width: 20,
+                height: 20,
+                mines: 40,
+                boxSize: 20,
+                fontSize: 15
+            }
+        ]
+
+        var level = levelList[selectedLevelIndex]
+            
+        // Taşıyıcı ekran
+        var a1
+
+        var upperBoxList = {}
+        var boxList = {}
+        var bombList = {}
+
+        
+        // ÖZEL FONKSİYONLAR
+            
+        // İlk çalışan fonksiyon.
+        var start = function() {
+
+            page.color = "white"
+
+            page.fit(GAME_PAGE_WIDTH, GAME_PAGE_WIDTH)
+
+            // BOX: Oyun oynama ekranı
+            a1 = createBox(0, 0, GAME_PAGE_WIDTH, page.height)
+            that.center("left")
+
+            // BOX: Küçük kutuların taşındığı kutu. Parametreler: Yatay kare sayısı, Dikey kare sayısı.
+            a1.b1 = createTheField(level.width, level.height)
+            that.color = "white"
+            that.border = 1
+            that.center()
+            
+            // Bombaları yerleştir. Parametreler: Oluşturulacak bomba sayısı.
+            placeTheBombs(level.mines)
+            // Bomba sayılarını işaretle. Parametreler: Yatay kare sayısı, dikey kare sayısı.
+            markDangerZones(level.width, level.height)
+
+            // Ekran boyutu değiştiğinde, yeniden ortala.
+            page.onResize(function() {
+
+                page.fit(GAME_PAGE_WIDTH, GAME_PAGE_WIDTH)
+                a1.width = GAME_PAGE_WIDTH
+                a1.height = page.height
+                a1.center("left")
+                a1.b1.center()
+                
+            })
+            
+        }
+        
+        // DİĞER FONKSİYONLAR
+        
+        // Oyun ekranının içinde küçük kutuları oluşturur.
+        var createTheField = function(leftCount, topCount) {
+
+            upperBoxList = {}
+            boxList = {}
+
+            var BOX_WIDTH = level.boxSize
+            var BOX_HEIGHT = level.boxSize
+
+            var boxField = createBox(0, 0)
+
+            for (var i = 0; i < topCount; i++) {
+                for (var j = 0; j < leftCount; j++) {
+
+                    var upperBoxName = "imgx" + j + "y" + i
+                    var boxName = "boxx" + j + "y" + i
+
+                    boxField[boxName] = createBox(0, 0, BOX_WIDTH, BOX_HEIGHT)
+                    that.left = j * BOX_WIDTH
+                    that.top = i * BOX_HEIGHT
+                    that.round = 1
+
+                    boxList[boxName] = that
+
+                    boxField[upperBoxName] = createImage(0, 0, BOX_WIDTH, BOX_HEIGHT)
+                    var imageFilePath = "resimler/67/box.svg"
+                    that.load(imageFilePath)
+                    that.left = j * BOX_WIDTH
+                    that.top = i * BOX_HEIGHT
+                    // that.visible = 0
+                    that.x = j
+                    that.y = i
+                    that.onClick(function(self) {
+                        self.visible = 0
+                        openNextWhiteBoxes(self.x, self.y)
+                    })
+
+                    upperBoxList[upperBoxName] = that
+
+                }
+            }
+
+            boxField.width = (leftCount * BOX_WIDTH) + (boxField.border * 2)
+            boxField.height = (topCount * BOX_HEIGHT) + (boxField.border * 2)
+
+            makeBasicObject(boxField)
+
+            return boxField
+            
+        }
+        
+        // Bombaları yerleştirir.
+        var placeTheBombs = function(count) {
+
+            bombList = {}
+
+            for (var i = 0; i < count; i++) {
+                
+                var boxName = "boxx" + Math.floor(Math.random() * level.width) + "y" + Math.floor(Math.random() * level.height)
+
+                // Her bir kareye sadece bir bomba yerleştirilebilir.
+                if (!bombList[boxName]) {
+
+                    var obj = boxList[boxName]
+                    obj.color = "whitesmoke"
+                    obj.dangerColor = "whitesmoke"
+                    obj.border = 1
+                    obj.round = 3
+
+                    // IMAGE: Bomba resmi
+                    obj.imgBomb = createImage(0, 0, obj.width, obj.height)
+                    var imageFilePath = "resimler/67/bomb.png"
+                    that.load(imageFilePath)
+                    that.space = 3
+
+                    bombList[boxName] = that
+
+                } else {
+                    i--
+                }
+
+            }
+
+            }
+
+        // Bomba sayılarını işaretle.
+        var markDangerZones = function(leftCount, topCount) {
+
+            var coorPatern = [
+                [0, -1],
+                [1, -1],
+                [1, 0],
+                [1, 1],
+                [0, 1],
+                [-1, 1],
+                [-1, 0],
+                [-1, -1]
+            ]
+            
+            for (var i = 0; i < topCount; i++) {
+                for (var j = 0; j < leftCount; j++) {
+
+                    var boxName = "boxx" + j + "y" + i
+                    var boxObject = boxList[boxName]
+
+                    var bombCount = 0
+
+                    if (bombList[boxName]) {
+
+                        // boxObject.color = "white"
+
+                    } else {
+
+                        for (var k = 0; k < 8; k++) {
+
+                        var x = j + coorPatern[k][0]
+                        var y = i + coorPatern[k][1]
+
+                        var nextBoxName = "boxx" + x + "y" + y
+
+                        if (boxList[nextBoxName]) {
+                            if (bombList[nextBoxName]) {
+                                bombCount++
+                            }
+                        }
+
+                        }
+
+                        if (bombCount != 0) {
+                            boxObject.lblNumber = createLabel(0, 0, level.boxSize)
+                            that.text = bombCount
+                            that.fontSize = level.fontSize
+                            that.textAlign = "center"
+                            that.textColor = "black"
+                        }
+
+                        boxObject.color = "white"
+
+                        switch (bombCount) {
+                        case 0:
+                            boxObject.color = "white"
+                            break
+                        case 1:
+                            boxObject.color = "#FFEB3A"
+                            break
+                        case 2:
+                            boxObject.color = "#FAA236"
+                            break
+                        case 3:
+                            boxObject.color = "#FE5D49"
+                            break
+                        default:
+                            boxObject.color = "#D0021B"
+                            break
+                        }
+
+                    }
+                }
+            }
+        }
+
+        // Tıklanan kutunun arka planı beyaz ise, beyaz olan tüm komşularını da aç.
+        var openNextWhiteBoxes = function(boxX, boxY) {
+                
+            var coorPatern = [
+                [0, -1],
+                [1, 0],
+                [0, 1],
+                [-1, 0]
+            ]
+
+            var boxName = "boxx" + boxX + "y" + boxY
+            var upperBoxName = "imgx" + boxX + "y" + boxY
+
+            if (boxList[boxName].color == "white") {
+
+                for (var k = 0; k < 4; k++) {
+
+                    var x = boxX + coorPatern[k][0]
+                    var y = boxY + coorPatern[k][1]
+
+                    var nextBoxName = "boxx" + x + "y" + y
+
+                    if (boxList[nextBoxName]) {
+
+                        var nextUpperBoxName = "imgx" + x + "y" + y
+                        var nextUpperBoxObject = upperBoxList[nextUpperBoxName]
+
+                        if (nextUpperBoxObject.visible == 1) {
+
+                            nextUpperBoxObject.visible = 0
+                            openNextWhiteBoxes(nextUpperBoxObject.x, nextUpperBoxObject.y)
+
+                        }
+                        
+                    }
+
+                }
+
+            }
+
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML içeriği -->
+        
+    </body>
+</html>

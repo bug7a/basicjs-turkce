@@ -29,7 +29,7 @@ var createSearcableList = function(objectWidth = 400, objectHeight = 450) {
     that.width = objectWidth
     that.height = objectHeight
     that.color = "whitesmoke"
-    that.round = 8
+    that.round = 0
     that.border = 0
 
     // NOT: Nesnenin konumu, oluşturulduğu yerden belirleniyor.
@@ -46,7 +46,7 @@ var createSearcableList = function(objectWidth = 400, objectHeight = 450) {
     object.boxSearchArea = createBox(10, 10)
     that.width = objectWidth - 20
     that.height = 60
-    that.color = "white"
+    that.color = "whitesmoke"
     that.round = 14
     that.border = 0
 
@@ -60,7 +60,7 @@ var createSearcableList = function(objectWidth = 400, objectHeight = 450) {
     that.width = 310
     that.border = 0
     that.minimal = 1
-    that.color = "white"
+    that.color = "whitesmoke"
     // TextBox a placeholder ekle.
     that.inputElement.setAttribute("placeholder", "Ara")
 
@@ -69,7 +69,7 @@ var createSearcableList = function(objectWidth = 400, objectHeight = 450) {
     that.left = 0
     that.top = object.boxSearchArea.height + 20
     that.width = objectWidth
-    that.height = objectHeight - object.boxSearchArea.height - 30
+    that.height = objectHeight - object.boxSearchArea.height - 20
     that.color = "white"
     that.border = 0
     that.borderColor = "lightgray"
