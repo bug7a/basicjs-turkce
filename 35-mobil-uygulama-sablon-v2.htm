@@ -15,6 +15,9 @@
         <script src="dosyalar/35/ui-side-bar.js" type="text/javascript" charset="utf-8"></script>
         <script src="dosyalar/35/ui-back-button.js" type="text/javascript" charset="utf-8"></script>
         <script src="dosyalar/35/ui-close-button.js" type="text/javascript" charset="utf-8"></script>
+        <script src="dosyalar/35/view-full.js" type="text/javascript" charset="utf-8"></script>
+        <script src="dosyalar/35/view-normal.js" type="text/javascript" charset="utf-8"></script>
+        <script src="dosyalar/35/view-small.js" type="text/javascript" charset="utf-8"></script>
         <script src="dosyalar/35/view-login.js" type="text/javascript" charset="utf-8"></script>
 
         <script src="dosyalar/35/ui-searchable-list.js" type="text/javascript" charset="utf-8"></script>
@@ -57,9 +60,6 @@
         // DEĞİŞKENLER
 
         var APP_CONTENT_WIDTH = 600
-
-        // BOX: view types; Tam ekran, yönlendirme çubuğu ile birlikte, yarım ekran.
-        var viewFull, viewNormal, viewSmall
             
         // İlk çalışan fonksiyon.
         var start = function() {
@@ -68,11 +68,14 @@
             
             // 600px genişliğindeki içeriği, ekrana sığdır. En fazla 500px genişlet.
             page.fit(APP_CONTENT_WIDTH, 500)
-
             // NOT: 500 yerine; desteklemek istediğini maksimum genişliği yazın. 700
 
             // NESNE: navigationBar ve tabBar kullanılabilen içerik alanı.
-            create_viewNormal()
+            // Parametreler: x, y, width, height
+            viewNormal.create(0, 
+                navigationBar.HEIGHT, 
+                APP_CONTENT_WIDTH, 
+                page.height - navigationBar.HEIGHT - tabBar.HEIGHT)
 
             // NESNE: Navigation Bar; üst bilg ve butonlar.
             navigationBar.create()
@@ -91,10 +94,12 @@
             tabBar.onClick(openContentByIndex)
 
             // NESNE: Tam sayfa kullanılabilen içerik alanı. (tabBar ile kullanılabilir.)
-            create_viewFull()
+            // Parametreler: x, y, width, height
+            viewFull.create(0, 0, APP_CONTENT_WIDTH, page.height)
 
             // NESNE: Küçük içerik alanı.
-            create_viewSmall()
+            // Parametreler: x, y, width, height
+            viewSmall.create(0, 0, APP_CONTENT_WIDTH, page.height)
 
             // NESNE: Side Bar; sağ üst düğme ile açılan menu.
             sideBar.create()
@@ -120,86 +125,22 @@
 
             // NOT: Nesnelerin oluşturulma sırası, bulundukları katmanları belirler.
 
-
             // Başlangıç ekranını aç.
-            open_contentHome()            
+            openContentByIndex(0)        
             
         }
 
         // DİĞER FONKSİYONLAR
 
-        var create_viewNormal = function() {
-
-            // BOX: Normal içerik taşıyıcısı
-            viewNormal = createBox(0, 
-                navigationBar.HEIGHT, 
-                APP_CONTENT_WIDTH, 
-                page.height - navigationBar.HEIGHT - tabBar.HEIGHT
-            )
-            clean_viewNormal()
-
-        }
-
-        var clean_viewNormal = function() {
-
-            viewNormal.text = ""
-            viewNormal.color = "whitesmoke"
-            viewNormal.border = 0
-            viewNormal.scrollX = 1
-
-        }
-
-        var create_viewFull = function() {
-
-            // BOX: Tam sayfa içerik taşıyıcısı
-            viewFull = createBox(0, 0, APP_CONTENT_WIDTH, page.height)
-            clean_viewFull()
-            viewFull.visible = 0
-
-        }
-
-        var clean_viewFull = function() {
-
-            viewFull.text = ""
-            viewFull.color = "whitesmoke"
-            viewFull.border = 0
-            viewFull.scrollX = 1
-
-        }
-
-        var create_viewSmall = function() {
-
-            // BOX: Küçük içerik taşıyıcısı
-            viewSmall = createBox(0, 0, APP_CONTENT_WIDTH, page.height)
-            that.color = "rgba(0, 0, 0, 0.8)"
-
-            viewSmall.box = createBox(0, 0, APP_CONTENT_WIDTH, 500)
-            that.element.style.borderTopLeftRadius = "50px"
-            that.element.style.borderTopRightRadius = "50px"
-            that.bottom = 0
-
-            clean_viewSmall()
-            viewSmall.visible = 0
-
-        }
-
-        var clean_viewSmall = function() {
-
-            viewSmall.box.text = ""
-            viewSmall.box.color = "white"
-            viewSmall.border = 0
-
-        }
-
         var cleanAndCloseAllView = function() {
                 
-                clean_viewNormal()
-                clean_viewFull()
-                clean_viewSmall()
-    
-                viewNormal.visible = 0
-                viewFull.visible = 0
-                viewSmall.visible = 0
+                viewNormal.clean()
+                viewFull.clean()
+                viewSmall.clean()
+
+                viewNormal.setVisible(0)
+                viewFull.setVisible(0)
+                viewSmall.setVisible(0)
     
         }
 
@@ -240,8 +181,8 @@
 
             tabBar.selectItemByIndex(0)
 
-            contentHome.create(viewNormal)
-            viewNormal.visible = 1
+            viewNormal.loadContent(contentHome)
+            viewNormal.setVisible(1)
 
         }
 
@@ -254,8 +195,8 @@
 
             tabBar.selectItemByIndex(1)
 
-            contentSearch.create(viewNormal)
-            viewNormal.visible = 1
+            viewNormal.loadContent(contentSearch)
+            viewNormal.setVisible(1)
 
         }
 
@@ -268,8 +209,8 @@
 
             tabBar.selectItemByIndex(2)
 
-            contentAlert.create(viewNormal)
-            viewNormal.visible = 1
+            viewNormal.loadContent(contentAlert)
+            viewNormal.setVisible(1)
 
         }
 
@@ -282,8 +223,8 @@
 
             tabBar.selectItemByIndex(3)
 
-            contentFav.create(viewNormal)
-            viewNormal.visible = 1
+            viewNormal.loadContent(contentFav)
+            viewNormal.setVisible(1)
 
         }
 
@@ -296,26 +237,22 @@
 
             tabBar.selectItemByIndex(4)
 
-            contentSetting.create(viewNormal)
-            viewNormal.visible = 1
+            viewNormal.loadContent(contentSetting)
+            viewNormal.setVisible(1)
 
         }
 
         var open_contentNum6 = function() {
 
-            clean_viewFull()
-            
-            contentNum6.create(viewFull)
-            viewFull.visible = 1
+            viewFull.loadContent(contentNum6)
+            viewFull.setVisible(1)
 
         }
 
         var open_contentNum7 = function() {
 
-            clean_viewSmall()
-
-            contentNum7.create(viewSmall.box)
-            viewSmall.visible = 1
+            viewSmall.loadContent(contentNum7)
+            viewSmall.setVisible(1)
 
         }
         
