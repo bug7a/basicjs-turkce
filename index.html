@@ -343,7 +343,12 @@
                 that.element.classList.add("motion-zoomOnMouseOver-forButtonWithOutWhite");
                 that.index = i;
                 that.onClick(function(self) {
-                    goto_url("/basicjs-turkce/javascript/" + sampleURLList[self.index] + ".htm");
+                    //goto_url("/basicjs-turkce/javascript/" + sampleURLList[self.index] + ".htm");
+                    if(self.index == 17) {
+                        goto_url("https://bug7a.github.io/cordova-mobile-app-ui-template/");
+                    } else {
+                        goto_url("/basicjs-turkce/javascript/" + sampleURLList[self.index] + ".htm");
+                    }
                 });
 
                 boxSample["b" + i].imgPreview = cimg(5, 5, 90, 90);
