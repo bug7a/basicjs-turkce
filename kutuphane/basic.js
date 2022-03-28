@@ -4,45 +4,17 @@
 /*
 
 
-v1.6.3
+v1.6.4
 
 
-basic.js NEDİR?
-
-Programlamaya yeni başlayanlar için: Nesne tabanlı yazılım projesi 
-geliştirmeyi kolaylaştıran JavaScript kütüphanesi.
-
-Project Site: https://bug7a.github.io/basicjs-turkce/
+basic.js is a technique (JavaScript library) that simplifies project development.
+- Project Site: https://bug7a.github.io/basic.js/
 
 
 Started Date: 25 October 2020
 Developer: Bugra Ozden
 Email: bugra.ozden@gmail.com
 Personal Site: http://bugraozden.com
-
-
---
-
-
-JAVASCRIPT PROGRAMLAMA DİLİ:
-
-- Bu kütüphane, temel JavaScript kodları ile geliştirilmiştir.
-- JavaScript'in ayrıntılarını öğrenmek için aşağıdaki kaynakları inceleyebilirsiniz.
-
-Türkçe kaynak;
-https://tr.javascript.info/
-
-İngilizce kaynak;
-https://www.w3schools.com/js/DEFAULT.asp
-
-
-İNGİLİZCE - TÜRKÇE SÖZLÜK:
-
-Anlamını bilmediğiniz ingilizce kelimeler için,
-https://translate.google.com/ internet sitesini kullanabilirsiniz.
-
-
---
 
 
 LICENSE:
@@ -59,7 +31,6 @@ Have Fun.
 
 
 */
-
 
 "use strict"
 const basic = {};
@@ -159,6 +130,7 @@ basic.settings = {};
 basic.autoAddObjectIntoBoxController = {}
 basic.autoAddObjectIntoBoxController.DELAY_TIME = 1;
 basic.autoAddObjectIntoBoxController.timer = 0;
+basic.autoAddObjectIntoBoxController.isActive = 1;
 
 // Nesnelerin boyut değişimlerini kontrol eder.
 basic.resizeDetection = {};
@@ -205,6 +177,14 @@ basic.start = function () {
 
 basic.afterStart = function () {
     // Kullanıcının start() fonksiyonu çalıştırıldıktan sonra,
+    var timeUsed = (Date.now() - basic.startTime)
+    if (timeUsed > 300) {
+        print("basic.js: Run time: " + timeUsed + "ms");
+        if(basic.autoAddObjectIntoBoxController.isActive == 1) {
+            console.log("basic.js: For performance, make passive autoAddObjectIntoBoxController and use selectBox() or .add() function. (Look handbook)")
+        }
+    }
+    
 }
 
 
@@ -221,12 +201,12 @@ basic.random = function ($first, $second) {
 
     if ($second != undefined) {
         if ($second < $first) {
-            console.log("basic.js: random(): İkinci parametre (sayı), birinciden büyük olmalıdır.");
+            console.log("basic.js: random(): The second parameter (number) must be greater than the first.");
         } else {
             myNum = $first + Math.round(Math.random() * ($second - $first));
         }
     } else {
-        console.log("basic.js: random(): İki parametre (sayı) gönderilmelidir.");
+        console.log("basic.js: random(): Two parameters (numbers) must be sent.");
     }
     
     return myNum;
@@ -293,6 +273,7 @@ basic.twoDigitFormat = function($number) {
     return $number;
 
 }
+
 var twoDigitFormat = basic.twoDigitFormat;
 
 // Bilgiyi kaydetmek ve geri yüklemek.
@@ -408,6 +389,7 @@ class Basic_UIComponent {
 
         this._motionString = "none";
         this._clickable = 0;
+        this._eventFuncList = [];
 
     }
 
@@ -469,7 +451,7 @@ class Basic_UIComponent {
         if ($value != "auto") {
             this.contElement.style.width = parseInt($value) + "px";
         } else {
-            console.log("basic.js: .width: 'auto' özelliği bu nesne için desteklenmiyor.");
+            console.log("basic.js: .width: The 'auto' property is not supported for this object.");
         }
     }
 
@@ -485,7 +467,7 @@ class Basic_UIComponent {
         if ($value != "auto") {
             this.contElement.style.height = parseInt($value) + "px";
         } else {
-            console.log("basic.js: .height: 'auto' özelliği bu nesne için desteklenmiyor.");
+            console.log("basic.js: .height: The 'auto' property is not supported for this object.");
 
         }
     }
@@ -637,6 +619,15 @@ class Basic_UIComponent {
 
     // Nesneyi sil.
     remove() {
+
+        if (this._type == "box") {
+            for (var i = 0; i < basic.createdBoxList.length; i++) {
+                if (basic.createdBoxList[i] == this) {
+                    basic.createdBoxList.splice(i, 1);
+                    break;
+                }
+            }
+        }
         this.contElement.remove();
     }
 
@@ -648,9 +639,31 @@ class Basic_UIComponent {
     // Olay eklemek.
     _addEventListener($eventName, $func, $element) {
         let _that = this;
-        $element.addEventListener($eventName, function ($ev) {
+        var eventFunc = function ($ev) {
             $func(_that, $ev);
-        });
+        }
+        $element.addEventListener($eventName, eventFunc);
+
+        var eventDateItem = {}
+        eventDateItem.eventName = $eventName;
+        eventDateItem.originalFunc = $func;
+        eventDateItem.func = eventFunc;
+        eventDateItem.element = $element;
+        this._eventFuncList.push(eventDateItem);
+    }
+
+    _removeEventListener($eventName, $func, $element) {
+        var func = null
+        for (var i = 0; i < this._eventFuncList.length; i++) {
+            if (this._eventFuncList[i].originalFunc == $func) {
+                func = this._eventFuncList[i].func;
+                this._eventFuncList.splice(i, 1);
+                break;
+            }
+        }
+        if (func) {
+            $element.removeEventListener($eventName, func);
+        }   
     }
 
     onResize($func) {
@@ -658,7 +671,7 @@ class Basic_UIComponent {
     }
 
     remove_onResize($func) {
-        // basic.resizeDetection.remove_onResize(this.element, $func);
+        basic.resizeDetection.remove_onResize(this.element, $func);
     }
 
     // Hareket
@@ -828,16 +841,30 @@ class MainBox {
         page.box.height = page.height;
     }
 
+    /*
     _addEventListener($event, $func) {
         window.addEventListener($event, $func);
     }
+    */
 
     onClick($func) {
-        this._addEventListener("click", $func, this.contElement);
+        this._box._addEventListener("click", $func, window);
+        //this._addEventListener("click", $func);
+    }
+
+    remove_onClick($func) {
+        this._box._removeEventListener("click", $func, window);
+        //this._addEventListener("click", $func);
     }
 
     onResize($func) {
-        this._addEventListener("resize", $func, this.contElement);
+        //this._addEventListener("resize", $func);
+        this._box._addEventListener("resize", $func, window);
+    }
+
+    remove_onResize($func) {
+        //this._addEventListener("resize", $func);
+        this._box._removeEventListener("resize", $func, window);
     }
 
     add($obj) {
@@ -965,6 +992,11 @@ class Box extends Basic_UIComponent {
     onClick($func) {
         this.clickable = 1;
         this._addEventListener("click", $func, this.contElement);
+    }
+
+    remove_onClick($func) {
+        //this.clickable = 0;
+        this._removeEventListener("click", $func, this.contElement);
     }
 
     add($obj) {
@@ -1116,8 +1148,13 @@ class Button extends Basic_UIComponent {
         this._addEventListener("click", $func, this.buttonElement);
     }
 
+    remove_onClick($func) {
+        this.clickable = 0;
+        this._removeEventListener("click", $func, this.buttonElement);
+    }
+
     add($obj) {
-        console.log("basic.js: add(): Button nesnesinin içine ekleme yapılamaz.");
+        console.log("basic.js: add(): Insertion cannot be made inside the Button object.");
     }
 
 }
@@ -1330,8 +1367,12 @@ class TextBox extends Basic_UIComponent {
         this._addEventListener("change", $func, this.inputElement);
     }
 
+    remove_onChange($func) {
+        this._removeEventListener("change", $func, this.inputElement);
+    }
+
     add($obj) {
-        console.log("basic.js: add(): TextBox nesnesinin içine ekleme yapılamaz.");
+        console.log("basic.js: add(): Insertion cannot be made inside the TextBox object.");
     }
 
 }
@@ -1466,8 +1507,13 @@ class Label extends Basic_UIComponent {
         this._addEventListener("click", $func, this.contElement);
     }
 
+    remove_onClick($func) {
+        this.clickable = 0
+        this._removeEventListener("click", $func, this.contElement);
+    }
+
     add($obj) {
-        console.log("basic.js: add(): Label nesnesinin içine ekleme yapılamaz.");
+        console.log("basic.js: add(): Insertion cannot be made inside the Label object.");
     }
 
 }
@@ -1628,8 +1674,17 @@ class Image extends Basic_UIComponent {
         this._addEventListener("click", $func, this.contElement);
     }
 
+    remove_onClick($func) {
+        this.clickable = 0
+        this._removeEventListener("click", $func, this.contElement);
+    }
+
     onLoad($func) {
         this._addEventListener("load", $func, this.imageElement);
+    }
+
+    remove_onLoad($func) {
+        this._removeEventListener("load", $func, this.imageElement);
     }
 
     load($imagePath) {
@@ -1637,7 +1692,7 @@ class Image extends Basic_UIComponent {
     }
 
     add($obj) {
-        console.log("basic.js: add(): Image nesnesinin içine ekleme yapılamaz.");
+        console.log("basic.js: add(): Insertion cannot be made inside the Image object.");
     }
 
 }
@@ -1781,7 +1836,7 @@ basic.setProparties = function ($this, $values = []) {
 // Bir nesnenin, başka bir nesneye göre ortalanması.
 basic.moveToCenter = function ($this, $position) {
 
-    if (basic.autoAddObjectIntoBoxController.isActive()) {
+    if (basic.autoAddObjectIntoBoxController.isActive) {
         basic.autoAddObjectIntoBoxController.addIntoBox($this);
         // NOT: center() kullanılmadan önce; nesne, kutu içine taşınmış olmalı.
     }
@@ -1949,7 +2004,7 @@ var getSelectedBox = basic.getSelectedBox;
 // Özel bir nesne oluşturulduğunda, that ve exThat nesnelerini yeniden düzenle.
 const makeBasicObject = function($newObject) {
 
-    if (basic.autoAddObjectIntoBoxController.isActive() && that) {
+    if (basic.autoAddObjectIntoBoxController.isActive && that) {
         basic.autoAddObjectIntoBoxController.addIntoBox(that);
         // NOT: Yeni bir nesne oluşturulduğunda,
         // Bir önceki nesnenin, otomatik eklenmesini gerçekleştir.
@@ -1959,7 +2014,7 @@ const makeBasicObject = function($newObject) {
     exThat = that
     that = $newObject
 
-    if (basic.autoAddObjectIntoBoxController.isActive()) {
+    if (basic.autoAddObjectIntoBoxController.isActive) {
         basic.autoAddObjectIntoBoxController.addIntoBoxAfterLinkedWithVariable(that);
         // NOT: Eğer yeni bir nesne oluşturulmaz ise, bu nesne otomatik eklenir.
     }
@@ -1987,25 +2042,36 @@ basic.autoAddObjectIntoBoxController.addIntoBoxAfterLinkedWithVariable = functio
 basic.autoAddObjectIntoBoxController.addIntoBox = function ($object) {
     // Taşıyıcı nesne, alt nesnelere eklenmeye çalışılır ise devam et:
     try {
-        for (var boxIndex in basic.createdBoxList) {
+        var isFound = 0
+        //for (var boxIndex in basic.createdBoxList) {
+        for (var boxIndex = (basic.createdBoxList.length - 1); boxIndex >= 0; boxIndex--) {
             for (var boxItemName in basic.createdBoxList[boxIndex]) {
                 if (basic.createdBoxList[boxIndex][boxItemName] == $object &&
                     basic.createdBoxList[boxIndex].upperObject != $object) {
                         basic.createdBoxList[boxIndex].add($object);
+                        isFound = 1;
+                }
+                if (isFound) {
+                    break;
                 }
             }
+            if (isFound) {
+                break;
+            }
         }
+        //}
     } catch (e) {
-        console.log("basic.js: Otomatik kutu içine taşıma hatası.")
+        console.log("basic.js: Automatic inbox error.")
     }
 }
 
 // Otomatik taşıma sistemi aktif mi?
-basic.autoAddObjectIntoBoxController.isActive = function () {
+basic.autoAddObjectIntoBoxController.setActive = function (value) {
+    basic.autoAddObjectIntoBoxController.isActive = value;
+}
 
-    // Her zaman aktif.
-    return 1;
-
+basic.autoAddObjectIntoBoxController.getActive = function () {
+    return basic.autoAddObjectIntoBoxController.isActive;
 }
 
 // Denetçi şu anda çalışıyor mu?
@@ -2036,7 +2102,7 @@ basic.resizeDetection.onResize = function($object, $func) {
 
 basic.resizeDetection.remove_onResize = function($element, $func) {
 
-    for(var j = basic.resiremove_onResizezeDetection.objectAndFunctionList.length - 1; j >= 0; j--) {
+    for(var j = basic.resizeDetection.objectAndFunctionList.length - 1; j >= 0; j--) {
 
         if (basic.resizeDetection.objectAndFunctionList[j].elem == $element) {
             if (basic.resizeDetection.objectAndFunctionList[j].func == $func) {
