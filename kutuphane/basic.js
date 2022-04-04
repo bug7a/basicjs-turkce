@@ -146,6 +146,7 @@ basic.createdObjectVisibilityController.objectList = [];
 basic.motionController = {}
 basic.motionController.SET_MOTION_TIME = 80;
 basic.motionController.WITH_MOTION_TIME = 100;
+basic.motionController.WITH_MOTION_TIME_SECOND = 10;
 basic.motionController.DONT_MOTION_TIME = 5;
 
 
@@ -682,7 +683,7 @@ class Basic_UIComponent {
         // Eğer nesne oluşturulduktan sonra, gösterilmiş ise,
         if (this.contElement.style.visibility == "visible") {
 
-            this.setMotionNow(this);
+            this.setMotionNow($motionString);
 
         } else {
 
@@ -715,10 +716,17 @@ class Basic_UIComponent {
 
         var _that = this;
 
-        setTimeout(function() {
-            $func(_that);
-        }, basic.motionController.WITH_MOTION_TIME)
-
+        if (this.contElement.style.visibility == "visible") {
+            setTimeout(function() {
+               _that.canMotionNow();
+                $func(_that);
+            }, basic.motionController.WITH_MOTION_TIME_SECOND);
+        
+        } else {
+            setTimeout(function() {
+                $func(_that);
+            }, basic.motionController.WITH_MOTION_TIME);
+        }
     }
 
     // Harekete, belli bir süre ara ver.
@@ -2073,6 +2081,9 @@ basic.autoAddObjectIntoBoxController.setActive = function (value) {
 basic.autoAddObjectIntoBoxController.getActive = function () {
     return basic.autoAddObjectIntoBoxController.isActive;
 }
+
+basic.setAutoAdd = basic.autoAddObjectIntoBoxController.setActive;
+basic.getAutoAdd = basic.autoAddObjectIntoBoxController.getActive
 
 // Denetçi şu anda çalışıyor mu?
 basic.autoAddObjectIntoBoxController.isRunning = function() {
