@@ -12,6 +12,8 @@ Ve proje geliştirmeyi kolaylaştıran JavaScript kütüphanesi.<br />
 * Bu teknikler ile, tamamen özelleştirilebilir ve dinamik uygulamalar geliştirilebilmektedir.
 * Kullanılan programlama dili JavaScript'dir. Projeler, tarayıcı veya WebView üzerinde çalıştırılabilir.
 
+NOT: Bu proje artık güncellenmeyecek; güncel örnekler için basic.js-examples projesini takip edebilirsiniz.
+
 ### Örnek Projelerden Bazıları
 
 ![alt tag](https://bug7a.github.io/basicjs-turkce/preview.png)
